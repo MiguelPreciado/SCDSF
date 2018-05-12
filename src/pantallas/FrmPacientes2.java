@@ -277,7 +277,7 @@ public class FrmPacientes2 extends javax.swing.JFrame {
         lblRelacion.setText("Relacion con el paciente:");
 
         chkCasaSagradoCorazon.setFont(fntComponente);
-        chkCasaSagradoCorazon.setText("Casa del Sagrado Corazón a.c");
+        chkCasaSagradoCorazon.setText("Casa de descanso \"La Sagrada Familia\" ");
 
         lblCalle.setFont(fntComponente);
         lblCalle.setText("Calle:");
@@ -732,7 +732,7 @@ public class FrmPacientes2 extends javax.swing.JFrame {
             .addGroup(pnlResponsable1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlResponsable2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlResponsable1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlResponsable1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -811,7 +811,7 @@ public class FrmPacientes2 extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 22, Short.MAX_VALUE)
+                .addGap(0, 9, Short.MAX_VALUE)
                 .addComponent(pnlResponsable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -879,6 +879,17 @@ public class FrmPacientes2 extends javax.swing.JFrame {
                                                 res.setNombreResponsable(chkCasaSagradoCorazon.getText());
                                                 res.setApMatResponsable("-");
                                                 res.setApPatResponsable("-");
+                                                res.setTel1("-");
+                                                res.setTel2("-");
+                                                res.setTel3("-");
+                                                res.setRelacion("-");
+                                                res.setNoExt("-");
+                                                res.setNoInt("-");
+                                                res.setColonia("-");
+                                                res.setEstadoResponsable("-");
+                                                res.setMunicipioResponsable("-");
+                                                res.setCalle("-");
+                                                res.setcP("-");
                                             } else {
                                                 res.setNombreResponsable(txtResponsable.getText());
                                                 res.setApPatResponsable(txtApPatResponsable.getText());
@@ -1001,6 +1012,17 @@ public class FrmPacientes2 extends javax.swing.JFrame {
                                                 res.setNombreResponsable(chkCasaSagradoCorazon.getText());
                                                 res.setApMatResponsable("-");
                                                 res.setApPatResponsable("-");
+                                                res.setTel1("-");
+                                                res.setTel2("-");
+                                                res.setTel3("-");
+                                                res.setRelacion("-");
+                                                res.setNoExt("-");
+                                                res.setNoInt("-");
+                                                res.setColonia("-");
+                                                res.setEstadoResponsable("-");
+                                                res.setMunicipioResponsable("-");
+                                                res.setCalle("-");
+                                                res.setcP("-");
                                             } else {
                                                 res.setNombreResponsable(txtResponsable.getText());
                                                 res.setApPatResponsable(txtApPatResponsable.getText());
