@@ -26,10 +26,11 @@ public class DAOPacientes extends Pacientes {
     private String mensaje;
     Connection con;
 
-    public DAOPacientes(int idPaciente, String nombre, String apPat, String apMat, int noExpediente, char actaIfe, char estado, String estadoCivil, String fechaNac, String EstadoProcedencia, String MunicipioProcedencia, String EstadoOrigen, String MunicipioOrigen, String tpPaciente, String seguro, String tpSangre, String Alergias, String fechaIngreso, String areas, String diagnostico, String tel) {
-        super(idPaciente, nombre, apPat, apMat, noExpediente, actaIfe, estado, estadoCivil, fechaNac, EstadoProcedencia, MunicipioProcedencia, EstadoOrigen, MunicipioOrigen, tpPaciente, seguro, tpSangre, Alergias, fechaIngreso, areas, diagnostico, tel);
+    public DAOPacientes(int idPaciente, String nombre, String apPat, String apMat, int noExpediente, int noProgresivo, char actaIfe, char estado, String estadoCivil, String fechaNac, String EstadoProcedencia, String MunicipioProcedencia, String EstadoOrigen, String MunicipioOrigen, String tpPaciente, String seguro, String tpSangre, String Alergias, String fechaIngreso, String areas, String diagnostico, String tel) {
+        super(idPaciente, nombre, apPat, apMat, noExpediente, noProgresivo, actaIfe, estado, estadoCivil, fechaNac, EstadoProcedencia, MunicipioProcedencia, EstadoOrigen, MunicipioOrigen, tpPaciente, seguro, tpSangre, Alergias, fechaIngreso, areas, diagnostico, tel);
     }
 
+    
 
     public DAOPacientes() {
     }
@@ -50,7 +51,7 @@ public class DAOPacientes extends Pacientes {
         con = Conex.getInstance().getConnection();
 
         String cadSql= "call ins_Paciente("+
-           "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+           "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
        try {
            CallableStatement pstm = con.prepareCall(cadSql);
            pstm.setString(1,super.getNombre());
@@ -71,6 +72,7 @@ public class DAOPacientes extends Pacientes {
            pstm.setString(16, super.getDiagnostico());
            pstm.setString(17, super.getAlergias());
            pstm.setString(18,""+super. getActaIfe());
+           pstm.setInt(19, super.getNoProgresivo());
            System.out.println("Se mando a ejecutar");
            pstm.executeUpdate();
            System.out.println("Se agregó exitosamente");
@@ -88,7 +90,7 @@ public class DAOPacientes extends Pacientes {
         con = Conex.getInstance().getConnection();
         try {
             CallableStatement pstm = con.prepareCall("call delete_Paciente (?)");
-            pstm.setInt(1, super.getIdPaciente());
+            pstm.setInt(1, super.getNoProgresivo());
             pstm.execute();
             res = true;
         } catch (SQLException ex) {
@@ -104,7 +106,7 @@ public class DAOPacientes extends Pacientes {
         con = Conex.getInstance().getConnection();
         try {
             CallableStatement pstm = con.prepareCall("call update_Paciente("
-                    + " ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    + " ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
            pstm.setString(1,super.getNombre());
            pstm.setString(2, super.getApPat());
            pstm.setString(3, super.getApMat());
@@ -125,6 +127,7 @@ public class DAOPacientes extends Pacientes {
            pstm.setString(17, super.getAlergias());
            pstm.setInt(18, super.getIdPaciente());
            pstm.setString(19,""+super. getActaIfe());
+            pstm.setInt(20, super.getNoProgresivo());
             pstm.execute();
 
             res = true;
@@ -142,6 +145,22 @@ public class DAOPacientes extends Pacientes {
             CallableStatement pstm = con.prepareCall("call Activar_Paciente("
                     + " ?)");
            pstm.setInt(1,super.getNoExpediente());
+           pstm.execute();
+            res = true;
+        } catch (SQLException ex) {
+           mensaje = ex.getMessage();
+           System.out.println(mensaje);
+       } 
+        return res;
+    }
+    
+    public boolean activarEliminados() {
+        boolean res = false;
+        con = Conex.getInstance().getConnection();
+        try {
+            CallableStatement pstm = con.prepareCall("call activate_error_paciente("
+                    + " ?)");
+           pstm.setInt(1,super.getIdPaciente());
            pstm.execute();
             res = true;
         } catch (SQLException ex) {
@@ -179,6 +198,7 @@ public class DAOPacientes extends Pacientes {
                 super.setApPat(rs.getString("ApPat"));
                 super.setApMat(rs.getString( "ApMat"));
                 super.setNoExpediente(rs.getInt("NoExpediente"));
+                super.setNoProgresivo(rs.getInt("noProgresivo"));
                 super.setActaIfe(rs.getString("ActaIfe").charAt(0));
                 super.setEstado(rs.getString("estado").charAt(0));
                 super.setEstadoCivil(rs.getString( "estadoCivil"));
@@ -196,6 +216,26 @@ public class DAOPacientes extends Pacientes {
                 super.setAreas(rs.getString("area"));
                 super.setDiagnostico(rs.getString("diagnostico"));
                 
+                res = true;
+            }
+        } catch (SQLException ex) {
+           mensaje = ex.getMessage();
+           System.out.println(mensaje);
+       } 
+        return res;
+    }
+    public boolean buscarEliminados() {
+        boolean res = false;
+        con = Conex.getInstance().getConnection();
+        try {
+            CallableStatement stm = con.prepareCall("call search_Pacientes_Eliminados(?)");
+            stm.setInt(1, super.getIdPaciente());
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {  
+                super.setIdPaciente(rs.getInt("IDPaciente"));
+                super.setNombre(rs.getString("Nombre"));
+                super.setApPat(rs.getString("ApPat"));
+                super.setApMat(rs.getString( "ApMat"));
                 res = true;
             }
         } catch (SQLException ex) {
@@ -272,7 +312,25 @@ public class DAOPacientes extends Pacientes {
         return pacientes;
     }
     //</editor-fold>
-    
+    public ArrayList<ComboItem> filtrarPacientesEliminados(String filtro){
+        ArrayList<ComboItem> pacientes = new ArrayList<>();
+        con = Conex.getInstance().getConnection();
+        String nombre="";
+        int id= 0;
+        try {
+            CallableStatement cstm = con.prepareCall("CALL filtro_Pacientes_eliminados(?)");
+            cstm.setString(1, filtro);
+            ResultSet rs = cstm.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("IdPaciente");
+                nombre = rs.getString("Nombre_Completo");
+                pacientes.add(new ComboItem(id,nombre));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOPacientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pacientes;
+    }
     // <editor-fold defaultstate="collapsed" desc="setPaciente">
     public void setPaciente(Pacientes pac){
         super.setIdPaciente(pac.getIdPaciente());
@@ -280,6 +338,7 @@ public class DAOPacientes extends Pacientes {
         super.setApPat(pac.getApPat());
         super.setApMat(pac.getApMat());
         super.setNoExpediente(pac.getNoExpediente());
+        super.setNoProgresivo(pac.getNoProgresivo());
         super.setActaIfe(pac.getActaIfe());
         super.setEstadoCivil(pac.getEstadoCivil());
         super.setFechaNac(pac.getFechaNac());

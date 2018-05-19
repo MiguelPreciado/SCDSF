@@ -9,6 +9,7 @@ package pantallas;
 
 import clases.ComboItem;
 import clases.DAOPacientes;
+import clases.DAOResponsables;
 import clases.Estado;
 import clases.Municipio;
 import clases.Pacientes;
@@ -53,6 +54,7 @@ public class FrmPacientes extends javax.swing.JFrame {
 //        cargarMunicipioNac();
 //        cargarMunicipioProce();
         cargaCmbFiltrado();
+        cargaCmbFiltradoEliminados();
         skin();
     }
 
@@ -61,7 +63,7 @@ public class FrmPacientes extends javax.swing.JFrame {
         cmbSeguro.addItem("ISSSTE");
         cmbSeguro.addItem("IMSS");
         cmbSeguro.addItem("SP");
-        cmbSeguro.addItem(" ");
+        cmbSeguro.addItem("Ninguno");
     }
 
     private void skin() {
@@ -258,6 +260,8 @@ public class FrmPacientes extends javax.swing.JFrame {
         txtMunicipioProce = new javax.swing.JTextField();
         cmbSeguro = new javax.swing.JComboBox();
         lblEstadoCivil1 = new javax.swing.JLabel();
+        cmbEliminados = new javax.swing.JComboBox();
+        btnActivar = new javax.swing.JButton();
         mbrPrincipal = new javax.swing.JMenuBar();
         mn1 = new javax.swing.JMenu();
         mitHistorial1 = new javax.swing.JMenuItem();
@@ -543,6 +547,19 @@ public class FrmPacientes extends javax.swing.JFrame {
         lblEstadoCivil1.setFont(fntComponente);
         lblEstadoCivil1.setText("Seguro:");
 
+        cmbEliminados.setFont(fntComponente);
+        cmbEliminados.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnActivar.setFont(fntComponente);
+        btnActivar.setText("Activar");
+        btnActivar.setMaximumSize(dmsBoton);
+        btnActivar.setPreferredSize(dmsBoton);
+        btnActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
@@ -570,26 +587,7 @@ public class FrmPacientes extends javax.swing.JFrame {
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlDatosLayout.createSequentialGroup()
-                                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(pnlDatosLayout.createSequentialGroup()
-                                            .addComponent(lblFiltro)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txtFiltroPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(234, 234, 234))
-                                        .addComponent(cmbFiltradoPacientes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnlDatosLayout.createSequentialGroup()
-                                        .addComponent(lblId)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtIdPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblNoExpediente)
-                                        .addGap(17, 17, 17)
-                                        .addComponent(txtNoExpediente, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(12, 12, 12)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(pnlDatosLayout.createSequentialGroup()
                                 .addComponent(lblNombre)
                                 .addGap(18, 18, 18)
@@ -601,7 +599,34 @@ public class FrmPacientes extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblApMat)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtApMat, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtApMat, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlDatosLayout.createSequentialGroup()
+                                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlDatosLayout.createSequentialGroup()
+                                        .addComponent(lblId)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtIdPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblNoExpediente)
+                                        .addGap(17, 17, 17)
+                                        .addComponent(txtNoExpediente, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(pnlDatosLayout.createSequentialGroup()
+                                        .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnlDatosLayout.createSequentialGroup()
+                                                .addComponent(lblFiltro)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtFiltroPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(234, 234, 234))
+                                            .addComponent(cmbFiltradoPacientes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(16, 16, 16)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbEliminados, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnActivar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34))))
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addComponent(lblTpSangre)
@@ -684,7 +709,9 @@ public class FrmPacientes extends javax.swing.JFrame {
                             .addComponent(lblFiltro)
                             .addComponent(txtFiltroPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbFiltradoPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbEliminados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnActivar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblId)
@@ -843,7 +870,9 @@ public class FrmPacientes extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -858,80 +887,81 @@ public class FrmPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdPacienteActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if (!txtNoExpediente.getText().isEmpty()) {
-            if (!txtNombre.getText().isEmpty()) {
-                if (!txtApPat.getText().isEmpty()) {
-                    if (!txtApMat.getText().isEmpty()) {
-                        if (!txtDiaNac.getText().isEmpty()) {
-                            if (!txtMesNac.getText().isEmpty()) {
-                                if (!txtAnioNac.getText().isEmpty()) { 
-                                    if (!txtMunicipioNac.getText().isEmpty()) {  
-                                        if (!txtMunicipioProce.getText().isEmpty()) {  
-                                                
-                                        
-                                    
-                                    Pacientes pac = new Pacientes();
-                                    DAOPacientes dPac = new DAOPacientes();
-                                    pac.setTel(txtTel.getText());
-                                    pac.setNombre(txtNombre.getText());
-                                    pac.setApPat(txtApPat.getText());
-                                    pac.setApMat(txtApMat.getText());
-                                    pac.setNoExpediente(Integer.parseInt(txtNoExpediente.getText()));
-                                    if (chkActaIfe.isSelected()) {
-                                        pac.setActaIfe('1');
+        if (!txtIdPaciente.getText().isEmpty()) {
+            if (!txtNoExpediente.getText().isEmpty()) {
+                if (!txtNombre.getText().isEmpty()) {
+                    if (!txtApPat.getText().isEmpty()) {
+                        if (!txtApMat.getText().isEmpty()) {
+                            if (!txtDiaNac.getText().isEmpty()) {
+                                if (!txtMesNac.getText().isEmpty()) {
+                                    if (!txtAnioNac.getText().isEmpty()) { 
+                                        if (!txtMunicipioNac.getText().isEmpty()) {  
+                                            if (!txtMunicipioProce.getText().isEmpty()) {  
+                                                Pacientes pac = new Pacientes();
+                                                DAOPacientes dPac = new DAOPacientes();
+                                                pac.setTel(txtTel.getText());
+                                                pac.setNombre(txtNombre.getText());
+                                                pac.setApPat(txtApPat.getText());
+                                                pac.setApMat(txtApMat.getText());
+                                                pac.setNoExpediente(Integer.parseInt(txtNoExpediente.getText()));
+                                                pac.setNoProgresivo(Integer.parseInt(txtIdPaciente.getText()));
+                                                if (chkActaIfe.isSelected()) {
+                                                    pac.setActaIfe('1');
+                                                } else {
+                                                    pac.setActaIfe('0');
+                                                }
+                                                pac.setEstadoCivil(cmbEstadoCivil.getSelectedItem().toString());
+                                                pac.setFechaNac(txtAnioNac.getText() + "-" + txtMesNac.getText() + "-" + txtDiaNac.getText());
+                                                pac.setEstadoProcedencia(cmbEstadoProce.getSelectedItem().toString());
+                                                pac.setMunicipioProcedencia(txtMunicipioProce.getText());
+                                                pac.setSeguro(cmbSeguro.getSelectedItem().toString());
+                                                pac.setEstadoOrigen(cmbEstadoNac.getSelectedItem().toString());
+                                                pac.setMunicipioOrigen(txtMunicipioNac.getText());
+                                                pac.setTpPaciente(cmbTpPaciente.getSelectedItem().toString());
+                                                pac.setAreas(cmbArea.getSelectedItem().toString());
+                                                pac.setTpSangre(cmbTpSangre.getSelectedItem().toString());
+                                                pac.setAlergias(txaAlergias.getText());
+                                                pac.setDiagnostico(txaDiagnostico.getText());
+                                                dPac.setPaciente(pac);
+                                                if (dPac.agregar()) {
+                                                    JOptionPane.showMessageDialog(rootPane, "Registro guardado");
+                                                    LimpiarCampos();
+                                                    btnListar.doClick();
+                                                } else {
+                                                  JOptionPane.showMessageDialog(rootPane, "No se inserto");
+                                                }  
+                                           }else{ 
+                                                JOptionPane.showMessageDialog(this, "ERROR: Faltó el municipio de procedencia.");
+                                           }
+                                        }else{ 
+                                            JOptionPane.showMessageDialog(this, "ERROR: Faltó el municipio de nacimiento.");    
+                                        }
                                     } else {
-                                        pac.setActaIfe('0');
+                                        JOptionPane.showMessageDialog(this, "ERROR: Faltó el año de nacimiento.");
                                     }
-                                    pac.setEstadoCivil(cmbEstadoCivil.getSelectedItem().toString());
-                                    pac.setFechaNac(txtAnioNac.getText() + "-" + txtMesNac.getText() + "-" + txtDiaNac.getText());
-                                    pac.setEstadoProcedencia(cmbEstadoProce.getSelectedItem().toString());
-                                    pac.setMunicipioProcedencia(txtMunicipioProce.getText());
-                                    pac.setSeguro(cmbSeguro.getSelectedItem().toString());
-                                    pac.setEstadoOrigen(cmbEstadoNac.getSelectedItem().toString());
-                                    pac.setMunicipioOrigen(txtMunicipioNac.getText());
-                                    pac.setTpPaciente(cmbTpPaciente.getSelectedItem().toString());
-                                    pac.setAreas(cmbArea.getSelectedItem().toString());
-                                    pac.setTpSangre(cmbTpSangre.getSelectedItem().toString());
-                                    pac.setAlergias(txaAlergias.getText());
-                                    pac.setDiagnostico(txaDiagnostico.getText());
-                                    dPac.setPaciente(pac);
-                                    if (dPac.agregar()) {
-                                        JOptionPane.showMessageDialog(rootPane, "Registro guardado");
-                                        LimpiarCampos();
-                                        btnListar.doClick();
-                                          } else {
-                                          JOptionPane.showMessageDialog(rootPane, "No se inserto");
-                                          }  
-                                       }else{ 
-                                            JOptionPane.showMessageDialog(this, "ERROR: Faltó el municipio de procedencia.");
-                                       }
-                                    }else{ 
-                                        JOptionPane.showMessageDialog(this, "ERROR: Faltó el municipio de nacimiento.");    
-                                    }
-                                } else {
-                                    JOptionPane.showMessageDialog(this, "ERROR: Faltó el año de nacimiento.");
-                                }
 
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "ERROR: Faltó el mes de nacimiento.");
+                                }
                             } else {
-                                JOptionPane.showMessageDialog(this, "ERROR: Faltó el mes de nacimiento.");
+                                JOptionPane.showMessageDialog(this, "ERROR: Faltó el día de nacimiento.");
                             }
                         } else {
-                            JOptionPane.showMessageDialog(this, "ERROR: Faltó el día de nacimiento.");
+                            JOptionPane.showMessageDialog(this, "ERROR: Faltó el apellido materno.");
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "ERROR: Faltó el apellido materno.");
+                        JOptionPane.showMessageDialog(this, "ERROR: Faltó el apellido paterno.");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(this, "ERROR: Faltó el apellido paterno.");
-                }
 
+                } else {
+                    JOptionPane.showMessageDialog(this, "ERROR: Faltó el Nombre de paciente.");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "ERROR: Faltó el Nombre de paciente.");
+                JOptionPane.showMessageDialog(this, "ERROR: Faltó el No. de Expediente.");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "ERROR: Faltó el No. de Expediente.");
+                JOptionPane.showMessageDialog(this, "ERROR: Faltó el No.Progresivo.");
         }
-
 
     }//GEN-LAST:event_btnAceptarActionPerformed
     public void llenaCamposDAO(DAOPacientes dPac) {
@@ -964,7 +994,7 @@ public class FrmPacientes extends javax.swing.JFrame {
         txtMunicipioNac.setText(dPac.getMunicipioOrigen());
         cmbEstadoProce.setSelectedItem(dPac.getEstadoProcedencia());
         txtMunicipioProce.setText(dPac.getMunicipioProcedencia());
-        txtIdPaciente.setText(""+dPac.getIdPaciente());
+        txtIdPaciente.setText(""+dPac.getNoProgresivo());
     }
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
@@ -980,18 +1010,21 @@ public class FrmPacientes extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         //ComboItem ci = (ComboItem) cmbFiltradoPacientes.getSelectedItem();
-        DAOPacientes dPac = new DAOPacientes();
-        System.out.println(Integer.parseInt(txtIdPaciente.getText()));
-        dPac.setIdPaciente(Integer.parseInt(txtIdPaciente.getText()));
-        if (dPac.eliminar()) {
-            JOptionPane.showMessageDialog(rootPane, "Registro eliminado");
+        int si = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el registro del  paciente?");
+        if (JOptionPane.YES_OPTION == si) {
+            DAOPacientes dPac = new DAOPacientes();
+            System.out.println(Integer.parseInt(txtIdPaciente.getText()));
+            dPac.setNoProgresivo(Integer.parseInt(txtIdPaciente.getText()));
+            if (dPac.eliminar()) {
+                JOptionPane.showMessageDialog(rootPane, "Registro eliminado");
+                LimpiarCampos();
+                btnListar.doClick();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No se elimino");
+            }
             LimpiarCampos();
             btnListar.doClick();
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "No se elimino");
         }
-        LimpiarCampos();
-        btnListar.doClick();
 
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -1023,6 +1056,7 @@ public class FrmPacientes extends javax.swing.JFrame {
                                     pac.setApPat(txtApPat.getText());
                                     pac.setApMat(txtApMat.getText());
                                     pac.setNoExpediente(Integer.parseInt(txtNoExpediente.getText()));
+                                    pac.setNoProgresivo(Integer.parseInt(txtIdPaciente.getText()));
                                     if (chkActaIfe.isSelected()) {
                                         pac.setActaIfe('1');
                                     } else {
@@ -1122,6 +1156,7 @@ public class FrmPacientes extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtFiltroPacientes.setText(txtFiltroPacientes.getText().toUpperCase());
         cargaCmbFiltrado();
+        cargaCmbFiltradoEliminados();
     }//GEN-LAST:event_txtFiltroPacientesKeyReleased
 
     private void tblPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPacientesMouseClicked
@@ -1193,12 +1228,39 @@ public class FrmPacientes extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_mitSalirActionPerformed
 
+    private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
+        int si = JOptionPane.showConfirmDialog(this, "¿Desea volver a activar a la paciente?");
+        if (JOptionPane.YES_OPTION == si) {
+            ComboItem ci = (ComboItem) cmbEliminados.getSelectedItem();
+            Pacientes pac = new Pacientes();
+            DAOPacientes dPac = new DAOPacientes();
+            pac.setIdPaciente(ci.getId());
+            dPac.setPaciente(pac);
+            if (dPac.activarEliminados()) {
+                JOptionPane.showMessageDialog(rootPane, "Registro activado");
+                cargaCmbFiltrado();
+                btnListar.doClick();
+            } else {
+                   JOptionPane.showMessageDialog(rootPane, "No se activo paciente");
+           } 
+            
+        }
+    }//GEN-LAST:event_btnActivarActionPerformed
+
     public void cargaCmbFiltrado() {
         DAOPacientes dp = new DAOPacientes();
         cmbFiltradoPacientes.removeAllItems();
         ArrayList<ComboItem> pacientes = dp.filtrarPacientes(txtFiltroPacientes.getText());
         for (int i = 0; i < pacientes.size(); i++) {
             cmbFiltradoPacientes.addItem((ComboItem) pacientes.get(i));
+        }
+    }
+     public void cargaCmbFiltradoEliminados() {
+        DAOPacientes dp = new DAOPacientes();
+        cmbEliminados.removeAllItems();
+        ArrayList<ComboItem> pacientes = dp.filtrarPacientesEliminados(txtFiltroPacientes.getText());
+        for (int i = 0; i < pacientes.size(); i++) {
+            cmbEliminados.addItem((ComboItem) pacientes.get(i));
         }
     }
 
@@ -1246,12 +1308,14 @@ public class FrmPacientes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnActivar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JCheckBox chkActaIfe;
     private javax.swing.JComboBox<String> cmbArea;
+    private javax.swing.JComboBox cmbEliminados;
     private javax.swing.JComboBox cmbEstadoCivil;
     private javax.swing.JComboBox<String> cmbEstadoNac;
     private javax.swing.JComboBox<String> cmbEstadoProce;

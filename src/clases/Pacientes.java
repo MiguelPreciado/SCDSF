@@ -34,17 +34,19 @@ public class Pacientes {
     private String diagnostico;
     private String tel;
     private  char activo = '1';//si o no
+    private int noProgresivo;
    
 
     public Pacientes() {
     }
 
-    public Pacientes(int idPaciente, String nombre, String apPat, String apMat, int noExpediente, char actaIfe, char estado, String estadoCivil, String fechaNac, String EstadoProcedencia, String MunicipioProcedencia, String EstadoOrigen, String MunicipioOrigen, String tpPaciente, String seguro, String tpSangre, String Alergias, String fechaIngreso, String areas, String diagnostico, String tel) {
+    public Pacientes(int idPaciente, String nombre, String apPat, String apMat, int noExpediente, int noProgresivo,char actaIfe, char estado, String estadoCivil, String fechaNac, String EstadoProcedencia, String MunicipioProcedencia, String EstadoOrigen, String MunicipioOrigen, String tpPaciente, String seguro, String tpSangre, String Alergias, String fechaIngreso, String areas, String diagnostico, String tel) {
         this.idPaciente = idPaciente;
         this.nombre = nombre;
         this.apPat = apPat;
         this.apMat = apMat;
         this.noExpediente = noExpediente;
+        this.noProgresivo = noProgresivo;
         this.actaIfe = actaIfe;
         this.estado = estado;
         this.estadoCivil = estadoCivil;
@@ -249,7 +251,15 @@ public class Pacientes {
         this.tel = tel;
     }
 
+    public int getNoProgresivo() {
+        return noProgresivo;
+    }
 
+    public void setNoProgresivo(int noProgresivo) {
+        this.noProgresivo = noProgresivo;
+    }
+
+    
     
     
 }
