@@ -27,16 +27,18 @@ public class Responsables {
     private String cP;
     private String municipioResponsable;
     private String estadoResponsable;
+    private int noProgresivo;
 
     public Responsables() {
     }
 
-    public Responsables(int idPaciente, int idResponsable, String nombreResponsable, String apPatResponsable, String apMatResponsable, String tel1, String tel2, String tel3, String relacion, String calle, String noExt, String noInt, String colonia, String cP, String municipioResponsable, String estadoResponsable) {
+    public Responsables(int idPaciente, int idResponsable, String nombreResponsable, String apPatResponsable, String apMatResponsable, int noProgresivo, String tel1, String tel2, String tel3, String relacion, String calle, String noExt, String noInt, String colonia, String cP, String municipioResponsable, String estadoResponsable) {
         this.idPaciente = idPaciente;
         this.idResponsable = idResponsable;
         this.nombreResponsable = nombreResponsable;
         this.apPatResponsable = apPatResponsable;
         this.apMatResponsable = apMatResponsable;
+        this.noProgresivo = noProgresivo;
         this.tel1 = tel1;
         this.tel2 = tel2;
         this.tel3 = tel3;
@@ -185,6 +187,13 @@ public class Responsables {
     public void setEstadoResponsable(String estadoResponsable) {
         this.estadoResponsable = estadoResponsable;
     }
-    
+
+    public int getNoProgresivo() {
+        return noProgresivo;
+    }
+
+    public void setNoProgresivo(int noProgresivo) {
+        this.noProgresivo = noProgresivo;
+    }
     
 }
