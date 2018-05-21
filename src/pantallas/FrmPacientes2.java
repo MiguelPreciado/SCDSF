@@ -41,6 +41,7 @@ public class FrmPacientes2 extends javax.swing.JFrame {
 //        cargarRelacion();
         cargaCmbFiltradoPacientes();
         cargaCmbFiltradoResponsables();
+        cargaCmbFiltradoResponsablesEliminados();
         skin();
     }
 
@@ -74,6 +75,7 @@ public class FrmPacientes2 extends javax.swing.JFrame {
         btnListarPacientesDelResponsable.setText(btnListarPacientesDelResponsable.getText().toUpperCase());
         btnListarResponsablesDelPaciente.setText(btnListarResponsablesDelPaciente.getText().toUpperCase());
         btnVincular.setText(btnVincular.getText().toUpperCase());
+        btnActivarResponsable.setText(btnActivarResponsable.getText().toUpperCase());
     }
 
     private void LimpiarCampos() {
@@ -185,6 +187,8 @@ public class FrmPacientes2 extends javax.swing.JFrame {
         btnVincular = new javax.swing.JButton();
         txtRelacion = new javax.swing.JTextField();
         txtMunicipioResponsable = new javax.swing.JTextField();
+        cmbResponsablesEliminados = new javax.swing.JComboBox();
+        btnActivarResponsable = new javax.swing.JButton();
         lblRe = new javax.swing.JLabel();
         lblPa = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -474,6 +478,17 @@ public class FrmPacientes2 extends javax.swing.JFrame {
             }
         });
 
+        cmbResponsablesEliminados.setFont(fntComponente);
+        cmbResponsablesEliminados.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnActivarResponsable.setFont(fntComponente);
+        btnActivarResponsable.setText("Activar");
+        btnActivarResponsable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivarResponsableActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlResponsable2Layout = new javax.swing.GroupLayout(pnlResponsable2);
         pnlResponsable2.setLayout(pnlResponsable2Layout);
         pnlResponsable2Layout.setHorizontalGroup(
@@ -498,9 +513,17 @@ public class FrmPacientes2 extends javax.swing.JFrame {
                                 .addComponent(txtFiltroResponsables, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(234, 234, 234))
                             .addComponent(cmbFiltradoResponsables, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVincular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(228, 228, 228))
+                .addGroup(pnlResponsable2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlResponsable2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVincular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlResponsable2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbResponsablesEliminados, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActivarResponsable)
+                        .addGap(29, 29, 29))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlResponsable2Layout.createSequentialGroup()
                 .addGroup(pnlResponsable2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlResponsable2Layout.createSequentialGroup()
@@ -619,23 +642,20 @@ public class FrmPacientes2 extends javax.swing.JFrame {
                 .addComponent(lblTitulo)
                 .addGroup(pnlResponsable2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlResponsable2Layout.createSequentialGroup()
-                        .addGroup(pnlResponsable2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlResponsable2Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(pnlResponsable2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblFiltroResponsables)
-                                    .addComponent(txtFiltroResponsables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbFiltradoResponsables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlResponsable2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtFiltroPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbFiltradoPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFiltroPacientes))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlResponsable2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnVincular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
+                        .addGap(21, 21, 21)
+                        .addGroup(pnlResponsable2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFiltroResponsables)
+                            .addComponent(txtFiltroResponsables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbFiltradoResponsables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbResponsablesEliminados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnActivarResponsable))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlResponsable2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFiltroPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbFiltradoPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFiltroPacientes)
+                            .addComponent(btnVincular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -811,7 +831,7 @@ public class FrmPacientes2 extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 9, Short.MAX_VALUE)
+                .addGap(0, 2, Short.MAX_VALUE)
                 .addComponent(pnlResponsable1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -987,6 +1007,7 @@ public class FrmPacientes2 extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtFiltroResponsables.setText(txtFiltroResponsables.getText().toUpperCase());
         cargaCmbFiltradoResponsables();
+        cargaCmbFiltradoResponsablesEliminados();
     }//GEN-LAST:event_txtFiltroResponsablesKeyReleased
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -1158,12 +1179,43 @@ public class FrmPacientes2 extends javax.swing.JFrame {
          txtRelacion.setText(txtRelacion.getText().toUpperCase());
     }//GEN-LAST:event_txtRelacionKeyReleased
 
+    private void btnActivarResponsableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarResponsableActionPerformed
+        int si = JOptionPane.showConfirmDialog(this, "¿Desea volver a activar a el responsable?");
+        try {
+                if(JOptionPane.YES_OPTION == si){
+            ComboItem ci = (ComboItem) cmbResponsablesEliminados.getSelectedItem();
+            Responsables resp = new Responsables();
+            DAOResponsables dRes = new DAOResponsables();
+            resp.setIdResponsable(ci.getId());
+            dRes.setResponsable(resp);
+            if(dRes.activarResponsablesEliminados()){
+                JOptionPane.showMessageDialog(rootPane, "Responsable activado");
+                cargaCmbFiltradoResponsables();
+                btnListar.doClick();
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "No se pudo activar el responsable");
+               }
+                }
+            } catch (ClassCastException e) {
+                System.out.println("Error: " + e);
+        }
+    }//GEN-LAST:event_btnActivarResponsableActionPerformed
+
     public void cargaCmbFiltradoResponsables() {
         DAOResponsables dr = new DAOResponsables();
         cmbFiltradoResponsables.removeAllItems();
         ArrayList<ComboItem> responsables = dr.filtrarResponsables(txtFiltroResponsables.getText());
         for (int i = 0; i < responsables.size(); i++) {
             cmbFiltradoResponsables.addItem((ComboItem) responsables.get(i));
+        }
+    }
+    
+    public void cargaCmbFiltradoResponsablesEliminados() {
+        DAOResponsables dr = new DAOResponsables();
+        cmbResponsablesEliminados.removeAllItems();
+        ArrayList<ComboItem> responsables = dr.filtrarResponsablesEliminados(txtFiltroResponsables.getText());
+        for (int i = 0; i < responsables.size(); i++) {
+            cmbResponsablesEliminados.addItem((ComboItem)(responsables.get(i))); //String.valueOf((ComboItem) responsables.get(i))  ComboItem) responsables.get(i)
         }
     }
 
@@ -1219,6 +1271,7 @@ public class FrmPacientes2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActivarResponsable;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
@@ -1231,6 +1284,7 @@ public class FrmPacientes2 extends javax.swing.JFrame {
     private javax.swing.JComboBox cmbEstadoResponsable;
     private javax.swing.JComboBox cmbFiltradoPacientes;
     private javax.swing.JComboBox cmbFiltradoResponsables;
+    private javax.swing.JComboBox cmbResponsablesEliminados;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;

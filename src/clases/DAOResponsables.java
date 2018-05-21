@@ -31,8 +31,8 @@ public class DAOResponsables extends Responsables {
 
     }
 
-    public DAOResponsables(int idPaciente, int idResponsable, String nombreResponsable, String apPatResponsable, String apMatResponsable, String tel1, String tel2, String tel3, String relacion, String calle, String noExt, String noInt, String colonia, String cP, String municipioResponsable, String estadoResponsable) {
-        super(idPaciente, idResponsable, nombreResponsable, apPatResponsable, apMatResponsable, tel1, tel2, tel3, relacion, calle, noExt, noInt, colonia, cP, municipioResponsable, estadoResponsable);
+    public DAOResponsables(int idPaciente, int idResponsable, String nombreResponsable, String apPatResponsable, String apMatResponsable, int noProgresivo, String tel1, String tel2, String tel3, String relacion, String calle, String noExt, String noInt, String colonia, String cP, String municipioResponsable, String estadoResponsable) {
+        super(idPaciente, idResponsable, nombreResponsable, apPatResponsable, apMatResponsable, noProgresivo, tel1, tel2, tel3, relacion, calle, noExt, noInt, colonia, cP, municipioResponsable, estadoResponsable);
     }
 
    
@@ -132,6 +132,61 @@ public class DAOResponsables extends Responsables {
         return res;
     }
 
+    public boolean activarResponsablesEliminados() {
+        boolean res = false;
+        con = Conex.getInstance().getConnection();
+        try {
+            CallableStatement pstm = con.prepareCall("call activar_responsable("
+                    + " ?)");
+           pstm.setInt(1,super.getIdResponsable());
+           pstm.execute();
+            res = true;
+        } catch (SQLException ex) {
+           mensaje = ex.getMessage();
+           System.out.println(mensaje);
+       } 
+        return res;
+    }
+    
+    public boolean buscarResponsablesEliminados() {
+        boolean res = false;
+        con = Conex.getInstance().getConnection();
+        try {
+            CallableStatement stm = con.prepareCall("call buscar_responsables_eliminados(?)");
+            stm.setInt(1, super.getIdPaciente());
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {  
+                super.setIdPaciente(rs.getInt("IdResponsable"));
+                super.setNombreResponsable(rs.getString("NombreResponsable"));
+                super.setApPatResponsable(rs.getString("ApPatResponsable"));
+                super.setApMatResponsable(rs.getString( "ApMatResponsable"));
+                res = true;
+            }
+        } catch (SQLException ex) {
+           mensaje = ex.getMessage();
+           System.out.println(mensaje);
+       } 
+        return res;
+    }
+    
+    public boolean buscarActivacionResponsable() {
+        boolean res = false;
+        con = Conex.getInstance().getConnection();
+        try {
+            CallableStatement stm = con.prepareCall("call buscar_activacion_responsable(?)");
+            stm.setInt(1, Integer.parseInt(super.getTel1()));
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {  
+                super.setActivo(rs.getString("activo").charAt(0));
+                res = true;
+            }
+        } catch (SQLException ex) {
+           mensaje = ex.getMessage();
+           System.out.println(mensaje);
+       } 
+        return res;
+    }
+    
     public DefaultTableModel listar() {
         DefaultTableModel tmodel = new DefaultTableModel();
         con = Conex.getInstance().getConnection();
@@ -158,6 +213,26 @@ public class DAOResponsables extends Responsables {
             System.out.println(mensaje);
         }
         return tmodel;
+    }
+    
+    public ArrayList<ComboItem> filtrarResponsablesEliminados(String filtro){
+        ArrayList<ComboItem> responsables = new ArrayList<>();
+        con = Conex.getInstance().getConnection();
+        String nombre="";
+        int id= 0;
+        try {
+            CallableStatement cstm = con.prepareCall("CALL filtro_responsables_eliminados(?)");
+            cstm.setString(1, filtro);
+            ResultSet rs = cstm.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("IdResponsable");
+                nombre = rs.getString("Nombre_Completo");
+                responsables.add(new ComboItem(id,nombre));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOPacientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return responsables;
     }
 
     public DefaultTableModel listarResponsable() {
