@@ -150,7 +150,7 @@ public class DaoProducto extends Producto {
         DefaultTableModel tmodel = new DefaultTableModel();
         con = Conex.getInstance().getConnection();
         
-        String sql = "{call sp_prod_bus (?)}";
+        String sql = "{call sp_prod_lis (?)}";
         try {
             
             CallableStatement stm = con.prepareCall(sql);

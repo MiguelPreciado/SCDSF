@@ -59,7 +59,7 @@ public class DaoAdministracion extends Administracion {
         con = Conex.getInstance().getConnection();
         
         
-    String cadSql = "{call sp_adm_ins (?)}";
+        String cadSql = "{call sp_adm_ins (?)}";
 
         try {
             CallableStatement cstm = con.prepareCall(cadSql);

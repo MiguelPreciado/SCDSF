@@ -174,14 +174,17 @@ public class frmAdministracion extends javax.swing.JFrame {
         DaoAdministracion da = new DaoAdministracion();
 
         da.setAdministracion(txtMedioAdministracion.getText());
+        
+        if(!da.buscar()){
+            if(da.agregar()){
+                JOptionPane.showMessageDialog(rootPane, "Registro agregado");
+                txtMedioAdministracion.setText("");
+                btnListarParecidos.doClick();
 
-        if (da.agregar() == true) {
-            JOptionPane.showMessageDialog(rootPane, "Registro agregado");
-            txtMedioAdministracion.setText("");
-            btnListarParecidos.doClick();
-
+            }
+        
         } else {
-            JOptionPane.showMessageDialog(rootPane, "No se inserto");
+            JOptionPane.showMessageDialog(rootPane, "Ese tipo ya existe");
 
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
