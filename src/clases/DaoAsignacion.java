@@ -8,6 +8,7 @@ package clases;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -47,6 +48,11 @@ public class DaoAsignacion extends Asignacion {
             System.out.println(ex);
         }
         return res;
+    }
+    
+    public DefaultTableModel listarAsignacionPorPaciente(){
+        DefaultTableModel dtm = new DefaultTableModel();
+        return dtm;
     }
     
     public boolean detalle(){

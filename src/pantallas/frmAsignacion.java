@@ -7,6 +7,7 @@ package pantallas;
 
 import clases.Conex;
 import clases.DaoAsignacion;
+import clases.DaoProducto;
 import java.awt.Font;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -177,7 +178,8 @@ public class frmAsignacion extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         DaoAsignacion da = new DaoAsignacion();
-        int idPac = 0;
+        int idPac = 0, cantidadProductos;
+        DaoProducto dProductos[];// = new DaoProducto();
         String pac = cmbPaciente.getSelectedItem().toString();
         Connection con = Conex.getInstance().getConnection();
             String sql = "{call sp_pac_nom(?)}";

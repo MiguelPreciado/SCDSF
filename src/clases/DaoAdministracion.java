@@ -133,11 +133,11 @@ public class DaoAdministracion extends Administracion {
             CallableStatement stm = con.prepareCall(sql);
             stm.setString(1, getAdministracion());
             ResultSet rs = stm.executeQuery();
-            res = true; 
             if(rs.next()){
                 idAdministracion = (rs.getInt("idAdministracion"));
                 administracion = (rs.getString("administracion"));
                
+                res = true; 
             }
         }catch(SQLException ex){
             mensaje = ex.getMessage();
@@ -158,7 +158,7 @@ public class DaoAdministracion extends Administracion {
     public DefaultTableModel listar() {
                 DefaultTableModel tmodel = new DefaultTableModel();
                con = Conex.getInstance().getConnection();
-               String sql = "{call sp_adm_bus(?)}";
+               String sql = "{call sp_adm_lis(?)}";
                
         try {
           
