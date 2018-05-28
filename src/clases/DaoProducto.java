@@ -186,6 +186,7 @@ public class DaoProducto extends Producto {
 
     /**
      * Metodo que busca los datos de un solo producto por medio de su nombre
+     * de patente, nombre generico y medio de administracion
      * para rellenar los campos y posteriormente modificarlos o eliminarlos
      *
      * @return res, para indicar si el proceso fue exitoso.
@@ -214,6 +215,41 @@ public class DaoProducto extends Producto {
             }
         } catch (SQLException ex) {
             System.out.println("fallo");
+            mensaje = ex.getMessage();
+        }
+        return res;
+    }
+
+    /**
+     * Metodo que busca los datos de un solo producto por medio de su id
+     * para rellenar los campos y posteriormente modificarlos o eliminarlos
+     *
+     * @return res, para indicar si el proceso fue exitoso.
+     */
+    public boolean buscarPorId(int id) {
+        boolean res = false;
+        con = Conex.getInstance().getConnection();
+        String sql = "{call sp_prod_bus_id(?)}";
+        try {
+            CallableStatement stm = con.prepareCall(sql);
+            stm.setString(1, nombreProductoPat);
+            stm.setString(2, nombreProductoGen);
+            stm.setInt(3, administracion);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                res = true;
+                idProducto = (rs.getInt("idProducto"));
+                nombreProductoPat = (rs.getString("nombreProductoPat"));
+                nombreProductoGen = (rs.getString("nombreProductoGen"));
+                contenidoCaja = (rs.getString("contenidoCaja"));
+                stockActual = (rs.getInt("stockActual"));
+                stockMinimo = (rs.getInt("stockMinimo"));
+                administracion = (rs.getInt("idAdministracion"));
+                tipo = (rs.getInt("idTipo"));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("fallo en recuperar el registro");
             mensaje = ex.getMessage();
         }
         return res;

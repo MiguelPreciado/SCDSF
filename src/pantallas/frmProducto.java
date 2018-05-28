@@ -478,7 +478,7 @@ public class frmProducto extends javax.swing.JFrame {
         String sql3 = "{call sp_tip_id(?)}";
         try {
             CallableStatement stm = con.prepareCall(sql);
-            stm.setString(1, txtNombreProductoPat.getText());
+            stm.setString(1, txtNombreProductoGen.getText());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 busqueda = rs.getInt("idProducto");
@@ -535,17 +535,22 @@ public class frmProducto extends javax.swing.JFrame {
 
     private void tblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosMouseClicked
         int filaSeleccionada = tblProductos.getSelectedRow();
-        int columna = 0;
+        int columna = 0,stockActual, stockMinimo;
         busqueda = Integer.parseInt((String) tblProductos.getValueAt(filaSeleccionada, columna));
         txtNombreProductoPat.setText((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 1));
         txtNombreProductoGen.setText((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 2));
         txtContenidoCaja.setText((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 3));
         txtStockActual.setText((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 4));
+        stockActual = (int) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 4);
         txtStockMinimo.setText((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 5));
+        stockMinimo = (int) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 5);
         cmbAdministracion.setSelectedItem((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 6));
         cmbTipoProducto.setSelectedItem((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 7));
         btnEliminar.setEnabled(true);
         btnModificar.setEnabled(true);
+    if(stockActual  <= stockMinimo){
+        JOptionPane.showMessageDialog(rootPane, "Este producto está por terminarse");
+    }
     }//GEN-LAST:event_tblProductosMouseClicked
 
     private void txtNombreProductoPatKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreProductoPatKeyReleased

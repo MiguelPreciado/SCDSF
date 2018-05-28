@@ -178,8 +178,11 @@ public class frmAsignacion extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         DaoAsignacion da = new DaoAsignacion();
-        int idPac = 0, cantidadProductos;
-        DaoProducto dProductos[];// = new DaoProducto();
+        int idPac = 0;
+        DaoProducto dProductos[];
+        boolean superaStock = false;
+        String mensajeSuperaStock ="La operacion no pudo realizarse por los siguientes motivos:\n";
+        int cantidadesProductos[];// = new DaoProducto();
         String pac = cmbPaciente.getSelectedItem().toString();
         Connection con = Conex.getInstance().getConnection();
             String sql = "{call sp_pac_nom(?)}";
@@ -197,15 +200,38 @@ public class frmAsignacion extends javax.swing.JFrame {
        if (da.agregar() == true) {
             DefaultTableModel dtm = (DefaultTableModel) tblSalida.getModel();
             int fila = dtm.getRowCount();
+            cantidadesProductos = new int[fila];
+            dProductos = new DaoProducto[fila];
             for (int i = 0; i < fila; i++) {
-               da.setIdProducto((int)dtm.getValueAt(i, 0));
-               da.setCantidad((int)dtm.getValueAt(i, 2));
-               da.detalle();
+                cantidadesProductos[i]=(int)dtm.getValueAt(i, 2);
+                dProductos[i] = new DaoProducto();
+                //dProductos[i].setIdProducto((int)dtm.getValueAt(i, 0));
+                dProductos[i].buscarPorId((int)dtm.getValueAt(i, 0));
+                if((dProductos[i].getStockActual()- cantidadesProductos[i]) <= dProductos[i].getStockMinimo()){
+                    superaStock = true;
+                    mensajeSuperaStock += "" + dProductos[i].getNombreProductoPat() + " cuenta con un stock de "
+                            + dProductos[i].getStockActual() + ", la operación cae bajo el stock minimo\n";
+                }
             }
-            dtm.setRowCount(0);
-            JOptionPane.showMessageDialog(rootPane, "Asignacion terminada");
-            cmbPaciente.setEnabled(true);
-            btnAceptar.setEnabled(false);
+            if(superaStock){
+               JOptionPane.showMessageDialog(rootPane, mensajeSuperaStock);
+            }
+            else{
+
+                for (int i = 0; i < fila; i++) {
+                   da.setIdProducto((int)dtm.getValueAt(i, 0));
+                   da.setCantidad((int)dtm.getValueAt(i, 2));
+                   da.detalle();
+                }
+                dtm.setRowCount(0);
+                JOptionPane.showMessageDialog(rootPane, "Asignacion terminada");
+                cmbPaciente.setEnabled(true);
+                btnAceptar.setEnabled(false);
+            }
+            
+/*          
+*/
+            
        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
