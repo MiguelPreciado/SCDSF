@@ -194,12 +194,12 @@ public class DaoProducto extends Producto {
     public boolean buscar() {
         boolean res = false;
         con = Conex.getInstance().getConnection();
-        String sql = "{call sp_prod_bus_pat_gen_tipo(?,?,?)}";
+        String sql = "call sp_prod_bus_pat_gen_tipo(?,?,?)";
         try {
             CallableStatement stm = con.prepareCall(sql);
             stm.setString(1, nombreProductoPat);
             stm.setString(2, nombreProductoGen);
-            stm.setInt(3, administracion);
+            stm.setInt(3, tipo);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 res = true;

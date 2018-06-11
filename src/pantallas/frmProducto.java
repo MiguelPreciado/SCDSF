@@ -465,60 +465,66 @@ public class frmProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        DaoProducto d5 = new DaoProducto();
-        DaoTipo dt = new DaoTipo();
-        DaoAdministracion da = new DaoAdministracion();
-        int idAdmin, idTipo;
-        String admin = null, tipo = null;
-//        Object adminObject = null, tipoObject = null;
-        d5.setNombreProductoPat(txtNombreProductoPat.getText());
-        Connection con = Conex.getInstance().getConnection();
-        String sql = "{call sp_prod_lis(?)}";
-        String sql2 = "{call sp_adm_id(?)}";
-        String sql3 = "{call sp_tip_id(?)}";
-        try {
-            CallableStatement stm = con.prepareCall(sql);
-            stm.setString(1, txtNombreProductoGen.getText());
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                busqueda = rs.getInt("idProducto");
-                idAdmin = rs.getInt("idAdministracion");
-                idTipo = rs.getInt("idTipo");
-                try {
-                    CallableStatement stm2 = con.prepareCall(sql2);
-                    stm2.setInt(1, idAdmin);
-                    ResultSet rs2 = stm2.executeQuery();
-                    if (rs2.next()) {
-                        admin = rs2.getString("administracion");
+        if(txtNombreProductoGen.getText().compareTo("") == 0 || txtNombreProductoPat.getText().compareTo("")==0){
+            JOptionPane.showMessageDialog(rootPane,"Necesita llenar el campo de nombre de producto patente, el nombre de producto generico y seleccionar un tipo de medicamento para empezar la busca");
+        }else{
+            DaoProducto d5 = new DaoProducto();
+            DaoTipo dt = new DaoTipo();
+            DaoAdministracion da = new DaoAdministracion();
+            int idAdmin, idTipo;
+            String admin = null, tipo = null;
+    //        Object adminObject = null, tipoObject = null;
+            d5.setNombreProductoPat(txtNombreProductoPat.getText());
+            Connection con = Conex.getInstance().getConnection();
+            String sql = "{call sp_prod_lis(?)}";
+            String sql2 = "{call sp_adm_id(?)}";
+            String sql3 = "{call sp_tip_id(?)}";
+            try {
+                CallableStatement stm = con.prepareCall(sql);
+                stm.setString(1, txtNombreProductoGen.getText());
+                ResultSet rs = stm.executeQuery();
+                if (rs.next()) {
+                    busqueda = rs.getInt("idProducto");
+                    idAdmin = rs.getInt("idAdministracion");
+                    idTipo = rs.getInt("idTipo");
+                    d5.setNombreProductoGen(txtNombreProductoGen.getText());
+                    d5.setTipo(idTipo);
+                    try {
+                        CallableStatement stm2 = con.prepareCall(sql2);
+                        stm2.setInt(1, idAdmin);
+                        ResultSet rs2 = stm2.executeQuery();
+                        if (rs2.next()) {
+                            admin = rs2.getString("administracion");
+                        }
+                        CallableStatement stm3 = con.prepareCall(sql3);
+                        stm3.setInt(1, idTipo);
+                        ResultSet rs3 = stm3.executeQuery();
+                        if (rs3.next()) {
+                            tipo = rs3.getString("tipo");
+                        }
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(this, "ERROR");
                     }
-                    CallableStatement stm3 = con.prepareCall(sql3);
-                    stm3.setInt(1, idTipo);
-                    ResultSet rs3 = stm3.executeQuery();
-                    if (rs3.next()) {
-                        tipo = rs3.getString("tipo");
+                    if (d5.buscar()) {
+                        txtNombreProductoPat.setText(d5.getNombreProductoPat());
+                        txtNombreProductoGen.setText(d5.getNombreProductoGen());
+                        txtContenidoCaja.setText(d5.getContenidoCaja());
+                        txtStockActual.setText(Integer.toString(d5.getStockActual()));
+                        txtStockMinimo.setText(Integer.toString(d5.getStockMinimo()));
+                        cmbAdministracion.setSelectedItem(admin);
+                        cmbTipoProducto.setSelectedItem(tipo);
+    //                      cmbAdministracion.
+                        btnEliminar.setEnabled(true);
+                        btnModificar.setEnabled(true);
+                        JOptionPane.showMessageDialog(this, "Medicamento Encontrado");
                     }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, "ERROR");
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "ERROR: El Nombre No Existe.");
                 }
-                if (d5.buscar()) {
-                    txtNombreProductoPat.setText(d5.getNombreProductoPat());
-                    txtNombreProductoGen.setText(d5.getNombreProductoGen());
-                    txtContenidoCaja.setText(d5.getContenidoCaja());
-                    txtStockActual.setText(Integer.toString(d5.getStockActual()));
-                    txtStockMinimo.setText(Integer.toString(d5.getStockMinimo()));
-                    cmbAdministracion.setSelectedItem(admin);
-                    cmbTipoProducto.setSelectedItem(tipo);
-//                      cmbAdministracion.
-                    btnEliminar.setEnabled(true);
-                    btnModificar.setEnabled(true);
-                    JOptionPane.showMessageDialog(this, "Medicamento Encontrado");
-                }
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "ERROR: El Nombre No Existe.");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "ERROR: El nombre no existe.");
+                System.out.println("primer mensaje8");
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "ERROR: El nombre no existe.");
-            System.out.println("primer mensaje8");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
