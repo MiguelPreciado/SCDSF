@@ -29,7 +29,7 @@ public class frmAsignacion extends javax.swing.JFrame {
         Font textComponente = new Font("Tahoma", Font.BOLD, 14);
         lblCantidad.setFont(textComponente);
         lblPaciente.setFont(textComponente);
-        lblProducto.setFont(textComponente);
+        lblDosis.setFont(textComponente);
         lblSalida.setFont(textTitulo);
         txtCantidadCajas.setFont(textComponente);
         cmbPaciente.setFont(textComponente);
@@ -62,7 +62,7 @@ public class frmAsignacion extends javax.swing.JFrame {
         cmbPaciente = new javax.swing.JComboBox();
         lblPaciente = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
-        lblProducto = new javax.swing.JLabel();
+        lblDosis = new javax.swing.JLabel();
         lblCantidad = new javax.swing.JLabel();
         cmbProducto = new javax.swing.JComboBox();
         txtCantidadCajas = new javax.swing.JTextField();
@@ -70,6 +70,11 @@ public class frmAsignacion extends javax.swing.JFrame {
         tblSalida = new javax.swing.JTable();
         btnAceptar = new javax.swing.JButton();
         btnAnyadir = new javax.swing.JButton();
+        btnQuitar = new javax.swing.JButton();
+        lblProducto = new javax.swing.JLabel();
+        chkNoche = new javax.swing.JCheckBox();
+        chkManana = new javax.swing.JCheckBox();
+        chkTarde = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
@@ -93,29 +98,29 @@ public class frmAsignacion extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 410, -1, 40));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 500, -1, 40));
 
-        lblProducto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblProducto.setText("PRODUCTO");
-        getContentPane().add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 76, -1, -1));
+        lblDosis.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblDosis.setText("DOSIS");
+        getContentPane().add(lblDosis, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
 
         lblCantidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCantidad.setText("CANTIDAD CAJAS");
-        getContentPane().add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 107, -1, -1));
+        getContentPane().add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
 
         getContentPane().add(cmbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 76, 180, -1));
-        getContentPane().add(txtCantidadCajas, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 107, 90, -1));
+        getContentPane().add(txtCantidadCajas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 90, -1));
 
         tblSalida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "idProducto", "Producto", "Cantifdad"
+                "idProducto", "Producto", "Cantidad", "Dosis"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false
+                false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -124,7 +129,7 @@ public class frmAsignacion extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblSalida);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 133, 375, 275));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 375, 275));
 
         btnAceptar.setText("ACEPTAR");
         btnAceptar.setEnabled(false);
@@ -133,7 +138,7 @@ public class frmAsignacion extends javax.swing.JFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 410, -1, 40));
+        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 500, -1, 40));
 
         btnAnyadir.setText("AÑADIR");
         btnAnyadir.addActionListener(new java.awt.event.ActionListener() {
@@ -141,10 +146,31 @@ public class frmAsignacion extends javax.swing.JFrame {
                 btnAnyadirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAnyadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, -1, 40));
+        getContentPane().add(btnAnyadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, -1, 40));
+
+        btnQuitar.setText("QUITAR");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnQuitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, -1, 40));
+
+        lblProducto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblProducto.setText("PRODUCTO");
+        getContentPane().add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 76, -1, -1));
+
+        chkNoche.setText("NOCHE");
+        getContentPane().add(chkNoche, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, -1, -1));
+
+        chkManana.setText("MAÑANA");
+        getContentPane().add(chkManana, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, -1, -1));
+
+        chkTarde.setText("TARDE");
+        getContentPane().add(chkTarde, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoVerde.jpg"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 480));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -154,27 +180,63 @@ public class frmAsignacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnAnyadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnyadirActionPerformed
-        cmbPaciente.setEnabled(false);
-        btnAceptar.setEnabled(true);
+        String dosis = "";
         int idProd = 0;
+        int cant,stockActualProducto;
+        String cant1;
         String prod = cmbProducto.getSelectedItem().toString();
-        int cant = Integer.parseInt(txtCantidadCajas.getText());
-        Connection con = Conex.getInstance().getConnection();
-            String sql = "{call sp_prod_lis(?)}";
-            try {
-                CallableStatement stm = con.prepareCall(sql);
-                stm.setString(1, prod);
-                ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                idProd = rs.getInt("idProducto");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            cmbPaciente.setEnabled(false);
+            btnAceptar.setEnabled(true);
+            cant1=txtCantidadCajas.getText();
+        if(isNumeric(cant1)){
+            cant = Integer.parseInt(cant1);
+            Connection con = Conex.getInstance().getConnection();
+                String sql = "{call sp_prod_lis(?)}";
+                try {
+                    CallableStatement stm = con.prepareCall(sql);
+                    stm.setString(1, prod);
+                    ResultSet rs = stm.executeQuery();
+                    if (rs.next()) {
+                        stockActualProducto = rs.getInt("stockActual");
+                        if(stockActualProducto>cant){
+                            if(chkManana.isSelected()){
+                                dosis +="1";
+                            }else{
+                                dosis +="0";
+                            }
+                            if(chkTarde.isSelected()){
+                                dosis +="1";
+                            }else{
+                                dosis +="0";
+
+                            }
+                            if(chkNoche.isSelected()){
+                                dosis +="1";
+                            }else{
+                                dosis +="0";
+                            }
+                            idProd = rs.getInt("idProducto");
+                            Object[] fila = {idProd, prod, cant,dosis};
+                            DefaultTableModel modelo = (DefaultTableModel) tblSalida.getModel();
+                            modelo.addRow(fila);   
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "La cantidad ingresada supera el stock actual");
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, ex);
+                }
         }
-        Object[] fila = {idProd, prod, cant};
-        DefaultTableModel modelo = (DefaultTableModel) tblSalida.getModel();
-        modelo.addRow(fila);
+        else{
+            JOptionPane.showMessageDialog(rootPane,"Ingrese un número");
+            txtCantidadCajas.setText("");
+            txtCantidadCajas.requestFocus(true);
+        }
     }//GEN-LAST:event_btnAnyadirActionPerformed
+
+public static boolean isNumeric(String str){
+  return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+}
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         DaoAsignacion da = new DaoAsignacion();
@@ -197,6 +259,7 @@ public class frmAsignacion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex);
         }
         da.setIdPaciente(idPac);
+        
        if (da.agregar() == true) {
             DefaultTableModel dtm = (DefaultTableModel) tblSalida.getModel();
             int fila = dtm.getRowCount();
@@ -221,6 +284,7 @@ public class frmAsignacion extends javax.swing.JFrame {
                 for (int i = 0; i < fila; i++) {
                    da.setIdProducto((int)dtm.getValueAt(i, 0));
                    da.setCantidad((int)dtm.getValueAt(i, 2));
+                   da.setDosis((String) dtm.getValueAt(i, 3));
                    da.detalle();
                 }
                 dtm.setRowCount(0);
@@ -234,6 +298,19 @@ public class frmAsignacion extends javax.swing.JFrame {
             
        }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        // TODO add your handling code here:
+        
+        if(tblSalida.getSelectedRow()!= -1){
+            
+            DefaultTableModel modelo = (DefaultTableModel) tblSalida.getModel();
+            modelo.removeRow(tblSalida.getSelectedRow());   
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane,"Seleccione una columna de la tabla");
+        }
+    }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void CargacomboPaciente() {
         Connection con = Conex.getInstance().getConnection();
@@ -303,13 +380,18 @@ public class frmAsignacion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAnyadir;
+    private javax.swing.JButton btnQuitar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JCheckBox chkManana;
+    private javax.swing.JCheckBox chkNoche;
+    private javax.swing.JCheckBox chkTarde;
     private javax.swing.JComboBox cmbPaciente;
     private javax.swing.JComboBox cmbProducto;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCantidad;
+    private javax.swing.JLabel lblDosis;
     private javax.swing.JLabel lblPaciente;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblSalida;

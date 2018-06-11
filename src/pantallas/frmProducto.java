@@ -541,9 +541,9 @@ public class frmProducto extends javax.swing.JFrame {
         txtNombreProductoGen.setText((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 2));
         txtContenidoCaja.setText((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 3));
         txtStockActual.setText((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 4));
-        stockActual = (int) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 4);
+        stockActual = Integer.parseInt((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 4));
         txtStockMinimo.setText((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 5));
-        stockMinimo = (int) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 5);
+        stockMinimo = Integer.parseInt((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 5));
         cmbAdministracion.setSelectedItem((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 6));
         cmbTipoProducto.setSelectedItem((String) tblProductos.getModel().getValueAt(filaSeleccionada, columna + 7));
         btnEliminar.setEnabled(true);

@@ -232,9 +232,10 @@ public class DaoProducto extends Producto {
         String sql = "{call sp_prod_bus_id(?)}";
         try {
             CallableStatement stm = con.prepareCall(sql);
-            stm.setString(1, nombreProductoPat);
-            stm.setString(2, nombreProductoGen);
-            stm.setInt(3, administracion);
+            stm.setInt(1, id);
+//stm.setString(1, nombreProductoPat);
+            //stm.setString(2, nombreProductoGen);
+            //stm.setInt(3, administracion);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 res = true;

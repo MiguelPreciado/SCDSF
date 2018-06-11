@@ -81,7 +81,7 @@ public class frmEntrada extends javax.swing.JFrame {
         btnGenerarReporte = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtProductoFiltro = new javax.swing.JTextField();
-        txtFarmacia1 = new javax.swing.JTextField();
+        txtFarmacia = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -202,15 +202,20 @@ public class frmEntrada extends javax.swing.JFrame {
                 txtProductoFiltroActionPerformed(evt);
             }
         });
-        getContentPane().add(txtProductoFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 140, -1));
-
-        txtFarmacia1.setEditable(false);
-        txtFarmacia1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtProductoFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtFarmacia1KeyReleased(evt);
+                txtProductoFiltroKeyReleased(evt);
             }
         });
-        getContentPane().add(txtFarmacia1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 90, -1));
+        getContentPane().add(txtProductoFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 140, -1));
+
+        txtFarmacia.setEditable(false);
+        txtFarmacia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFarmaciaKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txtFarmacia, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 90, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoVerde.jpg"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 410));
@@ -380,22 +385,30 @@ public class frmEntrada extends javax.swing.JFrame {
     private void txtProductoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductoFiltroActionPerformed
         // TODO add your handling code here:
         
-        
     }//GEN-LAST:event_txtProductoFiltroActionPerformed
 
-    private void txtFarmacia1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFarmacia1KeyReleased
+    private void txtFarmaciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFarmaciaKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFarmacia1KeyReleased
+        txtFarmacia.setText(txtFarmacia.getText().toUpperCase());
+    }//GEN-LAST:event_txtFarmaciaKeyReleased
+
+    private void txtProductoFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductoFiltroKeyReleased
+        // TODO add your handling code here:
+        txtProductoFiltro.setText(txtProductoFiltro.getText().toUpperCase());
+        CargacomboProducto();
+    }//GEN-LAST:event_txtProductoFiltroKeyReleased
 
     private void CargacomboProducto() {
         Connection con = Conex.getInstance().getConnection();
-               String sql = "{call sp_prod_sel ()}";
+               String sql = "call sp_prod_filtro(?);";
+               
                cmbProductos.removeAllItems();
             try {
                 CallableStatement stm = con.prepareCall(sql);
+               stm.setString(1, txtProductoFiltro.getText());
                 ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                cmbProductos.addItem(rs.getString("nombreProductoPat"));
+                cmbProductos.addItem(rs.getString("Generico"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(frmProducto.class.getName()).log(Level.SEVERE, null, ex);
@@ -457,7 +470,7 @@ public class frmEntrada extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser txtCaducidad;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JFormattedTextField txtCosto;
-    private javax.swing.JTextField txtFarmacia1;
+    private javax.swing.JTextField txtFarmacia;
     private javax.swing.JTextField txtNoFactura;
     private javax.swing.JTextField txtProductoFiltro;
     private javax.swing.JTextField txtSucursal;
