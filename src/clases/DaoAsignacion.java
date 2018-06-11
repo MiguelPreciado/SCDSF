@@ -8,6 +8,7 @@ package clases;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,6 +20,10 @@ public class DaoAsignacion extends Asignacion {
 
     public DaoAsignacion(int idAsignacion, int idPaciente, int idProducto, int cantidad) {
         super(idAsignacion, idPaciente, idProducto, cantidad);
+    }
+    
+    public DaoAsignacion(int idAsignacion, int idPaciente, int idProducto, int cantidad, String dosis) {
+        super(idAsignacion, idPaciente, idProducto, cantidad, dosis);
     }
     
     public DaoAsignacion() {
@@ -49,14 +54,20 @@ public class DaoAsignacion extends Asignacion {
         return res;
     }
     
+    public DefaultTableModel listarAsignacionPorPaciente(){
+        DefaultTableModel dtm = new DefaultTableModel();
+        return dtm;
+    }
+    
     public boolean detalle(){
         boolean res = false;
-         String cadSql = "{call sp_deta_ins (?,?)}";
+         String cadSql = "{call sp_deta_ins (?,?,?)}";
 
         try {
             CallableStatement cstm = con.prepareCall(cadSql);
             cstm.setInt(1, getIdProducto());
             cstm.setInt(2, getCantidad());
+            cstm.setString(3,getDosis());
             cstm.execute();
             res = true;
         } catch (SQLException ex) {

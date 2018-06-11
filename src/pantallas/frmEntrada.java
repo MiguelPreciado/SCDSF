@@ -36,6 +36,10 @@ public class frmEntrada extends javax.swing.JFrame {
         txtCantidad.setFont(textComponente);
         btnAceptar.setFont(textComponente);
         btnCancelar.setFont(textComponente);
+        rbtAsignado.setVisible(false);
+        rbtComprado.setVisible(false);
+        rbtComprado.setSelected(true);
+        rbtDonado.setVisible(false);
     }
 
     /**
@@ -68,13 +72,16 @@ public class frmEntrada extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         lblProductos = new javax.swing.JLabel();
         txtCaducidad = new com.toedter.calendar.JDateChooser();
-        txtFarmacia = new javax.swing.JTextField();
+        txtSucursal = new javax.swing.JTextField();
         txtNoFactura = new javax.swing.JTextField();
         txtCosto = new javax.swing.JFormattedTextField();
         lblCosto = new javax.swing.JLabel();
         lblFarmacia = new javax.swing.JLabel();
         lblNoFactura = new javax.swing.JLabel();
         btnGenerarReporte = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtProductoFiltro = new javax.swing.JTextField();
+        txtFarmacia = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -89,7 +96,7 @@ public class frmEntrada extends javax.swing.JFrame {
                 cmbProductosActionPerformed(evt);
             }
         });
-        getContentPane().add(cmbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 61, 180, -1));
+        getContentPane().add(cmbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 180, -1));
 
         lblCantidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCantidad.setText("CANTIDAD");
@@ -101,6 +108,7 @@ public class frmEntrada extends javax.swing.JFrame {
 
         rbtAsignado.setText("ASIGNADO");
         rbtAsignado.setContentAreaFilled(false);
+        rbtAsignado.setEnabled(false);
         rbtAsignado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtAsignadoActionPerformed(evt);
@@ -110,6 +118,7 @@ public class frmEntrada extends javax.swing.JFrame {
 
         rbtDonado.setText("DONADO");
         rbtDonado.setContentAreaFilled(false);
+        rbtDonado.setEnabled(false);
         rbtDonado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtDonadoActionPerformed(evt);
@@ -119,6 +128,7 @@ public class frmEntrada extends javax.swing.JFrame {
 
         rbtComprado.setText("COMPRADO");
         rbtComprado.setContentAreaFilled(false);
+        rbtComprado.setEnabled(false);
         rbtComprado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtCompradoActionPerformed(evt);
@@ -148,32 +158,32 @@ public class frmEntrada extends javax.swing.JFrame {
         getContentPane().add(lblProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 61, -1, -1));
         getContentPane().add(txtCaducidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 160, -1));
 
-        txtFarmacia.setEditable(false);
-        txtFarmacia.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtSucursal.setEditable(false);
+        txtSucursal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtFarmaciaKeyReleased(evt);
+                txtSucursalKeyReleased(evt);
             }
         });
-        getContentPane().add(txtFarmacia, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 90, -1));
+        getContentPane().add(txtSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 90, -1));
 
         txtNoFactura.setEditable(false);
-        getContentPane().add(txtNoFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 90, -1));
+        getContentPane().add(txtNoFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 90, -1));
 
         txtCosto.setEditable(false);
         txtCosto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-        getContentPane().add(txtCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 90, -1));
+        getContentPane().add(txtCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 90, -1));
 
         lblCosto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCosto.setText("COSTO");
-        getContentPane().add(lblCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, -1, -1));
+        getContentPane().add(lblCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, -1));
 
         lblFarmacia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFarmacia.setText("FARMACIA");
-        getContentPane().add(lblFarmacia, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
+        getContentPane().add(lblFarmacia, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
 
         lblNoFactura.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblNoFactura.setText("No. FACTURA");
-        getContentPane().add(lblNoFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
+        getContentPane().add(lblNoFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
 
         btnGenerarReporte.setText("GENERAR REPORTE");
         btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
@@ -182,6 +192,30 @@ public class frmEntrada extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnGenerarReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, -1, 40));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("SUCURSAL");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
+
+        txtProductoFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtProductoFiltroActionPerformed(evt);
+            }
+        });
+        txtProductoFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtProductoFiltroKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txtProductoFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 140, -1));
+
+        txtFarmacia.setEditable(false);
+        txtFarmacia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFarmaciaKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txtFarmacia, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 90, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoVerde.jpg"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 410));
@@ -225,12 +259,12 @@ public class frmEntrada extends javax.swing.JFrame {
             }
         } else if (rbtComprado.isSelected()) {
             DaoCompra dc = new DaoCompra();
-            dc.setFarmacia(txtFarmacia.getText());
+            dc.setFarmacia(txtSucursal.getText());
             dc.setNumFactura(txtNoFactura.getText());
             dc.setCosto(Double.parseDouble(txtCosto.getText()));
             if (dc.agregar() == true) {
 
-                txtFarmacia.setText("");
+                txtSucursal.setText("");
                 txtNoFactura.setText("");
                 txtCosto.setText("");
 
@@ -306,41 +340,9 @@ public class frmEntrada extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbProductosActionPerformed
 
-    private void rbtAsignadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtAsignadoActionPerformed
-        if (rbtAsignado.isSelected()) {
-            rbtComprado.setSelected(false);
-            rbtDonado.setSelected(false);
-            txtFarmacia.setEditable(false);
-            txtCosto.setEditable(false);
-            txtNoFactura.setEditable(false);
-            txtCosto.setText("");
-        }
-    }//GEN-LAST:event_rbtAsignadoActionPerformed
-
-    private void rbtDonadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtDonadoActionPerformed
-        if (rbtDonado.isSelected()) {
-            rbtComprado.setSelected(false);
-            rbtAsignado.setSelected(false);
-            txtFarmacia.setEditable(false);
-            txtCosto.setEditable(false);
-            txtNoFactura.setEditable(false);
-            txtCosto.setText("");
-        }
-    }//GEN-LAST:event_rbtDonadoActionPerformed
-
-    private void rbtCompradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtCompradoActionPerformed
-        if (rbtComprado.isSelected()) {
-            rbtAsignado.setSelected(false);
-            rbtDonado.setSelected(false);
-            txtFarmacia.setEditable(true);
-            txtCosto.setEditable(true);
-            txtNoFactura.setEditable(true);
-        }
-    }//GEN-LAST:event_rbtCompradoActionPerformed
-
-    private void txtFarmaciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFarmaciaKeyReleased
-        txtFarmacia.setText(txtFarmacia.getText().toUpperCase());
-    }//GEN-LAST:event_txtFarmaciaKeyReleased
+    private void txtSucursalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSucursalKeyReleased
+        txtSucursal.setText(txtSucursal.getText().toUpperCase());
+    }//GEN-LAST:event_txtSucursalKeyReleased
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
         pantallas.frmReporteCompra frc = new pantallas.frmReporteCompra();
@@ -348,15 +350,65 @@ public class frmEntrada extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
+    private void rbtDonadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtDonadoActionPerformed
+        if (rbtDonado.isSelected()) {
+            rbtComprado.setSelected(false);
+            rbtAsignado.setSelected(false);
+            txtSucursal.setEditable(false);
+            txtCosto.setEditable(false);
+            txtNoFactura.setEditable(false);
+            txtCosto.setText("");
+        }
+    }//GEN-LAST:event_rbtDonadoActionPerformed
+
+    private void rbtAsignadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtAsignadoActionPerformed
+        if (rbtAsignado.isSelected()) {
+            rbtComprado.setSelected(false);
+            rbtDonado.setSelected(false);
+            txtSucursal.setEditable(false);
+            txtCosto.setEditable(false);
+            txtNoFactura.setEditable(false);
+            txtCosto.setText("");
+        }
+    }//GEN-LAST:event_rbtAsignadoActionPerformed
+
+    private void rbtCompradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtCompradoActionPerformed
+        if (rbtComprado.isSelected()) {
+            rbtAsignado.setSelected(false);
+            rbtDonado.setSelected(false);
+            txtSucursal.setEditable(true);
+            txtCosto.setEditable(true);
+            txtNoFactura.setEditable(true);
+        }
+    }//GEN-LAST:event_rbtCompradoActionPerformed
+
+    private void txtProductoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductoFiltroActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtProductoFiltroActionPerformed
+
+    private void txtFarmaciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFarmaciaKeyReleased
+        // TODO add your handling code here:
+        txtFarmacia.setText(txtFarmacia.getText().toUpperCase());
+    }//GEN-LAST:event_txtFarmaciaKeyReleased
+
+    private void txtProductoFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductoFiltroKeyReleased
+        // TODO add your handling code here:
+        txtProductoFiltro.setText(txtProductoFiltro.getText().toUpperCase());
+        CargacomboProducto();
+    }//GEN-LAST:event_txtProductoFiltroKeyReleased
+
     private void CargacomboProducto() {
         Connection con = Conex.getInstance().getConnection();
-               String sql = "{call sp_prod_sel ()}";
+               String sql = "call sp_prod_filtro(?);";
+               
                cmbProductos.removeAllItems();
             try {
                 CallableStatement stm = con.prepareCall(sql);
+               stm.setString(1, txtProductoFiltro.getText());
                 ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                cmbProductos.addItem(rs.getString("nombreProductoPat"));
+                cmbProductos.addItem(rs.getString("Generico"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(frmProducto.class.getName()).log(Level.SEVERE, null, ex);
@@ -403,6 +455,7 @@ public class frmEntrada extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JComboBox cmbProductos;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblCaducidad;
     private javax.swing.JLabel lblCantidad;
@@ -419,5 +472,7 @@ public class frmEntrada extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtCosto;
     private javax.swing.JTextField txtFarmacia;
     private javax.swing.JTextField txtNoFactura;
+    private javax.swing.JTextField txtProductoFiltro;
+    private javax.swing.JTextField txtSucursal;
     // End of variables declaration//GEN-END:variables
 }
