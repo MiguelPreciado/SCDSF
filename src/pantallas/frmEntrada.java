@@ -6,6 +6,7 @@
 package pantallas;
 
 import clases.Conex;
+import clases.DaoAdministracion;
 import clases.DaoCompra;
 import clases.DaoDetalleEntrada;
 import java.awt.Font;
@@ -96,7 +97,7 @@ public class frmEntrada extends javax.swing.JFrame {
                 cmbProductosActionPerformed(evt);
             }
         });
-        getContentPane().add(cmbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 180, -1));
+        getContentPane().add(cmbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 310, -1));
 
         lblCantidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCantidad.setText("CANTIDAD");
@@ -126,6 +127,7 @@ public class frmEntrada extends javax.swing.JFrame {
         });
         getContentPane().add(rbtDonado, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 158, -1, -1));
 
+        rbtComprado.setSelected(true);
         rbtComprado.setText("COMPRADO");
         rbtComprado.setContentAreaFilled(false);
         rbtComprado.setEnabled(false);
@@ -158,18 +160,14 @@ public class frmEntrada extends javax.swing.JFrame {
         getContentPane().add(lblProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 61, -1, -1));
         getContentPane().add(txtCaducidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 160, -1));
 
-        txtSucursal.setEditable(false);
         txtSucursal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSucursalKeyReleased(evt);
             }
         });
         getContentPane().add(txtSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 90, -1));
-
-        txtNoFactura.setEditable(false);
         getContentPane().add(txtNoFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 90, -1));
 
-        txtCosto.setEditable(false);
         txtCosto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         getContentPane().add(txtCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 90, -1));
 
@@ -209,7 +207,6 @@ public class frmEntrada extends javax.swing.JFrame {
         });
         getContentPane().add(txtProductoFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 140, -1));
 
-        txtFarmacia.setEditable(false);
         txtFarmacia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtFarmaciaKeyReleased(evt);
@@ -218,7 +215,7 @@ public class frmEntrada extends javax.swing.JFrame {
         getContentPane().add(txtFarmacia, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 90, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoVerde.jpg"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 410));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -226,8 +223,10 @@ public class frmEntrada extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         DaoDetalleEntrada de = new DaoDetalleEntrada();
         int idProd = 0;
+        String[] datosProducto;
+        DaoAdministracion da = new DaoAdministracion();
         DateFormat fmt = new SimpleDateFormat("yy/MM/dd");
-
+/*
         if (rbtAsignado.isSelected()) {
             String prod = cmbProductos.getSelectedItem().toString();
             de.setEntrada(Integer.parseInt(txtCantidad.getText()));
@@ -257,48 +256,67 @@ public class frmEntrada extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "No se inserto");
 
             }
-        } else if (rbtComprado.isSelected()) {
+        } else 
+            
+            */
+
+        if (rbtComprado.isSelected()) {
+            datosProducto = cmbProductos.getSelectedItem().toString().split(" - ");
+            
             DaoCompra dc = new DaoCompra();
-            dc.setFarmacia(txtSucursal.getText());
-            dc.setNumFactura(txtNoFactura.getText());
+            dc.setFarmacia(""+txtSucursal.getText());
+            dc.setNumFactura(""+txtNoFactura.getText());
+            dc.setSucursal(""+txtSucursal.getText());
             dc.setCosto(Double.parseDouble(txtCosto.getText()));
+            
             if (dc.agregar() == true) {
 
                 txtSucursal.setText("");
                 txtNoFactura.setText("");
                 txtCosto.setText("");
-
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "No se inserto");
-
-            }
+                txtFarmacia.setText("");
+                
             String prod = cmbProductos.getSelectedItem().toString();
             de.setEntrada(Integer.parseInt(txtCantidad.getText()));
             String date = fmt.format(txtCaducidad.getDate());
             de.setCaducidad(date);
             de.setTipoEntrada("COMPRADO");
             Connection con = Conex.getInstance().getConnection();
-            String sql = "{call sp_prod_lis(?)}";
+            String sql = "{call sp_prod_bus_pat_gen_tipo(?,?,?)}";
             try {
                 CallableStatement stm = con.prepareCall(sql);
-                stm.setString(1, prod);
+                stm.setString(1, datosProducto[0]);
+                stm.setString(2, datosProducto[1]);
+                da.setAdministracion(datosProducto[2]);
+                da.buscar();
+                stm.setInt(3, da.getIdAdministracion());
                 ResultSet rs = stm.executeQuery();
                 if (rs.next()) {
                     idProd = rs.getInt("idProducto");
+                    
+                    de.setIdProducto(idProd);
+                    de.setCantidad(Integer.parseInt(txtCantidad.getText()));
+                    
+                    if ((de.agregarCompraDetalle()) == true) {
+                        JOptionPane.showMessageDialog(rootPane, "Registro agregado");
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "No se inserto");
+                    }
                 }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, ex);
             }
-            de.setIdProducto(idProd);
-            if ((de.agregar()) == true) {
-                JOptionPane.showMessageDialog(rootPane, "Registro agregado");
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "No se inserto");
-            }
             txtCantidad.setText("");
             CargacomboProducto();
 
-        } else if (rbtDonado.isSelected()) {
+
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No se inserto");
+
+            }
+        }
+        
+        /*else if (rbtDonado.isSelected()) {
             String prod = cmbProductos.getSelectedItem().toString();
             de.setEntrada(Integer.parseInt(txtCantidad.getText()));
             String date = fmt.format(txtCaducidad.getDate());
@@ -329,7 +347,7 @@ public class frmEntrada extends javax.swing.JFrame {
 
             }
 
-        }
+        }*/
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -400,15 +418,16 @@ public class frmEntrada extends javax.swing.JFrame {
 
     private void CargacomboProducto() {
         Connection con = Conex.getInstance().getConnection();
-               String sql = "call sp_prod_filtro(?);";
-               
-               cmbProductos.removeAllItems();
+        String sql = "call sp_prod_filtro(?);";
+        String producto="";
+        cmbProductos.removeAllItems();
             try {
                 CallableStatement stm = con.prepareCall(sql);
                stm.setString(1, txtProductoFiltro.getText());
                 ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                cmbProductos.addItem(rs.getString("Generico"));
+                producto = rs.getString("Patente") + " - " +  rs.getString("Generico") + " - " + rs.getString("Metodo de Administracion");
+                cmbProductos.addItem(producto);
             }
         } catch (SQLException ex) {
             Logger.getLogger(frmProducto.class.getName()).log(Level.SEVERE, null, ex);
