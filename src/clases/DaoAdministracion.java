@@ -147,6 +147,33 @@ public class DaoAdministracion extends Administracion {
     
     }
     
+    /**
+     * Metodo que busca los datos de un solo medio de Administracion por medio de su
+     * nombre para rellenar el campo y posteriormente modificarlo o eliminarlo.
+     *
+     * @return res, para indicar si el proceso fue exitoso.
+     */
+    public boolean buscarPorId(){ 
+         boolean res = false;
+        con = Conex.getInstance().getConnection();
+        String sql = "{select * from medioadministracion WHERE idAministracion = ?}";
+        try{
+            CallableStatement stm = con.prepareCall(sql);
+            stm.setInt(1, getIdAdministracion());
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                idAdministracion = (rs.getInt("idAdministracion"));
+                administracion = (rs.getString("administracion"));
+               
+                res = true; 
+            }
+        }catch(SQLException ex){
+            mensaje = ex.getMessage();
+        }
+        return res;
+    
+    
+    }
    
     /**
      * Metodo que crea el modelo para la tabla que se desplegara en la ventana

@@ -92,7 +92,6 @@ public class frmProducto extends javax.swing.JFrame {
         txtContenidoCaja = new javax.swing.JTextField();
         btnAgregarAdministracion = new javax.swing.JButton();
         btnTipo = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
         cmbTipoProducto = new javax.swing.JComboBox();
         cmbAdministracion = new javax.swing.JComboBox();
         lblNombreProductoGen = new javax.swing.JLabel();
@@ -102,6 +101,7 @@ public class frmProducto extends javax.swing.JFrame {
         btnListarParecidos = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Farmacia - Registro de productos");
@@ -224,14 +224,6 @@ public class frmProducto extends javax.swing.JFrame {
         });
         getContentPane().add(btnTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, -1, 40));
 
-        btnBuscar.setText("BUSCAR");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 480, -1, 40));
-
         getContentPane().add(cmbTipoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 120, -1));
 
         getContentPane().add(cmbAdministracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 120, -1));
@@ -274,10 +266,19 @@ public class frmProducto extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 480, -1, 40));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 480, -1, 40));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoVerde.jpg"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1260, 540));
+
+        btnBuscar.setText("BUSCAR");
+        btnBuscar.setEnabled(false);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 480, -1, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -473,12 +474,37 @@ public class frmProducto extends javax.swing.JFrame {
             DaoAdministracion da = new DaoAdministracion();
             int idAdmin, idTipo;
             String admin = null, tipo = null;
+            
+            
+            
+                
     //        Object adminObject = null, tipoObject = null;
             d5.setNombreProductoPat(txtNombreProductoPat.getText());
+            d5.setNombreProductoGen(txtNombreProductoGen.getText());
+            /*
             Connection con = Conex.getInstance().getConnection();
-            String sql = "{call sp_prod_lis(?)}";
+            String sql = "{call sp_prod_bus_pat_gen(?,?,?)}";
             String sql2 = "{call sp_adm_id(?)}";
-            String sql3 = "{call sp_tip_id(?)}";
+            String sql3 = "{call sp_tip_id(?)}";*/
+            da.setAdministracion(cmbAdministracion.getSelectedItem().toString());
+            dt.setTipo(cmbTipoProducto.getSelectedItem().toString());
+            if(da.buscar()){
+                d5.setAdministracion(da.getIdAdministracion());
+                if(d5.buscar()){
+                    llenaCampos(d5);
+                    JOptionPane.showMessageDialog(this, "Medicamento Encontrado");
+
+                }else{
+                    JOptionPane.showMessageDialog(this, "El producto no existe");
+                }
+                
+                
+            }else{
+                //mensaje de error por si no encuenta el metodo de administracion
+                JOptionPane.showMessageDialog(rootPane, "Ocurrió un error ");
+            }
+            
+            /*
             try {
                 CallableStatement stm = con.prepareCall(sql);
                 stm.setString(1, txtNombreProductoGen.getText());
@@ -506,17 +532,7 @@ public class frmProducto extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "ERROR");
                     }
                     if (d5.buscar()) {
-                        txtNombreProductoPat.setText(d5.getNombreProductoPat());
-                        txtNombreProductoGen.setText(d5.getNombreProductoGen());
-                        txtContenidoCaja.setText(d5.getContenidoCaja());
-                        txtStockActual.setText(Integer.toString(d5.getStockActual()));
-                        txtStockMinimo.setText(Integer.toString(d5.getStockMinimo()));
-                        cmbAdministracion.setSelectedItem(admin);
-                        cmbTipoProducto.setSelectedItem(tipo);
-    //                      cmbAdministracion.
-                        btnEliminar.setEnabled(true);
-                        btnModificar.setEnabled(true);
-                        JOptionPane.showMessageDialog(this, "Medicamento Encontrado");
+                        
                     }
                 } else {
                     JOptionPane.showMessageDialog(rootPane, "ERROR: El Nombre No Existe.");
@@ -524,10 +540,31 @@ public class frmProducto extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "ERROR: El nombre no existe.");
                 System.out.println("primer mensaje8");
-            }
+            }*/
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void llenaCampos(DaoProducto dp){
+        DaoAdministracion da = new DaoAdministracion();
+        DaoTipo dt = new DaoTipo();
+        da.setIdAdministracion(dp.getAdministracion());
+        dt.setIdTipo(dp.getTipo());
+        
+        da.buscarPorId();
+        dt.buscarPorId();
+        
+        
+        txtNombreProductoPat.setText(dp.getNombreProductoPat());
+        txtNombreProductoGen.setText(dp.getNombreProductoGen());
+        txtContenidoCaja.setText(dp.getContenidoCaja());
+        txtStockActual.setText(Integer.toString(dp.getStockActual()));
+        txtStockMinimo.setText(Integer.toString(dp.getStockMinimo()));
+        cmbAdministracion.setSelectedItem(da.getAdministracion());
+        cmbTipoProducto.setSelectedItem(dt.getTipo());
+//                      cmbAdministracion.
+        btnEliminar.setEnabled(true);
+        btnModificar.setEnabled(true);
+    }
     private void txtNombreProductoGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreProductoGenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreProductoGenActionPerformed
