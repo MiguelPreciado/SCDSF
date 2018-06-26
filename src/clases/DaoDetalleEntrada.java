@@ -40,7 +40,7 @@ public class DaoDetalleEntrada extends DetalleEntrada {
         con = clases.Conex.getInstance().getConnection();
         
         
-    String cadSql = "{call sp_dete_ins1 (?,?,?,?)}";
+    String cadSql = "{call sp_dete_ins_compra (?,?,?,?)}";
 
         try {
             CallableStatement cstm = con.prepareCall(cadSql);
@@ -77,5 +77,25 @@ public class DaoDetalleEntrada extends DetalleEntrada {
         return res;
     }
     
-    
+    public boolean agregarCompraDetalle(){
+        
+        boolean res = false;
+        con = clases.Conex.getInstance().getConnection();
+        
+        
+        String cadSql = "{call sp_dete_ins_compra (?,?,?,?)}";
+
+            try {
+                CallableStatement cstm = con.prepareCall(cadSql);
+                cstm.setInt(1, getIdProducto());
+                cstm.setString(2, getTipoEntrada());
+                cstm.setString(3, getCaducidad());
+                cstm.setInt(4, this.getCantidad());
+                cstm.execute();
+                res = true;
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+            return res;
+    }
 }

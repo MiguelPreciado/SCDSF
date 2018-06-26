@@ -199,7 +199,7 @@ public class DaoProducto extends Producto {
             CallableStatement stm = con.prepareCall(sql);
             stm.setString(1, nombreProductoPat);
             stm.setString(2, nombreProductoGen);
-            stm.setInt(3, tipo);
+            stm.setInt(3, administracion);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 res = true;

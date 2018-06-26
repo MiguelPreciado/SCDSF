@@ -6,6 +6,7 @@
 package pantallas;
 
 import clases.Conex;
+import clases.DaoAdministracion;
 import clases.DaoAsignacion;
 import clases.DaoProducto;
 import java.awt.Font;
@@ -75,7 +76,9 @@ public class frmAsignacion extends javax.swing.JFrame {
         chkNoche = new javax.swing.JCheckBox();
         chkManana = new javax.swing.JCheckBox();
         chkTarde = new javax.swing.JCheckBox();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblStock = new javax.swing.JLabel();
+        lblBackground = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
 
@@ -86,6 +89,11 @@ public class frmAsignacion extends javax.swing.JFrame {
         lblSalida.setText("SALIDA");
         getContentPane().add(lblSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 22, -1, -1));
 
+        cmbPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPacienteActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 50, 180, -1));
 
         lblPaciente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -98,29 +106,34 @@ public class frmAsignacion extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 500, -1, 40));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 550, -1, 40));
 
         lblDosis.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblDosis.setText("DOSIS");
-        getContentPane().add(lblDosis, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
+        getContentPane().add(lblDosis, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
         lblCantidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCantidad.setText("CANTIDAD CAJAS");
-        getContentPane().add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
+        getContentPane().add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
 
-        getContentPane().add(cmbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 76, 180, -1));
-        getContentPane().add(txtCantidadCajas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 90, -1));
+        cmbProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProductoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 76, 370, -1));
+        getContentPane().add(txtCantidadCajas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 90, -1));
 
         tblSalida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "idProducto", "Producto", "Cantidad", "Dosis"
+                "Id", "Patente", "Generico", "Administracion", "Cantidad", "Dosis"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false, false
+                false, true, true, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -128,8 +141,18 @@ public class frmAsignacion extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tblSalida);
+        if (tblSalida.getColumnModel().getColumnCount() > 0) {
+            tblSalida.getColumnModel().getColumn(0).setMinWidth(30);
+            tblSalida.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tblSalida.getColumnModel().getColumn(0).setMaxWidth(40);
+            tblSalida.getColumnModel().getColumn(4).setMinWidth(80);
+            tblSalida.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tblSalida.getColumnModel().getColumn(4).setMaxWidth(90);
+            tblSalida.getColumnModel().getColumn(5).setMinWidth(30);
+            tblSalida.getColumnModel().getColumn(5).setMaxWidth(40);
+        }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 375, 275));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 260, 520, 275));
 
         btnAceptar.setText("ACEPTAR");
         btnAceptar.setEnabled(false);
@@ -138,7 +161,7 @@ public class frmAsignacion extends javax.swing.JFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 500, -1, 40));
+        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 550, -1, 40));
 
         btnAnyadir.setText("AÑADIR");
         btnAnyadir.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +169,7 @@ public class frmAsignacion extends javax.swing.JFrame {
                 btnAnyadirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAnyadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, -1, 40));
+        getContentPane().add(btnAnyadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, -1, 40));
 
         btnQuitar.setText("QUITAR");
         btnQuitar.addActionListener(new java.awt.event.ActionListener() {
@@ -154,23 +177,31 @@ public class frmAsignacion extends javax.swing.JFrame {
                 btnQuitarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnQuitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, -1, 40));
+        getContentPane().add(btnQuitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, -1, 40));
 
         lblProducto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblProducto.setText("PRODUCTO");
         getContentPane().add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 76, -1, -1));
 
         chkNoche.setText("NOCHE");
-        getContentPane().add(chkNoche, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, -1, -1));
+        getContentPane().add(chkNoche, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, -1, -1));
 
         chkManana.setText("MAÑANA");
-        getContentPane().add(chkManana, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, -1, -1));
+        getContentPane().add(chkManana, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
 
         chkTarde.setText("TARDE");
-        getContentPane().add(chkTarde, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, -1, -1));
+        getContentPane().add(chkTarde, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoVerde.jpg"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 550));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("STOCK:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 60, 20));
+
+        lblStock.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblStock.setText("jLabel2");
+        getContentPane().add(lblStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, -1, -1));
+
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoVerde.jpg"))); // NOI18N
+        getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 590));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -184,21 +215,26 @@ public class frmAsignacion extends javax.swing.JFrame {
         int idProd = 0;
         int cant,stockActualProducto;
         String cant1;
-        String prod = cmbProducto.getSelectedItem().toString();
+        DaoAdministracion da = new DaoAdministracion();
+        String[] prodDatos = cmbProducto.getSelectedItem().toString().split(" - ");
             cmbPaciente.setEnabled(false);
             btnAceptar.setEnabled(true);
             cant1=txtCantidadCajas.getText();
         if(isNumeric(cant1)){
             cant = Integer.parseInt(cant1);
             Connection con = Conex.getInstance().getConnection();
-                String sql = "{call sp_prod_lis(?)}";
+                String sql = "{call sp_prod_bus_pat_gen_tipo(?,?,?)}";
                 try {
                     CallableStatement stm = con.prepareCall(sql);
-                    stm.setString(1, prod);
+                    stm.setString(1, prodDatos[0]);
+                    stm.setString(2,prodDatos[1]);
+                    da.setAdministracion(prodDatos[2]);
+                    da.buscar();
+                    stm.setInt(3, da.getIdAdministracion());
                     ResultSet rs = stm.executeQuery();
                     if (rs.next()) {
                         stockActualProducto = rs.getInt("stockActual");
-                        if(stockActualProducto>cant){
+                        if(stockActualProducto>=cant){
                             if(chkManana.isSelected()){
                                 dosis +="1";
                             }else{
@@ -216,12 +252,12 @@ public class frmAsignacion extends javax.swing.JFrame {
                                 dosis +="0";
                             }
                             idProd = rs.getInt("idProducto");
-                            Object[] fila = {idProd, prod, cant,dosis};
+                            Object[] fila = {idProd, prodDatos[0],prodDatos[1],prodDatos[2], cant,dosis};
                             DefaultTableModel modelo = (DefaultTableModel) tblSalida.getModel();
                             modelo.addRow(fila);   
-                        }
-                    }else{
+                        }else{
                         JOptionPane.showMessageDialog(rootPane, "La cantidad ingresada supera el stock actual");
+                    }
                     }
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(this, ex);
@@ -266,14 +302,14 @@ public static boolean isNumeric(String str){
             cantidadesProductos = new int[fila];
             dProductos = new DaoProducto[fila];
             for (int i = 0; i < fila; i++) {
-                cantidadesProductos[i]=(int)dtm.getValueAt(i, 2);
+                cantidadesProductos[i]=(int)dtm.getValueAt(i, 4);
                 dProductos[i] = new DaoProducto();
                 //dProductos[i].setIdProducto((int)dtm.getValueAt(i, 0));
                 dProductos[i].buscarPorId((int)dtm.getValueAt(i, 0));
-                if((dProductos[i].getStockActual()- cantidadesProductos[i]) <= dProductos[i].getStockMinimo()){
+                if((dProductos[i].getStockActual()- cantidadesProductos[i]) < 0){
                     superaStock = true;
                     mensajeSuperaStock += "" + dProductos[i].getNombreProductoPat() + " cuenta con un stock de "
-                            + dProductos[i].getStockActual() + ", la operación cae bajo el stock minimo\n";
+                            + dProductos[i].getStockActual() + ", la operación cae bajo el actual\n";
                 }
             }
             if(superaStock){
@@ -283,14 +319,15 @@ public static boolean isNumeric(String str){
 
                 for (int i = 0; i < fila; i++) {
                    da.setIdProducto((int)dtm.getValueAt(i, 0));
-                   da.setCantidad((int)dtm.getValueAt(i, 2));
-                   da.setDosis((String) dtm.getValueAt(i, 3));
+                   da.setCantidad((int)dtm.getValueAt(i, 4));
+                   da.setDosis((String) dtm.getValueAt(i, 5));
                    da.detalle();
                 }
                 dtm.setRowCount(0);
                 JOptionPane.showMessageDialog(rootPane, "Asignacion terminada");
                 cmbPaciente.setEnabled(true);
                 btnAceptar.setEnabled(false);
+                cmbProducto.setSelectedIndex(0);
             }
             
 /*          
@@ -312,6 +349,27 @@ public static boolean isNumeric(String str){
         }
     }//GEN-LAST:event_btnQuitarActionPerformed
 
+    private void cmbPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPacienteActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_cmbPacienteActionPerformed
+
+    private void cmbProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductoActionPerformed
+        // TODO add your handling code here:
+        String[] datos = cmbProducto.getSelectedItem().toString().split(" - ");
+        DaoProducto dp = new DaoProducto();
+        DaoAdministracion da = new DaoAdministracion();
+        da.setAdministracion(datos[2]);
+        da.buscar();
+        dp.setNombreProductoPat(datos[0]);
+        dp.setNombreProductoGen(datos[1]);
+        dp.setAdministracion(da.getIdAdministracion());
+        dp.buscar();
+        lblStock.setText(""+dp.getStockActual());
+        
+    }//GEN-LAST:event_cmbProductoActionPerformed
+
     private void CargacomboPaciente() {
         Connection con = Conex.getInstance().getConnection();
             String sql = "{call sp_pac_tnom ()}";
@@ -329,16 +387,17 @@ public static boolean isNumeric(String str){
 
     private void CargacomboProducto() {
         Connection con = Conex.getInstance().getConnection();
-               String sql = "{call sp_prod_sel ()}";
+               String sql = "{call sp_prod_filtro ('')}";
             try {
                 CallableStatement stm = con.prepareCall(sql);
                 ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                cmbProducto.addItem(rs.getString("nombreProductoPat"));
+                cmbProducto.addItem(rs.getString("Patente") + " - " + rs.getString("Generico") + " - " + rs.getString("Metodo de administracion"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(frmProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
+            cmbPaciente.setSelectedIndex(0);
     }
 
     /**
@@ -388,13 +447,15 @@ public static boolean isNumeric(String str){
     private javax.swing.JComboBox cmbPaciente;
     private javax.swing.JComboBox cmbProducto;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblDosis;
     private javax.swing.JLabel lblPaciente;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblSalida;
+    private javax.swing.JLabel lblStock;
     private javax.swing.JTable tblSalida;
     private javax.swing.JTextField txtCantidadCajas;
     // End of variables declaration//GEN-END:variables

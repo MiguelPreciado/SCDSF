@@ -18,6 +18,7 @@ public class DetalleEntrada {
     public String tipoEntrada; 
     public int idCompra; 
     public String caducidad; 
+    public int cantidad;
 
     public DetalleEntrada() {
         
@@ -78,6 +79,14 @@ public class DetalleEntrada {
 
     public void setCaducidad(String caducidad) {
         this.caducidad = caducidad;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
     
     
