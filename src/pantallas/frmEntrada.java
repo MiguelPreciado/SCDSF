@@ -226,6 +226,76 @@ public class frmEntrada extends javax.swing.JFrame {
         String[] datosProducto;
         DaoAdministracion da = new DaoAdministracion();
         DateFormat fmt = new SimpleDateFormat("yy/MM/dd");
+        if(txtCantidad.getText().compareTo("")!=0){
+            if(txtCaducidad.getDate() != null ){
+                
+                if (rbtComprado.isSelected()) {
+                    datosProducto = cmbProductos.getSelectedItem().toString().split(" - ");
+
+                    DaoCompra dc = new DaoCompra();
+                    dc.setFarmacia(""+txtSucursal.getText());
+                    dc.setNumFactura(""+txtNoFactura.getText());
+                    dc.setSucursal(""+txtSucursal.getText());
+                    if(txtCosto.getText().compareTo("")!= 0){
+                        dc.setCosto(Double.parseDouble(txtCosto.getText()));
+                    }
+                    else{
+                        dc.setCosto(0.00);
+                    }
+                    if (dc.agregar() == true) {
+
+                        txtSucursal.setText("");
+                        txtNoFactura.setText("");
+                        txtCosto.setText("");
+                        txtFarmacia.setText("");
+
+                    String prod = cmbProductos.getSelectedItem().toString();
+                    de.setEntrada(Integer.parseInt(txtCantidad.getText()));
+                    String date = fmt.format(txtCaducidad.getDate());
+                    de.setCaducidad(date);
+                    de.setTipoEntrada("COMPRADO");
+                    Connection con = Conex.getInstance().getConnection();
+                    String sql = "{call sp_prod_bus_pat_gen_tipo(?,?,?)}";
+                    try {
+                        CallableStatement stm = con.prepareCall(sql);
+                        stm.setString(1, datosProducto[0]);
+                        stm.setString(2, datosProducto[1]);
+                        da.setAdministracion(datosProducto[2]);
+                        da.buscar();
+                        stm.setInt(3, da.getIdAdministracion());
+                        ResultSet rs = stm.executeQuery();
+                        if (rs.next()) {
+                            idProd = rs.getInt("idProducto");
+
+                            de.setIdProducto(idProd);
+                            de.setCantidad(Integer.parseInt(txtCantidad.getText()));
+
+                            if ((de.agregarCompraDetalle()) == true) {
+                                JOptionPane.showMessageDialog(rootPane, "Registro agregado");
+                            } else {
+                                JOptionPane.showMessageDialog(rootPane, "No se inserto");
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(this, ex);
+                    }
+                    txtCantidad.setText("");
+                    CargacomboProducto();
+
+
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "No se inserto");
+
+                    }
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(rbtComprado,"Ingrese una fecha de caducidad");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(rbtComprado, "Ingrese una cantidad");
+        }
 /*
         if (rbtAsignado.isSelected()) {
             String prod = cmbProductos.getSelectedItem().toString();
@@ -260,61 +330,6 @@ public class frmEntrada extends javax.swing.JFrame {
             
             */
 
-        if (rbtComprado.isSelected()) {
-            datosProducto = cmbProductos.getSelectedItem().toString().split(" - ");
-            
-            DaoCompra dc = new DaoCompra();
-            dc.setFarmacia(""+txtSucursal.getText());
-            dc.setNumFactura(""+txtNoFactura.getText());
-            dc.setSucursal(""+txtSucursal.getText());
-            dc.setCosto(Double.parseDouble(txtCosto.getText()));
-            
-            if (dc.agregar() == true) {
-
-                txtSucursal.setText("");
-                txtNoFactura.setText("");
-                txtCosto.setText("");
-                txtFarmacia.setText("");
-                
-            String prod = cmbProductos.getSelectedItem().toString();
-            de.setEntrada(Integer.parseInt(txtCantidad.getText()));
-            String date = fmt.format(txtCaducidad.getDate());
-            de.setCaducidad(date);
-            de.setTipoEntrada("COMPRADO");
-            Connection con = Conex.getInstance().getConnection();
-            String sql = "{call sp_prod_bus_pat_gen_tipo(?,?,?)}";
-            try {
-                CallableStatement stm = con.prepareCall(sql);
-                stm.setString(1, datosProducto[0]);
-                stm.setString(2, datosProducto[1]);
-                da.setAdministracion(datosProducto[2]);
-                da.buscar();
-                stm.setInt(3, da.getIdAdministracion());
-                ResultSet rs = stm.executeQuery();
-                if (rs.next()) {
-                    idProd = rs.getInt("idProducto");
-                    
-                    de.setIdProducto(idProd);
-                    de.setCantidad(Integer.parseInt(txtCantidad.getText()));
-                    
-                    if ((de.agregarCompraDetalle()) == true) {
-                        JOptionPane.showMessageDialog(rootPane, "Registro agregado");
-                    } else {
-                        JOptionPane.showMessageDialog(rootPane, "No se inserto");
-                    }
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
-            }
-            txtCantidad.setText("");
-            CargacomboProducto();
-
-
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "No se inserto");
-
-            }
-        }
         
         /*else if (rbtDonado.isSelected()) {
             String prod = cmbProductos.getSelectedItem().toString();
