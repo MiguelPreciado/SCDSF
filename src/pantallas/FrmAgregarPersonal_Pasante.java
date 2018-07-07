@@ -82,6 +82,9 @@ public class FrmAgregarPersonal_Pasante extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TxtAreObservaciones = new javax.swing.JTextArea();
+        btnAgregar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Agregar Personal");
@@ -234,6 +237,12 @@ public class FrmAgregarPersonal_Pasante extends javax.swing.JPanel {
         TxtAreObservaciones.setRows(5);
         jScrollPane1.setViewportView(TxtAreObservaciones);
 
+        btnAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAgregar.setText("Agregar");
+
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCancelar.setText("Cancelar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -333,7 +342,12 @@ public class FrmAgregarPersonal_Pasante extends javax.swing.JPanel {
                                 .addComponent(jLabel19)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1))))
+                            .addComponent(jScrollPane1)
+                            .addComponent(jSeparator2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAgregar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCancelar)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -418,7 +432,13 @@ public class FrmAgregarPersonal_Pasante extends javax.swing.JPanel {
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -427,6 +447,8 @@ public class FrmAgregarPersonal_Pasante extends javax.swing.JPanel {
     private javax.swing.JLabel Area;
     private javax.swing.JCheckBox Martes;
     private javax.swing.JTextArea TxtAreObservaciones;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbEstatus;
     private javax.swing.JComboBox<String> cmbTipoTrabajador;
@@ -464,6 +486,7 @@ public class FrmAgregarPersonal_Pasante extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtApMaterno;
     private javax.swing.JTextField txtApPaterno;
