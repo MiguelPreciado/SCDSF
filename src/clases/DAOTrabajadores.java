@@ -10,6 +10,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,7 +21,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DAOTrabajadores extends Trabajadores {
     private String mensaje;
-    Connection con;
+    Connection con; 
+    
+    Pacientes d = new Pacientes();
 
     public DAOTrabajadores() {
     }
@@ -48,8 +53,8 @@ public class DAOTrabajadores extends Trabajadores {
      int horasRegistradas,  
      String areaAsignada, 
      String observaciones, 
-     String statusTrabajador, 
-     String claseTrabajador ) {
+     char statusTrabajador, 
+     char claseTrabajador ) {
         super(idTrabajador, nombreTrabajador, apPatTrabajador,apMatTrabajador ,calleTrabajador ,noIntTrabajador , 
                noExtTrabajador, estadoTrabajador,municipioTrabajador,telefonoTrabajador, correoTrabajador,universidadProcedencia,
               fechaInicio,fechaTermino,horarioAsignadoPasante,turnoTrabajador,jornadaTrabajador,matriculaPasante,tipoTrabajador,
@@ -88,7 +93,30 @@ public class DAOTrabajadores extends Trabajadores {
            pstm.setInt(20, super.getHorasRegistradas()); 
            pstm.setString(21, super.getAreaAsignada()); 
            pstm.setString(22, super.getObservaciones()); 
-           pstm.setString(23, super.getClaseTrabajador()); 
+           pstm.setString(23, ""+super.getClaseTrabajador()); 
+          
+           System.out.println("Se mando a ejecutar");
+           pstm.executeUpdate();
+           System.out.println("Se agregó exitosamente");
+           res = true;
+       } catch (SQLException ex) {
+           mensaje = ex.getMessage();
+           System.out.println(mensaje);
+       }                  
+        return res;
+    } 
+     
+     public  boolean agregarDetalleTrabajador(){
+        System.out.println("Inicio de agregado");
+        boolean res= false;
+        con = Conex.getInstance().getConnection();
+
+        String cadSql= "call ins_DetalleTrabajador("+
+           "?,?)";
+       try { 
+           CallableStatement pstm = con.prepareCall(cadSql);
+           pstm.setInt(1,d.getIdPaciente());
+           pstm.setInt(2,super.getIdTrabajador());
           
            System.out.println("Se mando a ejecutar");
            pstm.executeUpdate();
@@ -102,21 +130,24 @@ public class DAOTrabajadores extends Trabajadores {
     }
     
 //<editor-fold defaultstate="collapsed" desc="eliminar">
-     public boolean eliminar() {
+    
+//</editor-fold>
+    public boolean activar() {
         boolean res = false;
         con = Conex.getInstance().getConnection();
         try {
-            CallableStatement pstm = con.prepareCall("call delete_Paciente (?)");
-            pstm.setInt(1, super.getNoProgresivo());
-            pstm.execute();
+            CallableStatement pstm = con.prepareCall("call activar_trabajador("
+                    + " ?)");
+           pstm.setInt(1,super.getIdTrabajador());
+           pstm.execute();
             res = true;
         } catch (SQLException ex) {
            mensaje = ex.getMessage();
            System.out.println(mensaje);
-       }  
+       } 
         return res;
-    }
-//</editor-fold>
+    } 
+     
      
     public boolean modificar() {
         boolean res = false;
@@ -146,7 +177,7 @@ public class DAOTrabajadores extends Trabajadores {
            pstm.setInt(20, super.getHorasRegistradas()); 
            pstm.setString(21, super.getAreaAsignada()); 
            pstm.setString(22, super.getObservaciones()); 
-           pstm.setString(23, super.getClaseTrabajador()); 
+           pstm.setString(23, ""+super.getClaseTrabajador()); 
             pstm.execute();
 
             res = true;
@@ -157,44 +188,17 @@ public class DAOTrabajadores extends Trabajadores {
         return res;
     }
     
-    public boolean activar() {
-        boolean res = false;
-        con = Conex.getInstance().getConnection();
-        try {
-            CallableStatement pstm = con.prepareCall("call Activar_Paciente("
-                    + " ?)");
-           pstm.setInt(1,super.getNoExpediente());
-           pstm.execute();
-            res = true;
-        } catch (SQLException ex) {
-           mensaje = ex.getMessage();
-           System.out.println(mensaje);
-       } 
-        return res;
-    }
     
-    public boolean activarEliminados() {
-        boolean res = false;
-        con = Conex.getInstance().getConnection();
-        try {
-            CallableStatement pstm = con.prepareCall("call activate_error_paciente("
-                    + " ?)");
-           pstm.setInt(1,super.getIdPaciente());
-           pstm.execute();
-            res = true;
-        } catch (SQLException ex) {
-           mensaje = ex.getMessage();
-           System.out.println(mensaje);
-       } 
-        return res;
-    }
+    
+    
     public boolean del_trabajador() {
         boolean res = false;
         con = Conex.getInstance().getConnection();
         try {
             CallableStatement pstm = con.prepareCall("call del_trabajador("
-                    + " ?)");
-           pstm.setInt(1,super.getIdTrabajador());
+                    + " ?,?)");
+           pstm.setInt(1,d.getIdPaciente()); 
+           pstm.setInt(2,super.getIdTrabajador());
            pstm.execute();
             res = true;
         } catch (SQLException ex) {
@@ -205,12 +209,13 @@ public class DAOTrabajadores extends Trabajadores {
     } 
     
     public boolean del_detalleTrabajador() {
+        
         boolean res = false;
         con = Conex.getInstance().getConnection();
         try {
             CallableStatement pstm = con.prepareCall("call del_detalleTrabajador("
                     + " ?,?)");
-           pstm.setInt(1,super.getIdPaciente());
+           pstm.setInt(1,d.getIdPaciente());
            pstm.setInt(2,super.getIdTrabajador());
            pstm.execute();
             res = true;
@@ -229,29 +234,29 @@ public class DAOTrabajadores extends Trabajadores {
             stm.setInt(1, super.getIdTrabajador());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {   
-           super.setNombreTrabajador(rs.getString(""));
-           super.setApPatTrabajador(rs.getString(""));
-           super.setApMatTrabajador(rs.getString(""));
-           super.setCalleTrabajador(rs.getString(""));
-           super.setNoIntTrabajador(rs.getString(""));
-           super.setNoExtTrabajador(rs.getString(""));
-           super.setEstadoTrabajador(rs.getString(""));
-           super.setMunicipioTrabajador(rs.getString(""));
-           super.setTelefonoTrabajador(rs.getString(""));
-           super.setCorreoTrabajador(rs.getString(""));
-           super.setUniversidadProcedencia(rs.getString(""));
-           super.setFechaInicio(rs.getString(""));
-           super.setFechaTermino(rs.getString(""));
-           super.setHorarioAsignadoPasante(rs.getString(""));
-           super.setTurnoTrabajador(rs.getString(""));
-           super.setJornadaTrabajador(rs.getString(""));
-           super.setMatriculaPasante(rs.getInt(""));
-           super.setTipoTrabajador(rs.getString(""));
-           super.setEspecialidad(rs.getString("")); 
-           super.setHorasRegistradas(rs.getInt("")); 
-           super.setAreaAsignada(rs.getString("")); 
-           super.setObservaciones(rs.getString("")); 
-           super.setClaseTrabajador(rs.getString("")); 
+           super.setNombreTrabajador(rs.getString("nombreTrabajador"));
+           super.setApPatTrabajador(rs.getString("apPatTrabajador"));
+           super.setApMatTrabajador(rs.getString("apMatTrabajador"));
+           super.setCalleTrabajador(rs.getString("calleTrabajador"));
+           super.setNoIntTrabajador(rs.getString("noIntTrabajador"));
+           super.setNoExtTrabajador(rs.getString("noExtTrabajador"));
+           super.setEstadoTrabajador(rs.getString("estadoTrabajador"));
+           super.setMunicipioTrabajador(rs.getString("municipioTrabajador"));
+           super.setTelefonoTrabajador(rs.getString("telefonoTrabajador"));
+           super.setCorreoTrabajador(rs.getString("correoTrabajador"));
+           super.setUniversidadProcedencia(rs.getString("universidadProcedencia"));
+           super.setFechaInicio(rs.getString("fechaInicio"));
+           super.setFechaTermino(rs.getString("fechaTermino"));
+           super.setHorarioAsignadoPasante(rs.getString("horarioAsignadoPasante"));
+           super.setTurnoTrabajador(rs.getString("turnoTrabajador"));
+           super.setJornadaTrabajador(rs.getString("jornadaTrabajador"));
+           super.setMatriculaPasante(rs.getInt("matriculaPasante"));
+           super.setTipoTrabajador(rs.getString("tipoTrabajador"));
+           super.setEspecialidad(rs.getString("Especialidad")); 
+           super.setHorasRegistradas(rs.getInt("horasRegistradas")); 
+           super.setAreaAsignada(rs.getString("areaAsignada")); 
+           super.setObservaciones(rs.getString("observaciones")); 
+           super.setClaseTrabajador(rs.getString("claseTrabajador").charAt(0)); 
                 
                 
                 
@@ -272,27 +277,10 @@ public class DAOTrabajadores extends Trabajadores {
             stm.setInt(1, super.getIdTrabajador());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {  
-                super.setIdTrabajador(rs.getInt("IDPaciente"));
-                super.setNombre(rs.getString("Nombre"));
-                super.setApPat(rs.getString("ApPat"));
-                super.setApMat(rs.getString( "ApMat"));
-                res = true;
-            }
-        } catch (SQLException ex) {
-           mensaje = ex.getMessage();
-           System.out.println(mensaje);
-       } 
-        return res;
-    }
-    public boolean buscarActivacion() {
-        boolean res = false;
-        con = Conex.getInstance().getConnection();
-        try {
-            CallableStatement stm = con.prepareCall("call buscar_activacion(?)");
-            stm.setInt(1, super.getNoExpediente());
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {  
-                super.setEstado(rs.getString("estado").charAt(0));
+                super.setIdTrabajador(rs.getInt("idTrabajador"));
+                super.setNombreTrabajador(rs.getString("nombreTrabajador"));
+                super.setApPatTrabajador(rs.getString("apPatTrabajador"));
+                super.setApMatTrabajador(rs.getString( "apMatTrabajador"));
                 res = true;
             }
         } catch (SQLException ex) {
@@ -329,6 +317,104 @@ public class DAOTrabajadores extends Trabajadores {
            System.out.println(mensaje);
        } 
         return tmodel;
+    } 
+    
+    
+    public DefaultTableModel listarPersonal() {
+        DefaultTableModel tmodel = new DefaultTableModel();
+        con = Conex.getInstance().getConnection();
+        try {
+            CallableStatement stm = con.prepareCall("call list_Personal()");
+            ResultSet rs = stm.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numCols = rsmd.getColumnCount();
+            String nombreCol;
+            for (int i = 1; i <= numCols; i++) {
+                nombreCol = rsmd.getColumnName(i);
+                nombreCol = nombreCol.toUpperCase();
+                tmodel.addColumn(nombreCol);
+            }
+            String renglon[] = new String[numCols];
+            while (rs.next()) {
+                for (int c = 1, j = 0; c <= numCols; c++, j++) {
+                    renglon[j] = rs.getString(c);
+                }
+                tmodel.addRow(renglon);
+            }
+         } catch (SQLException ex) {
+           mensaje = ex.getMessage();
+           System.out.println(mensaje);
+       } 
+        return tmodel;
+    } 
+    
+    
+    public DefaultTableModel listarTrabajaddor() {
+        DefaultTableModel tmodel = new DefaultTableModel();
+        con = Conex.getInstance().getConnection();
+        try {
+            CallableStatement stm = con.prepareCall("call list_PorTrabajador()");
+            ResultSet rs = stm.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numCols = rsmd.getColumnCount();
+            String nombreCol;
+            for (int i = 1; i <= numCols; i++) {
+                nombreCol = rsmd.getColumnName(i);
+                nombreCol = nombreCol.toUpperCase();
+                tmodel.addColumn(nombreCol);
+            }
+            String renglon[] = new String[numCols];
+            while (rs.next()) {
+                for (int c = 1, j = 0; c <= numCols; c++, j++) {
+                    renglon[j] = rs.getString(c);
+                }
+                tmodel.addRow(renglon);
+            }
+         } catch (SQLException ex) {
+           mensaje = ex.getMessage();
+           System.out.println(mensaje);
+       } 
+        return tmodel;
+    } 
+    
+    public ArrayList<ComboItem> filtrarTrabajadores(String filtro){
+        ArrayList<ComboItem> trabajadores = new ArrayList<>();
+        con = Conex.getInstance().getConnection();
+        String nombre="";
+        int id= 0;
+        try {
+            CallableStatement cstm = con.prepareCall("CALL filtrar_Trabajadores(?)");
+            cstm.setString(1, filtro);
+            ResultSet rs = cstm.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("idTrabajador");
+                nombre = rs.getString("Nombre_Completo");
+                trabajadores.add(new ComboItem(id,nombre));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOTrabajadores.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return trabajadores;
     }
- 
+    //</editor-fold>
+    public ArrayList<ComboItem> filtrarTrabajadoresEliminados(String filtro){
+        ArrayList<ComboItem> trabajadores = new ArrayList<>();
+        con = Conex.getInstance().getConnection();
+        String nombre="";
+        int id= 0;
+        try {
+            CallableStatement cstm = con.prepareCall("CALL filtrar_Trabajadores_eliminados(?)");
+            cstm.setString(1, filtro);
+            ResultSet rs = cstm.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("idTrabajador");
+                nombre = rs.getString("Nombre_Completo");
+                trabajadores.add(new ComboItem(id,nombre));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOTrabajadores.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return trabajadores;
+    }
 }
+ 
