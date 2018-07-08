@@ -196,9 +196,8 @@ public class DAOTrabajadores extends Trabajadores {
         con = Conex.getInstance().getConnection();
         try {
             CallableStatement pstm = con.prepareCall("call del_trabajador("
-                    + " ?,?)");
-           pstm.setInt(1,d.getIdPaciente()); 
-           pstm.setInt(2,super.getIdTrabajador());
+                    + " ?)"); 
+           pstm.setInt(1,super.getIdTrabajador());
            pstm.execute();
             res = true;
         } catch (SQLException ex) {
@@ -288,8 +287,35 @@ public class DAOTrabajadores extends Trabajadores {
            System.out.println(mensaje);
        } 
         return res;
-    }
+    } 
     
+    public DefaultTableModel listarPasantes() {
+        DefaultTableModel tmodel = new DefaultTableModel();
+        con = Conex.getInstance().getConnection();
+        try {
+            CallableStatement stm = con.prepareCall("call list_Pasantes()");
+            ResultSet rs = stm.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numCols = rsmd.getColumnCount();
+            String nombreCol;
+            for (int i = 1; i <= numCols; i++) {
+                nombreCol = rsmd.getColumnName(i);
+                nombreCol = nombreCol.toUpperCase();
+                tmodel.addColumn(nombreCol);
+            }
+            String renglon[] = new String[numCols];
+            while (rs.next()) {
+                for (int c = 1, j = 0; c <= numCols; c++, j++) {
+                    renglon[j] = rs.getString(c);
+                }
+                tmodel.addRow(renglon);
+            }
+         } catch (SQLException ex) {
+           mensaje = ex.getMessage();
+           System.out.println(mensaje);
+       } 
+        return tmodel;
+    } 
     
     public DefaultTableModel listar() {
         DefaultTableModel tmodel = new DefaultTableModel();
