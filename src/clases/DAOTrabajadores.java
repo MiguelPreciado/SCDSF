@@ -27,42 +27,13 @@ public class DAOTrabajadores extends Trabajadores {
 
     public DAOTrabajadores() {
     }
-    
-    
-    public DAOTrabajadores(
-            int idTrabajador, 
-     String nombreTrabajador, 
-     String apPatTrabajador, 
-     String apMatTrabajador, 
-     String calleTrabajador, 
-     String noIntTrabajador, 
-     String noExtTrabajador, 
-     String estadoTrabajador,  
-     String municipioTrabajador, 
-     String telefonoTrabajador, 
-     String correoTrabajador, 
-     String universidadProcedencia, 
-     String fechaInicio, 
-     String fechaTermino, 
-     String horarioAsignadoPasante, 
-     String turnoTrabajador, 
-     String jornadaTrabajador, 
-     int matriculaPasante, 
-     String tipoTrabajador, 
-     String especialidad, 
-     int horasRegistradas,  
-     String areaAsignada, 
-     String observaciones, 
-     char statusTrabajador, 
-     char claseTrabajador ) {
-        super(idTrabajador, nombreTrabajador, apPatTrabajador,apMatTrabajador ,calleTrabajador ,noIntTrabajador , 
-               noExtTrabajador, estadoTrabajador,municipioTrabajador,telefonoTrabajador, correoTrabajador,universidadProcedencia,
-              fechaInicio,fechaTermino,horarioAsignadoPasante,turnoTrabajador,jornadaTrabajador,matriculaPasante,tipoTrabajador,
-              especialidad,horasRegistradas,areaAsignada,observaciones,statusTrabajador,claseTrabajador );
+
+    public DAOTrabajadores(int idTrabajador, String nombreTrabajador, String apPatTrabajador, String apMatTrabajador, String calleTrabajador, String noIntTrabajador, String noExtTrabajador, String estadoTrabajador, String municipioTrabajador, String telefonoTrabajador, String correoTrabajador, String universidadProcedencia, String fechaInicio, String fechaTermino, String horarioAsignadoPasante, String turnoTrabajador, String jornadaTrabajador, int matriculaPasante, String tipoTrabajador, String especialidad, int horasRegistradas, String areaAsignada, String observaciones, String statusTrabajador, String claseTrabajador) {
+        super(idTrabajador, nombreTrabajador, apPatTrabajador, apMatTrabajador, calleTrabajador, noIntTrabajador, noExtTrabajador, estadoTrabajador, municipioTrabajador, telefonoTrabajador, correoTrabajador, universidadProcedencia, fechaInicio, fechaTermino, horarioAsignadoPasante, turnoTrabajador, jornadaTrabajador, matriculaPasante, tipoTrabajador, especialidad, horasRegistradas, areaAsignada, observaciones, statusTrabajador, claseTrabajador);
     }
     
-    
-     public  boolean agregar(){
+   
+    public  boolean agregar(){
         System.out.println("Inicio de agregado");
         boolean res= false;
         con = Conex.getInstance().getConnection();
@@ -255,7 +226,7 @@ public class DAOTrabajadores extends Trabajadores {
            super.setHorasRegistradas(rs.getInt("horasRegistradas")); 
            super.setAreaAsignada(rs.getString("areaAsignada")); 
            super.setObservaciones(rs.getString("observaciones")); 
-           super.setClaseTrabajador(rs.getString("claseTrabajador").charAt(0)); 
+           super.setClaseTrabajador(rs.getString("claseTrabajador")); 
                 
                 
                 
