@@ -346,7 +346,7 @@ public class DAOTrabajadores extends Trabajadores {
     } 
     
     
-    public DefaultTableModel listarTrabajaddor() {
+    public DefaultTableModel listarTrabajador() {
         DefaultTableModel tmodel = new DefaultTableModel();
         con = Conex.getInstance().getConnection();
         try {
