@@ -964,22 +964,14 @@ public class FrmTrabajadores extends javax.swing.JFrame {
             if (!txtApPaterno.getText().isEmpty()) {
                 if (!txtApMaterno.getText().isEmpty()) {
                     if (!txtCalle.getText().isEmpty()) {
-                        if (!txtNoInt.getText().isEmpty()) {
                             if (!txtNoExt.getText().isEmpty()) {
                                 if (!txtMunicipio.getText().isEmpty()) {
-                                    if (!txtCorreo.getText().isEmpty()) {
                                         if (!txtTelefono.getText().isEmpty()) {
-                                            if (!txtCorreo.getText().isEmpty()) {
-                                                if (!fechaIni.isEmpty()) {
-                                                    if (!fechaFin.isEmpty()) {
                                                         if (HorarioSeleccionado()) {
                                                             if (txtJornada.getText().isEmpty()) {
-                                                                if (txtMatricula.getText().isEmpty()) {
-                                                                    if (txtHoras.getText().isEmpty()) {
-                                                                        if (txtUniversidad.getText().isEmpty()) {
-                                                                            if (txtEspecialidad.getText().isEmpty()) {
+
                                                                                 Trabajadores tra = new Trabajadores();
-                                                                                DAOPacientes dTra = new DAOPacientes();
+                                                                                DAOTrabajadores dTra = new DAOTrabajadores();
                                                                                 tra.setNombreTrabajador(txtNombre.getText());
                                                                                 tra.setApPatTrabajador(txtApPaterno.getText());
                                                                                 tra.setApMatTrabajador(txtApMaterno.getText());
@@ -989,23 +981,30 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                                                 tra.setEstadoTrabajador(cmbEstado.getSelectedItem().toString());
                                                                                 tra.setMunicipioTrabajador(txtMunicipio.getText());
                                                                                 tra.setCorreoTrabajador(txtCorreo.getText());
-                                                                                tra.setClaseTrabajador(cmbClase.getSelectedItem().toString());
-                                                                                tra.setTelefonoTrabajador(txtTelefono.getText());
-                                                                                tra.setFechaInicio(fechaIni);
-                                                                                tra.setFechaTermino(fechaFin);
+                                                 
+                                                                                
                                                                                 if ((cmbClase.getSelectedItem().toString()).equals("Personal")) {
                                                                                     tra.setClaseTrabajador("E");
+                                                                                    tra.setFechaInicio("-");
+                                                                                    tra.setFechaTermino("-");
+                                                                                    tra.setMatriculaPasante(0);
+                                                                                    tra.setHorasRegistradas(0);
+                                                                                    tra.setUniversidadProcedencia("-");
                                                                                 } else {
+                                                                                    tra.setMatriculaPasante(Integer.parseInt(txtMatricula.getText()));
+                                                                                    tra.setFechaInicio(fechaIni);
+                                                                                    tra.setFechaTermino(fechaFin);
+                                                                                    tra.setHorasRegistradas(Integer.parseInt(txtHoras.getText()));
+                                                                                    tra.setUniversidadProcedencia(txtUniversidad.getText());
                                                                                     tra.setClaseTrabajador("U");
                                                                                 }
                                                                                 tra.setTelefonoTrabajador(txtTelefono.getText());
                                                                                 tra.setTurnoTrabajador(cmbTurno.getSelectedItem().toString());
                                                                                 tra.setHorarioAsignadoPasante(Horario());
                                                                                 tra.setJornadaTrabajador(txtJornada.getText());
-                                                                                tra.setMatriculaPasante(Integer.parseInt(txtMatricula.getText()));
+                                                                                
                                                                                 tra.setTipoTrabajador(cmbTipoTrabajador.getSelectedItem().toString());
-                                                                                tra.setHorasRegistradas(Integer.parseInt(txtHoras.getText()));
-                                                                                tra.setUniversidadProcedencia(txtUniversidad.getText());
+                                                                                
                                                                                 tra.setEspecialidad(txtEspecialidad.getText());
                                                                                 tra.setObservaciones(txaObservaciones.getText());
                                                                                 if (dTra.agregar()) {
@@ -1015,48 +1014,22 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                                                 } else {
                                                                                     JOptionPane.showMessageDialog(rootPane, "No se inserto");
                                                                                 }
-                                                                            } else {
-                                                                                JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Especialidad' esta vacío");
-                                                                            }
-                                                                        } else {
-                                                                            JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Universidad' esta vacío");
-                                                                        }
-                                                                    } else {
-                                                                        JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Horas Registradas' esta vacío");
-                                                                    }
-                                                                } else {
-                                                                    JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Matricula Pasante' esta vacío");
-                                                                }
                                                             } else {
                                                                 JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Jornada' esta vacío");
                                                             }
                                                         } else {
                                                             JOptionPane.showMessageDialog(this, "ERROR: Debe de haber al menos un campo seleccionado en 'Horario'");
                                                         }
-                                                    } else {
-                                                        JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Fecha Fin' esta vacío");
-                                                    }
-                                                } else {
-                                                    JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Fecha Inicio' esta vacío");
-                                                }
-                                            } else {
-                                                JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Correo' esta vacío");
-                                            }
                                         } else {
                                             JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Telefono' esta vacío");
                                         }
-                                    } else {
-                                        JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Correo' esta vacío");
-                                    }
+                                    
                                 } else {
                                     JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Municipio' esta vacío");
                                 }
                             } else {
                                 JOptionPane.showMessageDialog(this, "ERROR: El campo de 'No. Exterior' esta vacío");
                             }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "ERROR: El campo de 'No. Interior' esta vacío");
-                        }
                     } else {
                         JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Calle' esta vacío");
                     }
@@ -1111,22 +1084,13 @@ public class FrmTrabajadores extends javax.swing.JFrame {
             if (!txtApPaterno.getText().isEmpty()) {
                 if (!txtApMaterno.getText().isEmpty()) {
                     if (!txtCalle.getText().isEmpty()) {
-                        if (!txtNoInt.getText().isEmpty()) {
                             if (!txtNoExt.getText().isEmpty()) {
                                 if (!txtMunicipio.getText().isEmpty()) {
-                                    if (!txtCorreo.getText().isEmpty()) {
                                         if (!txtTelefono.getText().isEmpty()) {
-                                            if (!txtCorreo.getText().isEmpty()) {
-                                                if (!fechaIni.isEmpty()) {
-                                                    if (!fechaFin.isEmpty()) {
                                                         if (HorarioSeleccionado()) {
                                                             if (txtJornada.getText().isEmpty()) {
-                                                                if (txtMatricula.getText().isEmpty()) {
-                                                                    if (txtHoras.getText().isEmpty()) {
-                                                                        if (txtUniversidad.getText().isEmpty()) {
-                                                                            if (txtEspecialidad.getText().isEmpty()) {
                                                                                 Trabajadores tra = new Trabajadores();
-                                                                                DAOPacientes dTra = new DAOPacientes();
+                                                                                DAOTrabajadores dTra = new DAOTrabajadores();
                                                                                 tra.setNombreTrabajador(txtNombre.getText());
                                                                                 tra.setApPatTrabajador(txtApPaterno.getText());
                                                                                 tra.setApMatTrabajador(txtApMaterno.getText());
@@ -1136,74 +1100,54 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                                                 tra.setEstadoTrabajador(cmbEstado.getSelectedItem().toString());
                                                                                 tra.setMunicipioTrabajador(txtMunicipio.getText());
                                                                                 tra.setCorreoTrabajador(txtCorreo.getText());
-                                                                                tra.setClaseTrabajador(cmbClase.getSelectedItem().toString());
                                                                                 tra.setTelefonoTrabajador(txtTelefono.getText());
-                                                                                tra.setFechaInicio(fechaIni);
-                                                                                tra.setFechaTermino(fechaFin);
+                                                                                
                                                                                 if ((cmbClase.getSelectedItem().toString()).equals("Personal")) {
                                                                                     tra.setClaseTrabajador("E");
+                                                                                    tra.setFechaInicio("");
+                                                                                    tra.setFechaTermino("");
+                                                                                    tra.setMatriculaPasante(0);
+                                                                                    tra.setHorasRegistradas(0);
+                                                                                    tra.setUniversidadProcedencia("");
                                                                                 } else {
+                                                                                    tra.setFechaInicio(fechaIni);
+                                                                                    tra.setFechaTermino(fechaFin);
+                                                                                    tra.setMatriculaPasante(Integer.parseInt(txtMatricula.getText()));
+                                                                                    tra.setHorasRegistradas(Integer.parseInt(txtHoras.getText()));
+                                                                                    tra.setUniversidadProcedencia(txtUniversidad.getText());
                                                                                     tra.setClaseTrabajador("U");
                                                                                 }
                                                                                 tra.setTelefonoTrabajador(txtTelefono.getText());
                                                                                 tra.setTurnoTrabajador(cmbTurno.getSelectedItem().toString());
                                                                                 tra.setHorarioAsignadoPasante(Horario());
                                                                                 tra.setJornadaTrabajador(txtJornada.getText());
-                                                                                tra.setMatriculaPasante(Integer.parseInt(txtMatricula.getText()));
+                                                                                
                                                                                 tra.setTipoTrabajador(cmbTipoTrabajador.getSelectedItem().toString());
-                                                                                tra.setHorasRegistradas(Integer.parseInt(txtHoras.getText()));
-                                                                                tra.setUniversidadProcedencia(txtUniversidad.getText());
+                                                                                
                                                                                 tra.setEspecialidad(txtEspecialidad.getText());
                                                                                 tra.setObservaciones(txaObservaciones.getText());
                                                                                 if (dTra.modificar()) {
-                                                                                    JOptionPane.showMessageDialog(rootPane, "Registro guardado");
+                                                                                    JOptionPane.showMessageDialog(rootPane, "Registro trabajador modificado");
                                                                                     LimpiarCampos();
                                                                                     btnListar.doClick();
                                                                                 } else {
                                                                                     JOptionPane.showMessageDialog(rootPane, "No se inserto");
                                                                                 }
-                                                                            } else {
-                                                                                JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Especialidad' esta vacío");
-                                                                            }
-                                                                        } else {
-                                                                            JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Universidad' esta vacío");
-                                                                        }
-                                                                    } else {
-                                                                        JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Horas Registradas' esta vacío");
-                                                                    }
-                                                                } else {
-                                                                    JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Matricula Pasante' esta vacío");
-                                                                }
                                                             } else {
                                                                 JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Jornada' esta vacío");
                                                             }
                                                         } else {
                                                             JOptionPane.showMessageDialog(this, "ERROR: Debe de haber al menos un campo seleccionado en 'Horario'");
-                                                        }
-                                                    } else {
-                                                        JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Fecha Fin' esta vacío");
-                                                    }
-                                                } else {
-                                                    JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Fecha Inicio' esta vacío");
-                                                }
-                                            } else {
-                                                JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Correo' esta vacío");
-                                            }
+                                                        } 
                                         } else {
                                             JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Telefono' esta vacío");
                                         }
-                                    } else {
-                                        JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Correo' esta vacío");
-                                    }
                                 } else {
                                     JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Municipio' esta vacío");
                                 }
                             } else {
                                 JOptionPane.showMessageDialog(this, "ERROR: El campo de 'No. Exterior' esta vacío");
                             }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "ERROR: El campo de 'No. Interior' esta vacío");
-                        }
                     } else {
                         JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Calle' esta vacío");
                     }
