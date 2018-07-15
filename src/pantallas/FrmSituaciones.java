@@ -370,7 +370,7 @@ public class FrmSituaciones extends javax.swing.JFrame {
         Situaciones s = new Situaciones();
         DAOTrabajadores dt = new DAOTrabajadores();
         Trabajadores t = new Trabajadores();
-        DateFormat fmt = new SimpleDateFormat("yyyy-mm-DD");
+        DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         String fechaSituacion = "";
 
         if (dchFechaSit.getDate() == null) {

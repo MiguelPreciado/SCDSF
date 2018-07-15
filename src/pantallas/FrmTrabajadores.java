@@ -763,12 +763,12 @@ public class FrmTrabajadores extends javax.swing.JFrame {
 
     private void cargaCmbArea() {
         cmbArea.removeAllItems();
-        cmbArea.addItem("San José");
-        cmbArea.addItem("Cesarita");
-        cmbArea.addItem("Nazaret");
-        cmbArea.addItem("Corazón de Jesús");
-        cmbArea.addItem("Sagrada Familia");
-        cmbArea.addItem("Vilaseca");
+        cmbArea.addItem("SAN JOSÉ");
+        cmbArea.addItem("CESARITA");
+        cmbArea.addItem("NAZARET");
+        cmbArea.addItem("CORAZÓN DE JESÚS");
+        cmbArea.addItem("SAGRADA FAMILIA");
+        cmbArea.addItem("VILASECA");
     }
 
     public void cargaCmbFiltrado() {
@@ -829,7 +829,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         txtEspecialidad.setText(dTra.getEspecialidad());
         txaObservaciones.setText(dTra.getObservaciones());
 
-        DateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         String str_dateIni = dTra.getFechaInicio();
         String str_dateFin = dTra.getFechaTermino();
 
@@ -957,7 +957,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     }//GEN-LAST:event_mitSituacionesActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        DateFormat fmt = new SimpleDateFormat("yyyy-mm-DD");
+        DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         String fechaIni = fmt.format(dchFechaIni.getDate());
         String fechaFin = fmt.format(dchFechaFin.getDate());
         if (!txtNombre.getText().isEmpty()) {
@@ -1104,7 +1104,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        DateFormat fmt = new SimpleDateFormat("yyyy-mm-DD");
+        DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         String fechaIni = fmt.format(dchFechaIni.getDate());
         String fechaFin = fmt.format(dchFechaFin.getDate());
         if (!txtNombre.getText().isEmpty()) {
