@@ -62,9 +62,8 @@ public class DAOSituaciones extends Situaciones{
         con = Conex.getInstance().getConnection();
         try {
             CallableStatement pstm = con.prepareCall("call del_Situacion("
-                    + " ?,?)"); 
+                    + " ?)"); 
            pstm.setInt(1,super.getIdSituacion());
-           pstm.setString(2, super.getFechaSituacion());
            pstm.execute();
             res = true;
         } catch (SQLException ex) {
@@ -75,7 +74,7 @@ public class DAOSituaciones extends Situaciones{
     } 
     
     
-    public DefaultTableModel listarPaciente() {
+    public DefaultTableModel listarSituaciones() {
         DefaultTableModel tmodel = new DefaultTableModel();
         con = Conex.getInstance().getConnection();
         try {

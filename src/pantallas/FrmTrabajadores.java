@@ -111,7 +111,6 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         lblFiltro = new javax.swing.JLabel();
         txtFiltroPacientes = new javax.swing.JTextField();
         cmbEliminados = new javax.swing.JComboBox();
-        btnActivar = new javax.swing.JButton();
         lblFiltro1 = new javax.swing.JLabel();
         txtFiltroTrabajadores = new javax.swing.JTextField();
         cmbEliminadosTrabajadores = new javax.swing.JComboBox();
@@ -125,6 +124,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         chkPersonal = new javax.swing.JCheckBox();
         chkPasantes = new javax.swing.JCheckBox();
+        txtHorario = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mitSituaciones = new javax.swing.JMenuItem();
@@ -378,16 +378,6 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         cmbEliminados.setFont(fntComponente);
         cmbEliminados.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnActivar.setFont(fntComponente);
-        btnActivar.setText("Activar");
-        btnActivar.setMaximumSize(dmsBoton);
-        btnActivar.setPreferredSize(dmsBoton);
-        btnActivar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActivarActionPerformed(evt);
-            }
-        });
-
         lblFiltro1.setText("FILTRO:");
 
         txtFiltroTrabajadores.addActionListener(new java.awt.event.ActionListener() {
@@ -470,6 +460,9 @@ public class FrmTrabajadores extends javax.swing.JFrame {
 
         chkPasantes.setText("PASANTES");
 
+        txtHorario.setEditable(false);
+        txtHorario.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -494,12 +487,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                 .addComponent(txtApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jLabel3)))
                                         .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(txtApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(71, 71, 71)
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jLabel4))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -507,11 +495,10 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel16))
+                                            .addComponent(jLabel16)
+                                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel12)
-                                            .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -581,7 +568,17 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                 .addComponent(cmbTipoTrabajador, 0, 157, Short.MAX_VALUE)
                                                 .addComponent(jLabel23)
                                                 .addComponent(cmbTurno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(txtTelefono)))))
+                                                .addComponent(txtTelefono))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(336, 336, 336)
+                                                .addComponent(txtApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(71, 71, 71))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(216, 216, 216)))
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(100, 100, 100)
@@ -684,14 +681,17 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
                             .addComponent(jLabel15)
-                            .addComponent(jLabel12))
+                            .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2))
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -821,6 +821,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         txtMunicipio.setText(dTra.getMunicipioTrabajador());
         txtTelefono.setText(dTra.getTelefonoTrabajador());
         txtCorreo.setText(dTra.getCorreoTrabajador());
+        txtHorario.setText(dTra.getHorarioAsignadoPasante());
         txtUniversidad.setText(dTra.getUniversidadProcedencia());
         txtJornada.setText(dTra.getJornadaTrabajador());
         txtMatricula.setText("" + dTra.getMatriculaPasante());
@@ -828,7 +829,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         txtEspecialidad.setText(dTra.getEspecialidad());
         txaObservaciones.setText(dTra.getObservaciones());
 
-        DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
         String str_dateIni = dTra.getFechaInicio();
         String str_dateFin = dTra.getFechaTermino();
 
@@ -912,10 +913,6 @@ public class FrmTrabajadores extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtFiltroPacientesKeyReleased
 
-    private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
-
-    }//GEN-LAST:event_btnActivarActionPerformed
-
     private void txtFiltroTrabajadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroTrabajadoresActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFiltroTrabajadoresActionPerformed
@@ -960,7 +957,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     }//GEN-LAST:event_mitSituacionesActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat fmt = new SimpleDateFormat("yyyy-mm-DD");
         String fechaIni = fmt.format(dchFechaIni.getDate());
         String fechaFin = fmt.format(dchFechaFin.getDate());
         if (!txtNombre.getText().isEmpty()) {
@@ -1107,7 +1104,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat fmt = new SimpleDateFormat("yyyy-mm-DD");
         String fechaIni = fmt.format(dchFechaIni.getDate());
         String fechaFin = fmt.format(dchFechaFin.getDate());
         if (!txtNombre.getText().isEmpty()) {
@@ -1341,7 +1338,6 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Area;
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnActivar;
     private javax.swing.JButton btnActivarTra;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
@@ -1409,6 +1405,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     private javax.swing.JTextField txtEspecialidad;
     private javax.swing.JTextField txtFiltroPacientes;
     private javax.swing.JTextField txtFiltroTrabajadores;
+    private javax.swing.JTextField txtHorario;
     private javax.swing.JTextField txtHoras;
     private javax.swing.JTextField txtJornada;
     private javax.swing.JTextField txtMatricula;
