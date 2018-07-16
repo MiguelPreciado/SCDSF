@@ -41,6 +41,7 @@ public class frmPedMed extends javax.swing.JFrame {
         cargaComboEnfermera();
         cmbMedPat.removeAllItems();
         cargaComboMedPat();
+        desactivaBoton();
         skin1();
     }
     private Connection con;
@@ -109,7 +110,7 @@ public class frmPedMed extends javax.swing.JFrame {
             ComboItem miItem;
             ResultSet res = cstm.executeQuery();
             while (res.next()) {
-                miItem = new ComboItem(res.getInt("idPaciente"), res.getString("Nombre") + " " + res.getString("apPat") + " " + res.getString("apMat"));
+                miItem = new ComboItem(res.getInt("IDPaciente"), res.getString("Nombre") + " " + res.getString("ApPat") + " " + res.getString("ApMat"));
                 cmbPaciente.addItem(String.valueOf(miItem));
             }
         } catch (SQLException ex) {
@@ -130,7 +131,7 @@ public class frmPedMed extends javax.swing.JFrame {
             ComboItem miItem;
             ResultSet res = cstm.executeQuery();
             while (res.next()) {
-                miItem = new ComboItem(res.getInt("idEnfermera"), res.getString("nombreEnfermera") + " " + res.getString("apellidoPatEnf") + " " + res.getString("apellidoMatEnf"));
+                miItem = new ComboItem(res.getInt("idTrabajador"), res.getString("nombreTrabajador") + " " + res.getString("apPatTrabajador") + " " + res.getString("apMatTrabajador"));
                 cmbEnfermera.addItem(String.valueOf(miItem));
             }
         } catch (SQLException ex) {
@@ -212,6 +213,10 @@ public class frmPedMed extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(frmPedMed.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void desactivaBoton(){
+        btnListMedSem.setEnabled(false);
     }
 
     /**

@@ -131,9 +131,9 @@ public class frmMenuCentEnf extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPerEnfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerEnfActionPerformed
-        JFrame persEnf = new frmEnfermeras();
-        dispose();
-        persEnf.setVisible(true);
+        //JFrame persEnf = new frmEnfermeras();
+        //dispose();
+        //persEnf.setVisible(true);
     }//GEN-LAST:event_btnPerEnfActionPerformed
 
     private void btnPedMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedMedActionPerformed

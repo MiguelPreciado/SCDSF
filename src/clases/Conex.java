@@ -107,9 +107,9 @@ public class Conex {
         server = "127.0.0.1";       
         insSql = "";      
         puerto="3306";
-        bd="";       
+        bd="sagradafamiliapruebas";       
         user="root";      
-        pwd = "";        
+        pwd = "LgAGxMye5K3VfQSYg9";        
         driver="com.mysql.jdbc.Driver";    
         if(insSql.trim().length() ==0){         
           url="jdbc:mysql://"+server+"/" +bd;

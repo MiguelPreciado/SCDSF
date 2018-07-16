@@ -66,7 +66,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         mnuCtrlEnf = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -162,14 +161,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuCtrlEnf.setText("ControlEnf");
         mnuCtrlEnf.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-
-        jMenuItem9.setText("Personal");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        mnuCtrlEnf.add(jMenuItem9);
 
         jMenuItem10.setText("Registro de Salud");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
@@ -322,13 +313,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         //dispose();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
-        frmEnfermeras frme = new frmEnfermeras();
-        frme.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        frme.setVisible(true);
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
         frmRegSaludPac frmrsp = new frmRegSaludPac();
@@ -395,7 +379,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu mnuBenefactores;
     private javax.swing.JMenu mnuCtrlEnf;
     private javax.swing.JMenu mnuFarmacia;

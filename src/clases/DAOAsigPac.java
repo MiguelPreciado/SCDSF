@@ -1,6 +1,6 @@
 /*
  * Nombre del autor: Iván Ruiz Ramírez
-                     Jose Luis Terraza Cortés
+                     Dámaso Valdés Rosales
  * Fecha de creación: 2017/01/31
  * Nombre del proyecto: casaDescanso
  * Nombre del módulo: centralDeEnfermería
@@ -17,12 +17,12 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author LUPITO
+ * @author Damaso
  */
 public class DAOAsigPac extends AsigPac {
 
-    public DAOAsigPac(int idPaciente, int idEnfermera, int idAsigPac, int horaInicio, int horaFin, int minInicio, int minFin, int resHora, int resMin, String mensaje, String nombreEnf, String nombrePac, String area) {
-        super(idPaciente, idEnfermera, idAsigPac, horaInicio, horaFin, minInicio, minFin, resHora, resMin, mensaje, nombreEnf, nombrePac, area);
+    public DAOAsigPac(int idPaciente, int idTrabajador, int idAsigPac, int horaInicio, int horaFin, int minInicio, int minFin, int resHora, int resMin, String mensaje, String nombreEnf, String nombrePac, String area) {
+        super(idPaciente, idTrabajador, idAsigPac, horaInicio, horaFin, minInicio, minFin, resHora, resMin, mensaje, nombreEnf, nombrePac, area);
     }
 
     public DAOAsigPac() {
@@ -36,7 +36,7 @@ public class DAOAsigPac extends AsigPac {
         try {
             CallableStatement cstm = con.prepareCall(cadSql);
             cstm.setInt(1, getIdPaciente());
-            cstm.setInt(2, getIdEnfermera());
+            cstm.setInt(2, getIdTrabajador());
             cstm.setString(3, getArea());
             cstm.setInt(4, getHoraInicio());
             cstm.setInt(5, getMinInicio());
@@ -61,7 +61,7 @@ public class DAOAsigPac extends AsigPac {
             CallableStatement cstm = con.prepareCall(cadSql);
             cstm.setInt(1, getIdAsigPac());
             cstm.setInt(2, getIdPaciente());
-            cstm.setInt(3, getIdEnfermera());
+            cstm.setInt(3, getIdTrabajador());
             cstm.setString(4, getArea());
             cstm.setInt(5, getHoraInicio());
             cstm.setInt(6, getMinInicio());
@@ -160,9 +160,9 @@ public class DAOAsigPac extends AsigPac {
             cstm.setString(3, array[2]);
             ResultSet rs = cstm.executeQuery();
             if (rs.next()) {
-                setIdEnfermera(rs.getInt("idEnfermera"));
+                setIdTrabajador(rs.getInt("idTrabajador"));
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el idProveedor.");
+                JOptionPane.showMessageDialog(null, "No se encontró el idTrabajador.");
             }
         } catch (SQLException ex) {
             setMensaje(ex.getMessage());
@@ -184,7 +184,7 @@ public class DAOAsigPac extends AsigPac {
             if (rs.next()) {
                 setIdPaciente(rs.getInt("idPaciente"));
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el idProveedor.");
+                JOptionPane.showMessageDialog(null, "No se encontró el idPaciente.");
             }
         } catch (SQLException ex) {
             setMensaje(ex.getMessage());

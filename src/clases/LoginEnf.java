@@ -46,8 +46,7 @@ public class LoginEnf {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    public void validarLogin(){
+        public void validarLogin(){
         if(usuario.equals("") || password.equals("")){
             JOptionPane.showMessageDialog(null, "Favor de llenar ambos campos");
             frmLogIn.setVisible(true);
