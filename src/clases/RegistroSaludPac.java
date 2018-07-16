@@ -19,7 +19,7 @@ public class RegistroSaludPac {
 
     private int idRegistroDeSalud;
     private int idPaciente;
-    private int idEnfermera;
+    private int idTrabajador;
     private int presionArtSis;
     private int presionArtDias;
     private int frecuenciaCar;
@@ -49,12 +49,12 @@ public class RegistroSaludPac {
         this.idPaciente = idPaciente;
     }
 
-    public int getIdEnfermera() {
-        return idEnfermera;
+    public int getIdTrabajador() {
+        return idTrabajador;
     }
 
-    public void setIdEnfermera(int idEnfermera) {
-        this.idEnfermera = idEnfermera;
+    public void setIdTrabajador(int idTrabajador) {
+        this.idTrabajador = idTrabajador;
     }
     
     public int getPresionArtSis() {
@@ -156,10 +156,10 @@ public class RegistroSaludPac {
     public RegistroSaludPac() {
     }
 
-    public RegistroSaludPac(int idRegistroDeSalud, int idPaciente, int idEnfermera, int presionArtSis, int presionArtDias, int frecuenciaCar, String temperatura, int prePrandial, int postPrandial, String notas, String fechaSalPac, String mensaje, String nomPac, String nomEnf) {
+    public RegistroSaludPac(int idRegistroDeSalud, int idPaciente, int idTrabajador, int presionArtSis, int presionArtDias, int frecuenciaCar, String temperatura, int prePrandial, int postPrandial, String notas, String fechaSalPac, String mensaje, String nomPac, String nomEnf) {
         this.idRegistroDeSalud = idRegistroDeSalud;
         this.idPaciente = idPaciente;
-        this.idEnfermera = idEnfermera;
+        this.idTrabajador = idTrabajador;
         this.presionArtSis = presionArtSis;
         this.presionArtDias = presionArtDias;
         this.frecuenciaCar = frecuenciaCar;

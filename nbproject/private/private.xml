@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/junio/Documents/Casa%20de%20descanso/Equipo%20Kappa/SCDSF/src/clases/DAOResponsables.java</file>
-            <file>file:/C:/Users/junio/Documents/Casa%20de%20descanso/Equipo%20Kappa/SCDSF/src/clases/DAOPacientes.java</file>
-            <file>file:/C:/Users/junio/Documents/Casa%20de%20descanso/Equipo%20Kappa/SCDSF/src/pantallas/FrmPacientes2.java</file>
-            <file>file:/C:/Users/junio/Documents/Casa%20de%20descanso/Equipo%20Kappa/SCDSF/src/pantallas/FrmPacientes.java</file>
+            <file>file:/C:/Users/junio/Documents/Casa%20de%20descanso/Equipo%20Kappa/SCDSF/src/clases/DAORegistroSaludPac.java</file>
+            <file>file:/C:/Users/junio/Documents/Casa%20de%20descanso/Equipo%20Kappa/SCDSF/src/pantallas/frmIncidencias.java</file>
+            <file>file:/C:/Users/junio/Documents/Casa%20de%20descanso/Equipo%20Kappa/SCDSF/src/clases/LoginEnf.java</file>
+            <file>file:/C:/Users/junio/Documents/Casa%20de%20descanso/Equipo%20Kappa/SCDSF/src/pantallas/frmxLogin.java</file>
+            <file>file:/C:/Users/junio/Documents/Casa%20de%20descanso/Equipo%20Kappa/SCDSF/src/clases/RegistroSaludPac.java</file>
+            <file>file:/C:/Users/junio/Documents/Casa%20de%20descanso/Equipo%20Kappa/SCDSF/src/pantallas/frmRegSaludPac.java</file>
         </group>
     </open-files>
 </project-private>

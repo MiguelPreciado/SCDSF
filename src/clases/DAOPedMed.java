@@ -31,8 +31,8 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class DAOPedMed extends PedMed {
 
-    public DAOPedMed(int idPedidoMed, int idEnfermera, int idPaciente, int idProducto, String depart, String fechaIngreso, String diagnost, String fechaPedMed, float dosis, String horarioEsp, String horarioMan, String horarioTarde, String horarioNoche, String descrPedMed, String nomPac, String nombreProductoGen, String nombreProductoPat, String enfermera, String mensaje) {
-        super(idPedidoMed, idEnfermera, idPaciente, idProducto, depart, fechaIngreso, diagnost, fechaPedMed, dosis, horarioEsp, horarioMan, horarioTarde, horarioNoche, descrPedMed, nomPac, nombreProductoGen, nombreProductoPat, enfermera, mensaje);
+    public DAOPedMed(int idPedidoMed, int idTrabajador, int idPaciente, int idProducto, String depart, String fechaIngreso, String diagnost, String fechaPedMed, float dosis, String horarioEsp, String horarioMan, String horarioTarde, String horarioNoche, String descrPedMed, String nomPac, String nombreProductoGen, String nombreProductoPat, String enfermera, String mensaje) {
+        super(idPedidoMed, idTrabajador, idPaciente, idProducto, depart, fechaIngreso, diagnost, fechaPedMed, dosis, horarioEsp, horarioMan, horarioTarde, horarioNoche, descrPedMed, nomPac, nombreProductoGen, nombreProductoPat, enfermera, mensaje);
     }
 
     public DAOPedMed() {
@@ -45,7 +45,7 @@ public class DAOPedMed extends PedMed {
         String cadSql = "{call sp_insPedMed(?,?,?,?,?,?,?,?,?,?,?,?,?)};";
         try {
             CallableStatement cstm = con.prepareCall(cadSql);
-            cstm.setInt(1, getIdEnfermera());
+            cstm.setInt(1, getIdTrabajador());
             cstm.setInt(2, getIdPaciente());
             cstm.setInt(3, getIdProducto());
             cstm.setString(4, getDepart());
@@ -74,7 +74,7 @@ public class DAOPedMed extends PedMed {
         try {
             CallableStatement cstm = con.prepareCall(cadSql);
             cstm.setInt(1,getIdPedidoMed());
-            cstm.setInt(2, getIdEnfermera());
+            cstm.setInt(2, getIdTrabajador());
             cstm.setInt(3, getIdPaciente());
             cstm.setInt(4, getIdProducto());
             cstm.setString(5, getDepart());
@@ -314,7 +314,7 @@ public class DAOPedMed extends PedMed {
                 setIdPaciente(rs.getInt("idPaciente"));
             }
             else{
-                JOptionPane.showMessageDialog(null,"No se encontró el idPaciente.");
+               //JOptionPane.showMessageDialog(null,"No se encontró el idPaciente.");
             }
         } catch (SQLException ex) {
             setMensaje(ex.getMessage());
@@ -354,7 +354,7 @@ public class DAOPedMed extends PedMed {
             cstm.setString(3, array[2]);
             ResultSet rs = cstm.executeQuery();
             if (rs.next()) {
-                setIdEnfermera(rs.getInt("idEnfermera"));
+                setIdTrabajador(rs.getInt("idTrabajador"));
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró el idEnfermera.");
             }

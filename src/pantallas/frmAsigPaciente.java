@@ -65,7 +65,6 @@ public class frmAsigPaciente extends javax.swing.JFrame {
         lblTiempoTot.setText(lblTiempoTot.getText().toUpperCase());
         lblHoras.setText(lblHoras.getText().toUpperCase());
         lblMinutos.setText(lblMinutos.getText().toUpperCase());
-        lblFiltNombreDeEnf.setText(lblFiltNombreDeEnf.getText().toUpperCase());
         lblAsigPac.setText(lblAsigPac.getText().toUpperCase());
         lblBuscModElim.setText(lblBuscModElim.getText().toUpperCase());
         lblIdAsigPac.setText(lblIdAsigPac.getText().toUpperCase());
@@ -111,7 +110,7 @@ public class frmAsigPaciente extends javax.swing.JFrame {
             ComboItem miItem;
             ResultSet res = cstm.executeQuery();
             while (res.next()) {
-                miItem = new ComboItem(res.getInt("idEnfermera"), res.getString("nombreEnfermera") + " " + res.getString("apellidoPatEnf") + " " + res.getString("apellidoMatEnf"));
+                miItem = new ComboItem(res.getInt("idTrabajador"), res.getString("nombreTrabajador") + " " + res.getString("apPatTrabajador") + " " + res.getString("apMatTrabajador"));
                 cmbEnfermera.addItem(String.valueOf(miItem));
             }
         } catch (SQLException ex) {
@@ -140,8 +139,6 @@ public class frmAsigPaciente extends javax.swing.JFrame {
         txtIdAsigPac = new javax.swing.JTextField();
         lblBuscModElim = new javax.swing.JLabel();
         btnListar = new javax.swing.JButton();
-        lblFiltNombreDeEnf = new javax.swing.JLabel();
-        txtFiltNombreDeEnf = new javax.swing.JTextField();
         txtResHora = new javax.swing.JTextField();
         txtResMin = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -297,23 +294,6 @@ public class frmAsigPaciente extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnListar, new org.netbeans.lib.awtextra.AbsoluteConstraints(572, 587, 137, 40));
-
-        lblFiltNombreDeEnf.setFont(textoComponentes);
-        lblFiltNombreDeEnf.setText("Filtro (Nombre de Enfermera):");
-        getContentPane().add(lblFiltNombreDeEnf, new org.netbeans.lib.awtextra.AbsoluteConstraints(456, 459, 259, -1));
-
-        txtFiltNombreDeEnf.setFont(textoComponentes);
-        txtFiltNombreDeEnf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFiltNombreDeEnfActionPerformed(evt);
-            }
-        });
-        txtFiltNombreDeEnf.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtFiltNombreDeEnfKeyReleased(evt);
-            }
-        });
-        getContentPane().add(txtFiltNombreDeEnf, new org.netbeans.lib.awtextra.AbsoluteConstraints(725, 456, 116, -1));
 
         txtResHora.setFont(textoComponentes);
         txtResHora.setEnabled(false);
@@ -569,19 +549,6 @@ public class frmAsigPaciente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void txtFiltNombreDeEnfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltNombreDeEnfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFiltNombreDeEnfActionPerformed
-
-    private void txtFiltNombreDeEnfKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltNombreDeEnfKeyReleased
-        daoAsig.setNombreEnf(txtFiltNombreDeEnf.getText() + "%");
-        daoAsig.getTmodel().setColumnCount(0);
-        daoAsig.getTmodel().setRowCount(0);
-        daoAsig.filtrarAsig();
-        tblAsigPac.setModel(daoAsig.getTmodel());
-
-    }//GEN-LAST:event_txtFiltNombreDeEnfKeyReleased
-
     private void cmbEnfermeraItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbEnfermeraItemStateChanged
 
     }//GEN-LAST:event_cmbEnfermeraItemStateChanged
@@ -778,7 +745,6 @@ public class frmAsigPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel lblCmbFiltEnf;
     private javax.swing.JLabel lblCmbFiltPac;
     private javax.swing.JLabel lblEnfermera;
-    private javax.swing.JLabel lblFiltNombreDeEnf;
     private javax.swing.JLabel lblFondoVerde;
     private javax.swing.JLabel lblHoraFin;
     private javax.swing.JLabel lblHoraInicio;
@@ -793,7 +759,6 @@ public class frmAsigPaciente extends javax.swing.JFrame {
     private javax.swing.JTable tblAsigPac;
     private javax.swing.JTextField txtCmbFiltEnf;
     private javax.swing.JTextField txtCmbFiltPac;
-    private javax.swing.JTextField txtFiltNombreDeEnf;
     private javax.swing.JTextField txtHoraFin;
     private javax.swing.JTextField txtHoraInicio;
     private javax.swing.JTextField txtIdAsigPac;
