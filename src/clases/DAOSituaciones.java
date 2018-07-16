@@ -103,4 +103,14 @@ public class DAOSituaciones extends Situaciones{
         return tmodel;
     }
     
+    public void setSituaciones(Situaciones s){
+        super.setIdTrabajador(s.getIdTrabajador());
+        super.setAreaSituacion(s.getAreaSituacion());
+        super.setDescripcionSituacion(s.getDescripcionSituacion());
+        super.setFechaSituacion(s.getFechaSituacion());
+        super.setHorarioSituacion(s.getHorarioSituacion());
+        super.setIdSituacion(s.getIdSituacion());
+        super.setTipoSituacion(s.getTipoSituacion());
+        super.setTurnoSituacion(s.getTurnoSituacion());
+    }
 }

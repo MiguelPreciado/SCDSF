@@ -34,12 +34,12 @@ public class Trabajadores {
     private String areaAsignada; 
     private String observaciones; 
     private String statusTrabajador; 
-    private String claseTrabajador; 
+    private char claseTrabajador; 
 
     public Trabajadores() {
     }
 
-    public Trabajadores(int idTrabajador, String nombreTrabajador, String apPatTrabajador, String apMatTrabajador, String calleTrabajador, String noIntTrabajador, String noExtTrabajador, String estadoTrabajador, String municipioTrabajador, String telefonoTrabajador, String correoTrabajador, String universidadProcedencia, String fechaInicio, String fechaTermino, String horarioAsignadoPasante, String turnoTrabajador, String jornadaTrabajador, int matriculaPasante, String tipoTrabajador, String especialidad, int horasRegistradas, String areaAsignada, String observaciones, String statusTrabajador, String claseTrabajador) {
+    public Trabajadores(int idTrabajador, String nombreTrabajador, String apPatTrabajador, String apMatTrabajador, String calleTrabajador, String noIntTrabajador, String noExtTrabajador, String estadoTrabajador, String municipioTrabajador, String telefonoTrabajador, String correoTrabajador, String universidadProcedencia, String fechaInicio, String fechaTermino, String horarioAsignadoPasante, String turnoTrabajador, String jornadaTrabajador, int matriculaPasante, String tipoTrabajador, String especialidad, int horasRegistradas, String areaAsignada, String observaciones, String statusTrabajador, char claseTrabajador) {
         this.idTrabajador = idTrabajador;
         this.nombreTrabajador = nombreTrabajador;
         this.apPatTrabajador = apPatTrabajador;
@@ -259,11 +259,11 @@ public class Trabajadores {
         this.statusTrabajador = statusTrabajador;
     }
 
-    public String getClaseTrabajador() {
+    public char getClaseTrabajador() {
         return claseTrabajador;
     }
 
-    public void setClaseTrabajador(String claseTrabajador) {
+    public void setClaseTrabajador(char claseTrabajador) {
         this.claseTrabajador = claseTrabajador;
     }
     

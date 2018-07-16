@@ -811,7 +811,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
 
     }
 
-    public void llenaCamposDAO(DAOTrabajadores dTra) throws ParseException {
+    public void llenaCamposDAOTRA(DAOTrabajadores dTra) throws ParseException {
         txtNombre.setText(dTra.getNombreTrabajador());
         txtApPaterno.setText(dTra.getApPatTrabajador());
         txtApMaterno.setText(dTra.getApMatTrabajador());
@@ -829,7 +829,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         txtEspecialidad.setText(dTra.getEspecialidad());
         txaObservaciones.setText(dTra.getObservaciones());
 
-        DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         String str_dateIni = dTra.getFechaInicio();
         String str_dateFin = dTra.getFechaTermino();
 
@@ -843,7 +843,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         cmbEstado.setSelectedItem(dTra.getEstadoTrabajador());
         cmbArea.setSelectedItem(dTra.getAreaAsignada());
         cmbTurno.setSelectedItem(dTra.getTurnoTrabajador());
-        if (dTra.getClaseTrabajador() == "E") {
+        if (dTra.getClaseTrabajador() == 'E') {
             cmbClase.setSelectedItem("PERSONAL");
         } else {
             cmbClase.setSelectedItem("PASANTE");
@@ -957,9 +957,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     }//GEN-LAST:event_mitSituacionesActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaIni = fmt.format(dchFechaIni.getDate());
-        String fechaFin = fmt.format(dchFechaFin.getDate());
+        
         if (!txtNombre.getText().isEmpty()) {
             if (!txtApPaterno.getText().isEmpty()) {
                 if (!txtApMaterno.getText().isEmpty()) {
@@ -968,7 +966,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                 if (!txtMunicipio.getText().isEmpty()) {
                                         if (!txtTelefono.getText().isEmpty()) {
                                                         if (HorarioSeleccionado()) {
-                                                            if (txtJornada.getText().isEmpty()) {
+                                                            if (!txtJornada.getText().isEmpty()) {
 
                                                                                 Trabajadores tra = new Trabajadores();
                                                                                 DAOTrabajadores dTra = new DAOTrabajadores();
@@ -983,30 +981,34 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                                                 tra.setCorreoTrabajador(txtCorreo.getText());
                                                  
                                                                                 
-                                                                                if ((cmbClase.getSelectedItem().toString()).equals("Personal")) {
-                                                                                    tra.setClaseTrabajador("E");
-                                                                                    tra.setFechaInicio("-");
-                                                                                    tra.setFechaTermino("-");
+                                                                                if ((cmbClase.getSelectedItem().toString()).equals("PERSONAL")) {
+                                                                                    tra.setClaseTrabajador('E');
+                                                                                    tra.setFechaInicio(null);
+                                                                                    tra.setFechaTermino(null);
                                                                                     tra.setMatriculaPasante(0);
                                                                                     tra.setHorasRegistradas(0);
                                                                                     tra.setUniversidadProcedencia("-");
                                                                                 } else {
+                                                                                    DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+                                                                                    String fechaIni = fmt.format(dchFechaIni.getDate());
+                                                                                    String fechaFin = fmt.format(dchFechaFin.getDate());
                                                                                     tra.setMatriculaPasante(Integer.parseInt(txtMatricula.getText()));
                                                                                     tra.setFechaInicio(fechaIni);
                                                                                     tra.setFechaTermino(fechaFin);
                                                                                     tra.setHorasRegistradas(Integer.parseInt(txtHoras.getText()));
                                                                                     tra.setUniversidadProcedencia(txtUniversidad.getText());
-                                                                                    tra.setClaseTrabajador("U");
+                                                                                    tra.setClaseTrabajador('U');
                                                                                 }
                                                                                 tra.setTelefonoTrabajador(txtTelefono.getText());
                                                                                 tra.setTurnoTrabajador(cmbTurno.getSelectedItem().toString());
                                                                                 tra.setHorarioAsignadoPasante(Horario());
                                                                                 tra.setJornadaTrabajador(txtJornada.getText());
-                                                                                
+                                                                                tra.setAreaAsignada(cmbArea.getSelectedItem().toString());
                                                                                 tra.setTipoTrabajador(cmbTipoTrabajador.getSelectedItem().toString());
                                                                                 
                                                                                 tra.setEspecialidad(txtEspecialidad.getText());
                                                                                 tra.setObservaciones(txaObservaciones.getText());
+                                                                                dTra.setTrabajador(tra);
                                                                                 if (dTra.agregar()) {
                                                                                     JOptionPane.showMessageDialog(rootPane, "Registro guardado");
                                                                                     LimpiarCampos();
@@ -1077,9 +1079,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaIni = fmt.format(dchFechaIni.getDate());
-        String fechaFin = fmt.format(dchFechaFin.getDate());
+      
         if (!txtNombre.getText().isEmpty()) {
             if (!txtApPaterno.getText().isEmpty()) {
                 if (!txtApMaterno.getText().isEmpty()) {
@@ -1088,9 +1088,11 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                 if (!txtMunicipio.getText().isEmpty()) {
                                         if (!txtTelefono.getText().isEmpty()) {
                                                         if (HorarioSeleccionado()) {
-                                                            if (txtJornada.getText().isEmpty()) {
+                                                            if (!txtJornada.getText().isEmpty()) {
                                                                                 Trabajadores tra = new Trabajadores();
                                                                                 DAOTrabajadores dTra = new DAOTrabajadores();
+                                                                                ComboItem ci = (ComboItem) cmbFiltradoTrabajadores.getSelectedItem();
+                                                                                tra.setIdTrabajador(ci.getId());
                                                                                 tra.setNombreTrabajador(txtNombre.getText());
                                                                                 tra.setApPatTrabajador(txtApPaterno.getText());
                                                                                 tra.setApMatTrabajador(txtApMaterno.getText());
@@ -1102,36 +1104,40 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                                                 tra.setCorreoTrabajador(txtCorreo.getText());
                                                                                 tra.setTelefonoTrabajador(txtTelefono.getText());
                                                                                 
-                                                                                if ((cmbClase.getSelectedItem().toString()).equals("Personal")) {
-                                                                                    tra.setClaseTrabajador("E");
+                                                                                if ((cmbClase.getSelectedItem().toString()).equals("PERSONAL")) {
+                                                                                    tra.setClaseTrabajador('E');
                                                                                     tra.setFechaInicio("");
                                                                                     tra.setFechaTermino("");
                                                                                     tra.setMatriculaPasante(0);
                                                                                     tra.setHorasRegistradas(0);
                                                                                     tra.setUniversidadProcedencia("");
                                                                                 } else {
+                                                                                    DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+                                                                                    String fechaIni = fmt.format(dchFechaIni.getDate());
+                                                                                    String fechaFin = fmt.format(dchFechaFin.getDate());
                                                                                     tra.setFechaInicio(fechaIni);
                                                                                     tra.setFechaTermino(fechaFin);
                                                                                     tra.setMatriculaPasante(Integer.parseInt(txtMatricula.getText()));
                                                                                     tra.setHorasRegistradas(Integer.parseInt(txtHoras.getText()));
                                                                                     tra.setUniversidadProcedencia(txtUniversidad.getText());
-                                                                                    tra.setClaseTrabajador("U");
+                                                                                    tra.setClaseTrabajador('U');
                                                                                 }
                                                                                 tra.setTelefonoTrabajador(txtTelefono.getText());
                                                                                 tra.setTurnoTrabajador(cmbTurno.getSelectedItem().toString());
                                                                                 tra.setHorarioAsignadoPasante(Horario());
                                                                                 tra.setJornadaTrabajador(txtJornada.getText());
-                                                                                
+                                                                                tra.setAreaAsignada(cmbArea.getSelectedItem().toString());
                                                                                 tra.setTipoTrabajador(cmbTipoTrabajador.getSelectedItem().toString());
                                                                                 
                                                                                 tra.setEspecialidad(txtEspecialidad.getText());
                                                                                 tra.setObservaciones(txaObservaciones.getText());
+                                                                                dTra.setTrabajador(tra);
                                                                                 if (dTra.modificar()) {
                                                                                     JOptionPane.showMessageDialog(rootPane, "Registro trabajador modificado");
                                                                                     LimpiarCampos();
                                                                                     btnListar.doClick();
                                                                                 } else {
-                                                                                    JOptionPane.showMessageDialog(rootPane, "No se inserto");
+                                                                                    JOptionPane.showMessageDialog(rootPane, "No se modifico");
                                                                                 }
                                                             } else {
                                                                 JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Jornada' esta vacío");
@@ -1170,7 +1176,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         dTra.setIdTrabajador(ci.getId());
         dTra.buscar();
         try {
-            llenaCamposDAO(dTra);
+            llenaCamposDAOTRA(dTra);
         } catch (ParseException ex) {
             Logger.getLogger(FrmTrabajadores.class.getName()).log(Level.SEVERE, null, ex);
         }
