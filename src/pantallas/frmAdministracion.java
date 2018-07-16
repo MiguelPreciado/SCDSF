@@ -174,14 +174,17 @@ public class frmAdministracion extends javax.swing.JFrame {
         DaoAdministracion da = new DaoAdministracion();
 
         da.setAdministracion(txtMedioAdministracion.getText());
+        
+        if(!da.buscar()){
+            if(da.agregar()){
+                JOptionPane.showMessageDialog(rootPane, "Registro agregado");
+                txtMedioAdministracion.setText("");
+                btnListarParecidos.doClick();
 
-        if (da.agregar() == true) {
-            JOptionPane.showMessageDialog(rootPane, "Registro agregado");
-            txtMedioAdministracion.setText("");
-            btnListarParecidos.doClick();
-
+            }
+        
         } else {
-            JOptionPane.showMessageDialog(rootPane, "No se inserto");
+            JOptionPane.showMessageDialog(rootPane, "Ese tipo ya existe");
 
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -226,16 +229,16 @@ public class frmAdministracion extends javax.swing.JFrame {
         d5.setAdministracion(txtMedioAdministracion.getText());
         if (d5.buscar()) {
             buscar = d5.getIdAdministracion();
-            System.out.println("la busqueda es " + buscar);
-            txtMedioAdministracion.setText(d5.getAdministracion());
+            //System.out.println("la busqueda es " + buscar);
+            //txtMedioAdministracion.setText(d5.getAdministracion());
             if(buscar != 0 ){
-                JOptionPane.showMessageDialog(rootPane, "El producto existe");
+                JOptionPane.showMessageDialog(rootPane, "El medio de administración existe");
                 btnEliminar.setEnabled(true);
                 btnModificar.setEnabled(true);
             }
-            else {
-                JOptionPane.showMessageDialog(rootPane, "Producto no encontrado");
-            }
+        }
+        else {
+            JOptionPane.showMessageDialog(rootPane, "Medio de administración no encontrado");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 

@@ -19,6 +19,7 @@ public class Asignacion {
    public int idPaciente;
    public int idProducto;
    public int cantidad;
+   public String dosis;
    
     public Asignacion() {
     }
@@ -28,6 +29,14 @@ public class Asignacion {
         this.idPaciente = idPaciente;
         this.idProducto = idProducto;
         this.cantidad = cantidad;
+    }
+
+    public Asignacion(int idAsignacion, int idPaciente, int idProducto,int cantidad, String dosis) {
+        this.idAsignacion = idAsignacion;
+        this.idPaciente = idPaciente;
+        this.idProducto = idProducto;
+        this.cantidad = cantidad;
+        this.dosis = dosis;
     }
 
     public int getIdAsignacion() {
@@ -60,6 +69,14 @@ public class Asignacion {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public String getDosis() {
+        return dosis;
+    }
+
+    public void setDosis(String dosis) {
+        this.dosis = dosis;
     }
     
     

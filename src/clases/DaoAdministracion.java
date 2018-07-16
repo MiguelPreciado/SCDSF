@@ -59,7 +59,7 @@ public class DaoAdministracion extends Administracion {
         con = Conex.getInstance().getConnection();
         
         
-    String cadSql = "{call sp_adm_ins (?)}";
+        String cadSql = "{call sp_adm_ins (?)}";
 
         try {
             CallableStatement cstm = con.prepareCall(cadSql);
@@ -133,11 +133,11 @@ public class DaoAdministracion extends Administracion {
             CallableStatement stm = con.prepareCall(sql);
             stm.setString(1, getAdministracion());
             ResultSet rs = stm.executeQuery();
-            res = true; 
             if(rs.next()){
                 idAdministracion = (rs.getInt("idAdministracion"));
                 administracion = (rs.getString("administracion"));
                
+                res = true; 
             }
         }catch(SQLException ex){
             mensaje = ex.getMessage();
@@ -147,6 +147,33 @@ public class DaoAdministracion extends Administracion {
     
     }
     
+    /**
+     * Metodo que busca los datos de un solo medio de Administracion por medio de su
+     * nombre para rellenar el campo y posteriormente modificarlo o eliminarlo.
+     *
+     * @return res, para indicar si el proceso fue exitoso.
+     */
+    public boolean buscarPorId(){ 
+         boolean res = false;
+        con = Conex.getInstance().getConnection();
+        String sql = "{select * from medioadministracion WHERE idAministracion = ?}";
+        try{
+            CallableStatement stm = con.prepareCall(sql);
+            stm.setInt(1, getIdAdministracion());
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                idAdministracion = (rs.getInt("idAdministracion"));
+                administracion = (rs.getString("administracion"));
+               
+                res = true; 
+            }
+        }catch(SQLException ex){
+            mensaje = ex.getMessage();
+        }
+        return res;
+    
+    
+    }
    
     /**
      * Metodo que crea el modelo para la tabla que se desplegara en la ventana
@@ -158,7 +185,7 @@ public class DaoAdministracion extends Administracion {
     public DefaultTableModel listar() {
                 DefaultTableModel tmodel = new DefaultTableModel();
                con = Conex.getInstance().getConnection();
-               String sql = "{call sp_adm_bus(?)}";
+               String sql = "{call sp_adm_lis(?)}";
                
         try {
           

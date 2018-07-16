@@ -162,6 +162,33 @@ public class DaoTipo extends Tipo {
     }
 
     /**
+     * Metodo que busca los datos de un solo tipo de producto por medio de su
+     * nombre para rellenar el campo y posteriormente modificarlo o eliminarlo
+     *
+     * @return res, para indicar si el proceso fue exitoso.
+     */
+    public boolean buscarPorId() {
+        boolean res = false;
+        con = Conex.getInstance().getConnection();
+        String sql = "{select * from TipoProducto where id = ?}";
+        try {
+            CallableStatement stm = con.prepareCall(sql);
+            stm.setInt(1, getIdTipo());
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                idTipo = (rs.getInt("idTipo"));
+                tipo = (rs.getString("tipo"));
+                res = true;
+
+            }
+        } catch (SQLException ex) {
+            mensaje = ex.getMessage();
+        }
+        return res;
+
+    }
+    
+    /**
      * Metodo que crea el modelo para la tabla que se desplegara en la ventana
      * utiliza un stored procedure para filtrar los datos en la tabla por los
      * caracteres que se ingresen en TipoProducto
