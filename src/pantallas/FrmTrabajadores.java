@@ -26,8 +26,10 @@ import javax.swing.JOptionPane;
  * @author Jose Luis Tinajero
  */
 public class FrmTrabajadores extends javax.swing.JFrame {
+
     Estado es = new Estado();
     Font fntComponente = new Font("Tahoma", Font.BOLD, 14);
+
     /**
      * Creates new form FrmTrabajadores
      */
@@ -58,7 +60,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtCalle = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtnoInt = new javax.swing.JTextField();
+        txtNoInt = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtNoExt = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -109,7 +111,6 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         lblFiltro = new javax.swing.JLabel();
         txtFiltroPacientes = new javax.swing.JTextField();
         cmbEliminados = new javax.swing.JComboBox();
-        btnActivar = new javax.swing.JButton();
         lblFiltro1 = new javax.swing.JLabel();
         txtFiltroTrabajadores = new javax.swing.JTextField();
         cmbEliminadosTrabajadores = new javax.swing.JComboBox();
@@ -123,6 +124,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         chkPersonal = new javax.swing.JCheckBox();
         chkPasantes = new javax.swing.JCheckBox();
+        txtHorario = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mitSituaciones = new javax.swing.JMenuItem();
@@ -376,16 +378,6 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         cmbEliminados.setFont(fntComponente);
         cmbEliminados.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnActivar.setFont(fntComponente);
-        btnActivar.setText("Activar");
-        btnActivar.setMaximumSize(dmsBoton);
-        btnActivar.setPreferredSize(dmsBoton);
-        btnActivar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActivarActionPerformed(evt);
-            }
-        });
-
         lblFiltro1.setText("FILTRO:");
 
         txtFiltroTrabajadores.addActionListener(new java.awt.event.ActionListener() {
@@ -468,6 +460,9 @@ public class FrmTrabajadores extends javax.swing.JFrame {
 
         chkPasantes.setText("PASANTES");
 
+        txtHorario.setEditable(false);
+        txtHorario.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -477,28 +472,22 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel8)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel3)))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(71, 71, 71)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator2)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel8)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel3)))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel4))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -506,11 +495,10 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel16))
+                                            .addComponent(jLabel16)
+                                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel12)
-                                            .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -526,7 +514,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
                                                 .addGap(18, 18, 18)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txtnoInt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txtNoInt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addComponent(jLabel6)))
                                             .addComponent(jLabel11))
                                         .addGap(18, 18, 18)
@@ -580,8 +568,18 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                 .addComponent(cmbTipoTrabajador, 0, 157, Short.MAX_VALUE)
                                                 .addComponent(jLabel23)
                                                 .addComponent(cmbTurno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(txtTelefono)))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 419, Short.MAX_VALUE))))
+                                                .addComponent(txtTelefono))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(336, 336, 336)
+                                                .addComponent(txtApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(71, 71, 71))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(216, 216, 216)))
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addComponent(jLabel1)
@@ -637,7 +635,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtnoInt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNoInt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNoExt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -683,14 +681,17 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
                             .addComponent(jLabel15)
-                            .addComponent(jLabel12))
+                            .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2))
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUniversidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -712,7 +713,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Menú Principal");
@@ -752,24 +753,24 @@ public class FrmTrabajadores extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void cargarEstado() {
         cmbEstado.removeAllItems();
         for (int i = 0; i < es.Listar().length; i++) {
             cmbEstado.addItem(es.Listar()[i][2]);
         }
     }
-    
+
     private void cargaCmbArea() {
         cmbArea.removeAllItems();
-        cmbArea.addItem("San José");
-        cmbArea.addItem("Cesarita");
-        cmbArea.addItem("Nazaret");
-        cmbArea.addItem("Corazón de Jesús");
-        cmbArea.addItem("Sagrada Familia");
-        cmbArea.addItem("Vilaseca");
+        cmbArea.addItem("SAN JOSÉ");
+        cmbArea.addItem("CESARITA");
+        cmbArea.addItem("NAZARET");
+        cmbArea.addItem("CORAZÓN DE JESÚS");
+        cmbArea.addItem("SAGRADA FAMILIA");
+        cmbArea.addItem("VILASECA");
     }
-    
+
     public void cargaCmbFiltrado() {
         DAOTrabajadores dt = new DAOTrabajadores();
         cmbFiltradoTrabajadores.removeAllItems();
@@ -778,7 +779,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
             cmbFiltradoTrabajadores.addItem((ComboItem) pacientes.get(i));
         }
     }
-    
+
     public void cargaCmbFiltradoEliminados() {
         DAOTrabajadores dt = new DAOTrabajadores();
         cmbEliminadosTrabajadores.removeAllItems();
@@ -787,14 +788,14 @@ public class FrmTrabajadores extends javax.swing.JFrame {
             cmbEliminadosTrabajadores.addItem((ComboItem) pacientes.get(i));
         }
     }
-     
+
     private void LimpiarCampos() {
-        
+
         txtNombre.setText("");
         txtApPaterno.setText("");
         txtApMaterno.setText("");
         txtCalle.setText("");
-        txtnoInt.setText("");
+        txtNoInt.setText("");
         txtNoExt.setText("");
         txtMunicipio.setText("");
         txtTelefono.setText("");
@@ -807,58 +808,110 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         txaObservaciones.setText("");
         dchFechaIni.setCalendar(null);
         dchFechaFin.setCalendar(null);
-        
+
     }
-    
-    public void llenaCamposDAO(DAOTrabajadores dTra) throws ParseException {
+
+    public void llenaCamposDAOTRA(DAOTrabajadores dTra) throws ParseException {
         txtNombre.setText(dTra.getNombreTrabajador());
         txtApPaterno.setText(dTra.getApPatTrabajador());
         txtApMaterno.setText(dTra.getApMatTrabajador());
         txtCalle.setText(dTra.getCalleTrabajador());
-        txtnoInt.setText(dTra.getNoIntTrabajador());
+        txtNoInt.setText(dTra.getNoIntTrabajador());
         txtNoExt.setText(dTra.getNoExtTrabajador());
         txtMunicipio.setText(dTra.getMunicipioTrabajador());
         txtTelefono.setText(dTra.getTelefonoTrabajador());
         txtCorreo.setText(dTra.getCorreoTrabajador());
+        txtHorario.setText(dTra.getHorarioAsignadoPasante());
         txtUniversidad.setText(dTra.getUniversidadProcedencia());
         txtJornada.setText(dTra.getJornadaTrabajador());
-        txtMatricula.setText(""+dTra.getMatriculaPasante());
-        txtHoras.setText(""+dTra.getHorasRegistradas());
+        txtMatricula.setText("" + dTra.getMatriculaPasante());
+        txtHoras.setText("" + dTra.getHorasRegistradas());
         txtEspecialidad.setText(dTra.getEspecialidad());
         txaObservaciones.setText(dTra.getObservaciones());
-        DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        String str_dateIni=dTra.getFechaInicio();
-        String str_dateFin=dTra.getFechaTermino();
-     
-        DateFormat formatter ; 
-        Date dateIni, dateFin ; 
-        dateIni = (Date)fmt.parse(str_dateIni);
-        dateFin =(Date)fmt.parse(str_dateFin);
-        
+
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        String str_dateIni = dTra.getFechaInicio();
+        String str_dateFin = dTra.getFechaTermino();
+
+        DateFormat formatter;
+        Date dateIni, dateFin;
+        dateIni = (Date) fmt.parse(str_dateIni);
+        dateFin = (Date) fmt.parse(str_dateFin);
+
         dchFechaIni.setDate(dateIni);
         dchFechaFin.setDate(dateFin);
         cmbEstado.setSelectedItem(dTra.getEstadoTrabajador());
         cmbArea.setSelectedItem(dTra.getAreaAsignada());
         cmbTurno.setSelectedItem(dTra.getTurnoTrabajador());
-        if(dTra.getClaseTrabajador()=="E"){
+        if (dTra.getClaseTrabajador() == 'E') {
             cmbClase.setSelectedItem("PERSONAL");
-        }else{
+        } else {
             cmbClase.setSelectedItem("PASANTE");
         }
-        
+
     }
+    
+    /**
+     * Funcion que se encarga de validar si algún checkBox esta seleccionado 
+     * y de no ser así regresa falso
+     * 
+     * @return
+     * regresa true si algún checkBox esta seleccionado y false si ninguno lo esta
+     */
+    private boolean HorarioSeleccionado() {
+        boolean bandera = true;
+        if (!chkDomingo.isSelected()) {
+            if (!chkLunes.isSelected()) {
+                if (!chkMartes.isSelected()) {
+                    if (!chkMiercoles.isSelected()) {
+                        if (!chkJueves.isSelected()) {
+                            if (!chkViernes.isSelected()) {
+                                if (!chkSabado.isSelected()) {
+                                    bandera = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return bandera;
+    }
+    
+    /**
+     * Funcion que sirve para verificar que checkBox estan marcados para poder
+     * agregar su respectivo prefijo al string.
+     * 
+     * @return 
+     * Regresa un string con todos los prefijos que se seleccionaron
+     */
+    private String Horario(){
+        String horario = "";
+        if (chkDomingo.isSelected())
+            horario += "Dom/";
+        if (chkLunes.isSelected()) 
+            horario += "Lun/";
+        if (chkMartes.isSelected()) 
+            horario += "Mar/";
+        if (chkMiercoles.isSelected()) 
+            horario += "Mir/";
+        if (chkJueves.isSelected()) 
+            horario += "Jue/";
+        if (chkViernes.isSelected()) 
+            horario += "Vie/";
+        if (chkSabado.isSelected())
+            horario += "Sab/";
+        return horario;
+    }
+    
     private void txtFiltroPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroPacientesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFiltroPacientesActionPerformed
 
     private void txtFiltroPacientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroPacientesKeyReleased
         // TODO add your handling code here:
-      
-    }//GEN-LAST:event_txtFiltroPacientesKeyReleased
 
-    private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
-      
-    }//GEN-LAST:event_btnActivarActionPerformed
+    }//GEN-LAST:event_txtFiltroPacientesKeyReleased
 
     private void txtFiltroTrabajadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroTrabajadoresActionPerformed
         // TODO add your handling code here:
@@ -904,91 +957,103 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     }//GEN-LAST:event_mitSituacionesActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if (!txtIdPaciente.getText().isEmpty()) {
-            if (!txtNoExpediente.getText().isEmpty()) {
-                if (!txtNombre.getText().isEmpty()) {
-                    if (!txtApPat.getText().isEmpty()) {
-                        if (!txtApMat.getText().isEmpty()) {
-                            if (!txtDiaNac.getText().isEmpty()) {
-                                if (!txtMesNac.getText().isEmpty()) {
-                                    if (!txtAnioNac.getText().isEmpty()) {
-                                        if (!txtMunicipioNac.getText().isEmpty()) {
-                                            if (!txtMunicipioProce.getText().isEmpty()) {
-                                                Pacientes pac = new Pacientes();
-                                                DAOPacientes dPac = new DAOPacientes();
-                                                pac.setTel(txtTel.getText());
-                                                pac.setNombre(txtNombre.getText());
-                                                pac.setApPat(txtApPat.getText());
-                                                pac.setApMat(txtApMat.getText());
-                                                pac.setNoExpediente(Integer.parseInt(txtNoExpediente.getText()));
-                                                pac.setNoProgresivo(Integer.parseInt(txtIdPaciente.getText()));
-                                                if (chkActaIfe.isSelected()) {
-                                                    pac.setActaIfe('1');
-                                                } else {
-                                                    pac.setActaIfe('0');
-                                                }
-                                                pac.setEstadoCivil(cmbEstadoCivil.getSelectedItem().toString());
-                                                pac.setFechaNac(txtAnioNac.getText() + "-" + txtMesNac.getText() + "-" + txtDiaNac.getText());
-                                                pac.setEstadoProcedencia(cmbEstadoProce.getSelectedItem().toString());
-                                                pac.setMunicipioProcedencia(txtMunicipioProce.getText());
-                                                pac.setSeguro(cmbSeguro.getSelectedItem().toString());
-                                                pac.setEstadoOrigen(cmbEstadoNac.getSelectedItem().toString());
-                                                pac.setMunicipioOrigen(txtMunicipioNac.getText());
-                                                pac.setTpPaciente(cmbTpPaciente.getSelectedItem().toString());
-                                                pac.setAreas(cmbArea.getSelectedItem().toString());
-                                                pac.setTpSangre(cmbTpSangre.getSelectedItem().toString());
-                                                pac.setAlergias(txaAlergias.getText());
-                                                pac.setDiagnostico(txaDiagnostico.getText());
-                                                dPac.setPaciente(pac);
-                                                if (dPac.agregar()) {
-                                                    JOptionPane.showMessageDialog(rootPane, "Registro guardado");
-                                                    LimpiarCampos();
-                                                    btnListar.doClick();
-                                                } else {
-                                                    JOptionPane.showMessageDialog(rootPane, "No se inserto");
-                                                }
-                                            }else{
-                                                JOptionPane.showMessageDialog(this, "ERROR: Faltó el municipio de procedencia.");
-                                            }
-                                        }else{
-                                            JOptionPane.showMessageDialog(this, "ERROR: Faltó el municipio de nacimiento.");
-                                        }
-                                    } else {
-                                        JOptionPane.showMessageDialog(this, "ERROR: Faltó el año de nacimiento.");
-                                    }
+        
+        if (!txtNombre.getText().isEmpty()) {
+            if (!txtApPaterno.getText().isEmpty()) {
+                if (!txtApMaterno.getText().isEmpty()) {
+                    if (!txtCalle.getText().isEmpty()) {
+                            if (!txtNoExt.getText().isEmpty()) {
+                                if (!txtMunicipio.getText().isEmpty()) {
+                                        if (!txtTelefono.getText().isEmpty()) {
+                                                        if (HorarioSeleccionado()) {
+                                                            if (!txtJornada.getText().isEmpty()) {
 
+                                                                                Trabajadores tra = new Trabajadores();
+                                                                                DAOTrabajadores dTra = new DAOTrabajadores();
+                                                                                tra.setNombreTrabajador(txtNombre.getText());
+                                                                                tra.setApPatTrabajador(txtApPaterno.getText());
+                                                                                tra.setApMatTrabajador(txtApMaterno.getText());
+                                                                                tra.setCalleTrabajador(txtCalle.getText());
+                                                                                tra.setNoIntTrabajador(txtNoInt.getText());
+                                                                                tra.setNoExtTrabajador(txtNoExt.getText());
+                                                                                tra.setEstadoTrabajador(cmbEstado.getSelectedItem().toString());
+                                                                                tra.setMunicipioTrabajador(txtMunicipio.getText());
+                                                                                tra.setCorreoTrabajador(txtCorreo.getText());
+                                                 
+                                                                                
+                                                                                if ((cmbClase.getSelectedItem().toString()).equals("PERSONAL")) {
+                                                                                    tra.setClaseTrabajador('E');
+                                                                                    tra.setFechaInicio(null);
+                                                                                    tra.setFechaTermino(null);
+                                                                                    tra.setMatriculaPasante(0);
+                                                                                    tra.setHorasRegistradas(0);
+                                                                                    tra.setUniversidadProcedencia("-");
+                                                                                } else {
+                                                                                    DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+                                                                                    String fechaIni = fmt.format(dchFechaIni.getDate());
+                                                                                    String fechaFin = fmt.format(dchFechaFin.getDate());
+                                                                                    tra.setMatriculaPasante(Integer.parseInt(txtMatricula.getText()));
+                                                                                    tra.setFechaInicio(fechaIni);
+                                                                                    tra.setFechaTermino(fechaFin);
+                                                                                    tra.setHorasRegistradas(Integer.parseInt(txtHoras.getText()));
+                                                                                    tra.setUniversidadProcedencia(txtUniversidad.getText());
+                                                                                    tra.setClaseTrabajador('U');
+                                                                                }
+                                                                                tra.setTelefonoTrabajador(txtTelefono.getText());
+                                                                                tra.setTurnoTrabajador(cmbTurno.getSelectedItem().toString());
+                                                                                tra.setHorarioAsignadoPasante(Horario());
+                                                                                tra.setJornadaTrabajador(txtJornada.getText());
+                                                                                tra.setAreaAsignada(cmbArea.getSelectedItem().toString());
+                                                                                tra.setTipoTrabajador(cmbTipoTrabajador.getSelectedItem().toString());
+                                                                                
+                                                                                tra.setEspecialidad(txtEspecialidad.getText());
+                                                                                tra.setObservaciones(txaObservaciones.getText());
+                                                                                dTra.setTrabajador(tra);
+                                                                                if (dTra.agregar()) {
+                                                                                    JOptionPane.showMessageDialog(rootPane, "Registro guardado");
+                                                                                    LimpiarCampos();
+                                                                                    btnListar.doClick();
+                                                                                } else {
+                                                                                    JOptionPane.showMessageDialog(rootPane, "No se inserto");
+                                                                                }
+                                                            } else {
+                                                                JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Jornada' esta vacío");
+                                                            }
+                                                        } else {
+                                                            JOptionPane.showMessageDialog(this, "ERROR: Debe de haber al menos un campo seleccionado en 'Horario'");
+                                                        }
+                                        } else {
+                                            JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Telefono' esta vacío");
+                                        }
+                                    
                                 } else {
-                                    JOptionPane.showMessageDialog(this, "ERROR: Faltó el mes de nacimiento.");
+                                    JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Municipio' esta vacío");
                                 }
                             } else {
-                                JOptionPane.showMessageDialog(this, "ERROR: Faltó el día de nacimiento.");
+                                JOptionPane.showMessageDialog(this, "ERROR: El campo de 'No. Exterior' esta vacío");
                             }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "ERROR: Faltó el apellido materno.");
-                        }
                     } else {
-                        JOptionPane.showMessageDialog(this, "ERROR: Faltó el apellido paterno.");
+                        JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Calle' esta vacío");
                     }
-
                 } else {
-                    JOptionPane.showMessageDialog(this, "ERROR: Faltó el Nombre de paciente.");
+                    JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Apellido Materno' esta vacío");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "ERROR: Faltó el No. de Expediente.");
+                JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Apellido Paterno' esta vacío");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "ERROR: Faltó el No.Progresivo.");
+            JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Nombre' esta vacío");
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         // TODO add your handling code here:
         DAOTrabajadores dTra = new DAOTrabajadores();
-        if(chkPersonal.isSelected()){
+        if (chkPersonal.isSelected()) {
             tblTrabajadores.setModel(dTra.listarPersonal());
-        }else if(chkPasantes.isSelected()){
+        } else if (chkPasantes.isSelected()) {
             tblTrabajadores.setModel(dTra.listarPasantes());
-        }else{
+        } else {
             tblTrabajadores.setModel(dTra.listar());
         }
     }//GEN-LAST:event_btnListarActionPerformed
@@ -1014,87 +1079,92 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-        if(!txtIdPaciente.getText().isEmpty()){
-            if (!txtNoExpediente.getText().isEmpty()) {
-                if (!txtNombre.getText().isEmpty()) {
-                    if (!txtApPat.getText().isEmpty()) {
-                        if (!txtApMat.getText().isEmpty()) {
-                            if (!txtDiaNac.getText().isEmpty()) {
-                                if (!txtMesNac.getText().isEmpty()) {
-                                    if (!txtAnioNac.getText().isEmpty()) {
-                                        if (!txtMunicipioNac.getText().isEmpty()) {
-                                            if (!txtMunicipioProce.getText().isEmpty()) {
-
-                                                ComboItem ci = (ComboItem) cmbFiltradoPacientes.getSelectedItem();
-                                                Pacientes pac = new Pacientes();
-                                                DAOPacientes dPac = new DAOPacientes();
-                                                pac.setIdPaciente(ci.getId());
-                                                pac.setTel(txtTel.getText());
-                                                pac.setNombre(txtNombre.getText());
-                                                pac.setApPat(txtApPat.getText());
-                                                pac.setApMat(txtApMat.getText());
-                                                pac.setNoExpediente(Integer.parseInt(txtNoExpediente.getText()));
-                                                pac.setNoProgresivo(Integer.parseInt(txtIdPaciente.getText()));
-                                                if (chkActaIfe.isSelected()) {
-                                                    pac.setActaIfe('1');
-                                                } else {
-                                                    pac.setActaIfe('0');
-                                                }
-                                                pac.setFechaNac(txtAnioNac.getText() + "-" + txtMesNac.getText() + "-" + txtDiaNac.getText());
-                                                pac.setEstadoCivil(cmbEstadoCivil.getSelectedItem().toString());
-                                                pac.setEstadoProcedencia(cmbEstadoProce.getSelectedItem().toString());
-                                                pac.setMunicipioProcedencia(txtMunicipioProce.getText());
-                                                pac.setSeguro(cmbSeguro.getSelectedItem().toString());
-                                                pac.setEstadoOrigen(cmbEstadoNac.getSelectedItem().toString());
-                                                pac.setMunicipioOrigen(txtMunicipioNac.getText());
-                                                pac.setTpPaciente(cmbTpPaciente.getSelectedItem().toString());
-                                                pac.setAreas(cmbArea.getSelectedItem().toString());
-                                                pac.setTpSangre(cmbTpSangre.getSelectedItem().toString());
-                                                pac.setAlergias(txaAlergias.getText());
-                                                pac.setDiagnostico(txaDiagnostico.getText());
-                                                pac.setEstado('1');
-
-                                                dPac.setPaciente(pac);
-                                                if (dPac.modificar()) {
-                                                    JOptionPane.showMessageDialog(rootPane, "Registro modificado");
-                                                    LimpiarCampos();
-                                                    cargaCmbFiltrado();
-                                                    btnListar.doClick();
-                                                } else {
-                                                    JOptionPane.showMessageDialog(rootPane, "No se modifico");
-                                                }
-                                            }else{
-                                                JOptionPane.showMessageDialog(this, "ERROR: Faltó el municipio de procedencia.");
-                                            }
-                                        }else{
-                                            JOptionPane.showMessageDialog(this, "ERROR: Faltó el municipio de nacimiento.");
+      
+        if (!txtNombre.getText().isEmpty()) {
+            if (!txtApPaterno.getText().isEmpty()) {
+                if (!txtApMaterno.getText().isEmpty()) {
+                    if (!txtCalle.getText().isEmpty()) {
+                            if (!txtNoExt.getText().isEmpty()) {
+                                if (!txtMunicipio.getText().isEmpty()) {
+                                        if (!txtTelefono.getText().isEmpty()) {
+                                                        if (HorarioSeleccionado()) {
+                                                            if (!txtJornada.getText().isEmpty()) {
+                                                                                Trabajadores tra = new Trabajadores();
+                                                                                DAOTrabajadores dTra = new DAOTrabajadores();
+                                                                                ComboItem ci = (ComboItem) cmbFiltradoTrabajadores.getSelectedItem();
+                                                                                tra.setIdTrabajador(ci.getId());
+                                                                                tra.setNombreTrabajador(txtNombre.getText());
+                                                                                tra.setApPatTrabajador(txtApPaterno.getText());
+                                                                                tra.setApMatTrabajador(txtApMaterno.getText());
+                                                                                tra.setCalleTrabajador(txtCalle.getText());
+                                                                                tra.setNoIntTrabajador(txtNoInt.getText());
+                                                                                tra.setNoExtTrabajador(txtNoExt.getText());
+                                                                                tra.setEstadoTrabajador(cmbEstado.getSelectedItem().toString());
+                                                                                tra.setMunicipioTrabajador(txtMunicipio.getText());
+                                                                                tra.setCorreoTrabajador(txtCorreo.getText());
+                                                                                tra.setTelefonoTrabajador(txtTelefono.getText());
+                                                                                
+                                                                                if ((cmbClase.getSelectedItem().toString()).equals("PERSONAL")) {
+                                                                                    tra.setClaseTrabajador('E');
+                                                                                    tra.setFechaInicio("");
+                                                                                    tra.setFechaTermino("");
+                                                                                    tra.setMatriculaPasante(0);
+                                                                                    tra.setHorasRegistradas(0);
+                                                                                    tra.setUniversidadProcedencia("");
+                                                                                } else {
+                                                                                    DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+                                                                                    String fechaIni = fmt.format(dchFechaIni.getDate());
+                                                                                    String fechaFin = fmt.format(dchFechaFin.getDate());
+                                                                                    tra.setFechaInicio(fechaIni);
+                                                                                    tra.setFechaTermino(fechaFin);
+                                                                                    tra.setMatriculaPasante(Integer.parseInt(txtMatricula.getText()));
+                                                                                    tra.setHorasRegistradas(Integer.parseInt(txtHoras.getText()));
+                                                                                    tra.setUniversidadProcedencia(txtUniversidad.getText());
+                                                                                    tra.setClaseTrabajador('U');
+                                                                                }
+                                                                                tra.setTelefonoTrabajador(txtTelefono.getText());
+                                                                                tra.setTurnoTrabajador(cmbTurno.getSelectedItem().toString());
+                                                                                tra.setHorarioAsignadoPasante(Horario());
+                                                                                tra.setJornadaTrabajador(txtJornada.getText());
+                                                                                tra.setAreaAsignada(cmbArea.getSelectedItem().toString());
+                                                                                tra.setTipoTrabajador(cmbTipoTrabajador.getSelectedItem().toString());
+                                                                                
+                                                                                tra.setEspecialidad(txtEspecialidad.getText());
+                                                                                tra.setObservaciones(txaObservaciones.getText());
+                                                                                dTra.setTrabajador(tra);
+                                                                                if (dTra.modificar()) {
+                                                                                    JOptionPane.showMessageDialog(rootPane, "Registro trabajador modificado");
+                                                                                    LimpiarCampos();
+                                                                                    btnListar.doClick();
+                                                                                } else {
+                                                                                    JOptionPane.showMessageDialog(rootPane, "No se modifico");
+                                                                                }
+                                                            } else {
+                                                                JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Jornada' esta vacío");
+                                                            }
+                                                        } else {
+                                                            JOptionPane.showMessageDialog(this, "ERROR: Debe de haber al menos un campo seleccionado en 'Horario'");
+                                                        } 
+                                        } else {
+                                            JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Telefono' esta vacío");
                                         }
-                                    } else {
-                                        JOptionPane.showMessageDialog(this, "ERROR: Faltó el año de nacimiento.");
-                                    }
-
                                 } else {
-                                    JOptionPane.showMessageDialog(this, "ERROR: Faltó el mes de nacimiento.");
+                                    JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Municipio' esta vacío");
                                 }
                             } else {
-                                JOptionPane.showMessageDialog(this, "ERROR: Faltó el día de nacimiento.");
+                                JOptionPane.showMessageDialog(this, "ERROR: El campo de 'No. Exterior' esta vacío");
                             }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "ERROR: Faltó el apellido materno.");
-                        }
                     } else {
-                        JOptionPane.showMessageDialog(this, "ERROR: Faltó el apellido paterno.");
+                        JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Calle' esta vacío");
                     }
-
                 } else {
-                    JOptionPane.showMessageDialog(this, "ERROR: Faltó el Nombre de paciente.");
+                    JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Apellido Materno' esta vacío");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "ERROR: Faltó el No. de Expediente.");
+                JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Apellido Paterno' esta vacío");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "ERROR: Faltó el No. Progresivo.");
+            JOptionPane.showMessageDialog(this, "ERROR: El campo de 'Nombre' esta vacío");
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -1106,7 +1176,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         dTra.setIdTrabajador(ci.getId());
         dTra.buscar();
         try {
-            llenaCamposDAO(dTra);
+            llenaCamposDAOTRA(dTra);
         } catch (ParseException ex) {
             Logger.getLogger(FrmTrabajadores.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1129,14 +1199,13 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     }//GEN-LAST:event_mitSalirActionPerformed
 
     private void cmbClaseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClaseItemStateChanged
-        if(cmbClase.getSelectedItem().toString().equals("PASANTE")){
+        if (cmbClase.getSelectedItem().toString().equals("PASANTE")) {
             dchFechaIni.setEnabled(true);
             dchFechaFin.setEnabled(true);
             txtHoras.setEnabled(true);
             txtUniversidad.setEnabled(true);
             txtMatricula.setEnabled(true);
-        }
-        else{
+        } else {
             dchFechaIni.setEnabled(false);
             dchFechaFin.setEnabled(false);
             txtHoras.setEnabled(false);
@@ -1174,7 +1243,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUniversidadKeyReleased
 
     private void txtEspecialidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEspecialidadKeyReleased
-       txtEspecialidad.setText(txtEspecialidad.getText().toUpperCase());
+        txtEspecialidad.setText(txtEspecialidad.getText().toUpperCase());
     }//GEN-LAST:event_txtEspecialidadKeyReleased
 
     private void txaObservacionesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txaObservacionesKeyReleased
@@ -1219,7 +1288,6 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Area;
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnActivar;
     private javax.swing.JButton btnActivarTra;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
@@ -1287,14 +1355,15 @@ public class FrmTrabajadores extends javax.swing.JFrame {
     private javax.swing.JTextField txtEspecialidad;
     private javax.swing.JTextField txtFiltroPacientes;
     private javax.swing.JTextField txtFiltroTrabajadores;
+    private javax.swing.JTextField txtHorario;
     private javax.swing.JTextField txtHoras;
     private javax.swing.JTextField txtJornada;
     private javax.swing.JTextField txtMatricula;
     private javax.swing.JTextField txtMunicipio;
     private javax.swing.JTextField txtNoExt;
+    private javax.swing.JTextField txtNoInt;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtUniversidad;
-    private javax.swing.JTextField txtnoInt;
     // End of variables declaration//GEN-END:variables
 }

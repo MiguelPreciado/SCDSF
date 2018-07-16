@@ -5,8 +5,18 @@
  */
 package pantallas;
 
+import clases.ComboItem;
+import clases.DAOPacientes;
+import clases.DAOSituaciones;
+import clases.DAOTrabajadores;
+import clases.Situaciones;
+import clases.Trabajadores;
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,24 +25,47 @@ import java.awt.Font;
 public class FrmSituaciones extends javax.swing.JFrame {
     Color colorTitulo = new Color(150, 0, 12);
     Font fntTitulo = new Font("Tahoma", Font.BOLD, 24);
-    Font fntComponente = new Font("Tahoma", Font.BOLD, 14);
+    Font fntComponente = new Font("Tahoma", Font.BOLD, 14); 
+    DAOSituaciones dSit = new DAOSituaciones();  
+    Situaciones sit = new Situaciones(); 
+    DAOTrabajadores dt = new DAOTrabajadores(); 
+    Trabajadores t = new Trabajadores();
+    
     /**
      * Creates new form FrmPersonal_Pasantes
      */
     public FrmSituaciones() {
         initComponents();
-        cargaCmbArea();
+        cargaCmbArea(); 
+        cargaCmbFiltrado();
     }
     
     private void cargaCmbArea() {
         cmbAreaSit.removeAllItems();
-        cmbAreaSit.addItem("San José");
-        cmbAreaSit.addItem("Cesarita");
-        cmbAreaSit.addItem("Nazaret");
-        cmbAreaSit.addItem("Corazón de Jesús");
-        cmbAreaSit.addItem("Sagrada Familia");
-        cmbAreaSit.addItem("Vilaseca");
+        cmbAreaSit.addItem("SAN JOSÉ");
+        cmbAreaSit.addItem("CESARITA");
+        cmbAreaSit.addItem("NAZARET");
+        cmbAreaSit.addItem("CORAZÓN DE JESÚS");
+        cmbAreaSit.addItem("SAGRADA FAMILIA");
+        cmbAreaSit.addItem("VILASECA");
+        cmbAreaSit.addItem("NINGUNA");
+    } 
+    private void LimpiarCampos() {
+        txtBuscar.setText("");
+        txtHorario.setText("");
+        txtTSituacion.setText("");
+        txtAreDesSit.setText("");
+      
+    } 
+    public void cargaCmbFiltrado() {
+        DAOTrabajadores dt = new DAOTrabajadores();
+        cmbTrabajador.removeAllItems();
+        ArrayList<ComboItem> pacientes = dt.filtrarTrabajadores(txtBuscar.getText());
+        for (int i = 0; i < pacientes.size(); i++) {
+            cmbTrabajador.addItem((ComboItem) pacientes.get(i));
+        }
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,7 +85,6 @@ public class FrmSituaciones extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         cmbTurno = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        cmbTipoS = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         dchFechaSit = new com.toedter.calendar.JDateChooser();
         jSeparator1 = new javax.swing.JSeparator();
@@ -63,14 +95,15 @@ public class FrmSituaciones extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         cmbTrabajador = new javax.swing.JComboBox();
         txtBuscar = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnEliminarSit = new javax.swing.JButton();
+        btnListarSit = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        txtTSituacion = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSituaciones = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        mitTrabajadores = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(198, 253, 188));
@@ -83,17 +116,21 @@ public class FrmSituaciones extends javax.swing.JFrame {
 
         jLabel3.setText("Horario Situación");
 
+        txtHorario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtHorarioKeyReleased(evt);
+            }
+        });
+
         jLabel4.setText("Área");
 
         cmbAreaSit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setText("Turno Situación");
 
-        cmbTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matutino", "Vespertino", "Nocturno" }));
+        cmbTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MATUTINO", "VESPERTINO", "NOCTURNO" }));
 
         jLabel6.setText("Tipo Situación");
-
-        cmbTipoS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fecha Situación"));
 
@@ -118,37 +155,57 @@ public class FrmSituaciones extends javax.swing.JFrame {
 
         txtAreDesSit.setColumns(20);
         txtAreDesSit.setRows(5);
+        txtAreDesSit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAreDesSitKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(txtAreDesSit);
 
         btnAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnAgregar.setText("Agregar");
+        btnAgregar.setText("AGREGAR");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         cmbTrabajador.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton4.setText("Eliminar");
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setText("Listar");
+        btnEliminarSit.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnEliminarSit.setText("ELIMINAR");
+        btnEliminarSit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarSitActionPerformed(evt);
+            }
+        });
+
+        btnListarSit.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnListarSit.setText("LISTAR");
+        btnListarSit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarSitActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Filtro:");
+
+        txtTSituacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTSituacionKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAgregar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(255, 255, 255)
-                        .addComponent(cmbAreaSit, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 115, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -164,17 +221,15 @@ public class FrmSituaciones extends javax.swing.JFrame {
                                     .addComponent(jLabel1)
                                     .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(cmbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(40, 40, 40)
-                                        .addComponent(cmbTipoS, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(61, 61, 61)
-                                        .addComponent(jLabel6))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addGap(152, 152, 152)
-                                        .addComponent(jLabel4)))
+                                        .addComponent(jLabel4))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(cmbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(40, 40, 40)
+                                        .addComponent(jLabel6)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -186,13 +241,27 @@ public class FrmSituaciones extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 100, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtTSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnAgregar)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnEliminarSit, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnListarSit, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(255, 255, 255)
+                            .addComponent(cmbAreaSit, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -213,27 +282,31 @@ public class FrmSituaciones extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbTipoS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)
-                        .addComponent(jButton3)))
-                .addContainerGap())
+                        .addComponent(cmbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnEliminarSit)
+                                .addComponent(btnListarSit)))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(txtTSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         tblSituaciones.setModel(new javax.swing.table.DefaultTableModel(
@@ -247,6 +320,11 @@ public class FrmSituaciones extends javax.swing.JFrame {
                 "Trabajador", "Situacion", "fecha"
             }
         ));
+        tblSituaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSituacionesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSituaciones);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -257,8 +335,8 @@ public class FrmSituaciones extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 839, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,13 +348,18 @@ public class FrmSituaciones extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Menú");
 
-        jMenu2.setText("Trabajadores");
-        jMenu1.add(jMenu2);
+        mitTrabajadores.setText("Trabajadores");
+        mitTrabajadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitTrabajadoresActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mitTrabajadores);
 
         jMenuBar1.add(jMenu1);
 
@@ -286,9 +369,7 @@ public class FrmSituaciones extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,6 +380,131 @@ public class FrmSituaciones extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+                                             
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+     
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        DAOSituaciones ds = new DAOSituaciones();
+        Situaciones s = new Situaciones();
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaSituacion = "";
+
+        if (!txtHorario.getText().isEmpty()) {
+            if (!txtTSituacion.getText().isEmpty()) {
+                if (!txtAreDesSit.getText().isEmpty()) {
+                    if (dchFechaSit.getDate() != null) {
+
+                        ComboItem ci = (ComboItem) cmbTrabajador.getSelectedItem();
+                        s.setIdTrabajador(ci.getId());
+                        s.setHorarioSituacion(txtHorario.getText());
+                        s.setAreaSituacion(cmbAreaSit.getSelectedItem().toString());
+                        s.setTurnoSituacion(cmbTurno.getSelectedItem().toString());
+                        s.setTipoSituacion(txtTSituacion.getText());
+                        s.setDescripcionSituacion(txtAreDesSit.getText());
+                        fechaSituacion = fmt.format(dchFechaSit.getDate());
+                        s.setFechaSituacion(fechaSituacion);
+                        ds.setSituaciones(s);
+                        if (ds.agregar()) {
+                            JOptionPane.showMessageDialog(rootPane, "Registro guardado");
+                            LimpiarCampos();
+                            btnListarSit.doClick();
+                        } else {
+                            JOptionPane.showMessageDialog(rootPane, "No se inserto");
+
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El campo de fecha de situación no puede estar vacío.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Falta la descripción ");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Falta el tipo de situación ");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Falta el horario de situación ");
+        }
+    
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+       
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        txtBuscar.setText(txtBuscar.getText().toUpperCase());
+        cargaCmbFiltrado();
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void txtHorarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHorarioKeyReleased
+     txtHorario.setText(txtHorario.getText().toUpperCase());
+    }//GEN-LAST:event_txtHorarioKeyReleased
+
+    private void txtTSituacionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTSituacionKeyReleased
+      txtTSituacion.setText(txtTSituacion.getText().toUpperCase());        
+    }//GEN-LAST:event_txtTSituacionKeyReleased
+
+    private void txtHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHorarioActionPerformed
+       
+    }//GEN-LAST:event_txtHorarioActionPerformed
+
+    private void txtTSituacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTSituacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTSituacionActionPerformed
+
+    private void txtAreDesSitKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAreDesSitKeyReleased
+        txtAreDesSit.setText(txtAreDesSit.getText().toUpperCase());
+    }//GEN-LAST:event_txtAreDesSitKeyReleased
+
+    private void btnEliminarSitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarSitActionPerformed
+        
+    }//GEN-LAST:event_btnEliminarSitActionPerformed
+
+    private void btnListarSitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSitActionPerformed
+        DAOSituaciones ds= new DAOSituaciones();
+        ComboItem ci = (ComboItem) cmbTrabajador.getSelectedItem();
+        ds.setIdTrabajador(ci.getId());
+        tblSituaciones.setModel(ds.listarSituaciones());
+    }//GEN-LAST:event_btnListarSitActionPerformed
+
+    private void mitTrabajadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitTrabajadoresActionPerformed
+       dispose();
+       FrmTrabajadores frm = new FrmTrabajadores();
+       frm.setVisible(true);
+    }//GEN-LAST:event_mitTrabajadoresActionPerformed
+
+    private void tblSituacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSituacionesMouseClicked
+        int filaSeleccionada = tblSituaciones.getSelectedRow();
+        int columna = 0;
+        int buscar = Integer.parseInt((String) tblSituaciones.getValueAt(filaSeleccionada, columna));
+
+        
+        int si = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el registro de la situacion del trabajador?");
+        if (JOptionPane.YES_OPTION == si) {
+            DAOSituaciones ds = new DAOSituaciones();
+            ds.setIdSituacion(buscar);
+            if (ds.delSituacion()) {
+                JOptionPane.showMessageDialog(rootPane, "Registro de situacion eliminada");
+                LimpiarCampos();
+                btnListarSit.doClick();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No se elimino");
+            }
+            LimpiarCampos();
+            btnListarSit.doClick();
+        }
+        
+    }//GEN-LAST:event_tblSituacionesMouseClicked
+
 
     /**
      * @param args the command line arguments
@@ -338,13 +544,12 @@ public class FrmSituaciones extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminarSit;
+    private javax.swing.JButton btnListarSit;
     private javax.swing.JComboBox<String> cmbAreaSit;
-    private javax.swing.JComboBox<String> cmbTipoS;
     private javax.swing.JComboBox cmbTrabajador;
     private javax.swing.JComboBox<String> cmbTurno;
     public com.toedter.calendar.JDateChooser dchFechaSit;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -353,7 +558,6 @@ public class FrmSituaciones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -362,9 +566,11 @@ public class FrmSituaciones extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JMenuItem mitTrabajadores;
     private javax.swing.JTable tblSituaciones;
     private javax.swing.JTextArea txtAreDesSit;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtHorario;
+    private javax.swing.JTextField txtTSituacion;
     // End of variables declaration//GEN-END:variables
 }

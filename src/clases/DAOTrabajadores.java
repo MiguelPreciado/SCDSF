@@ -28,7 +28,7 @@ public class DAOTrabajadores extends Trabajadores {
     public DAOTrabajadores() {
     }
 
-    public DAOTrabajadores(int idTrabajador, String nombreTrabajador, String apPatTrabajador, String apMatTrabajador, String calleTrabajador, String noIntTrabajador, String noExtTrabajador, String estadoTrabajador, String municipioTrabajador, String telefonoTrabajador, String correoTrabajador, String universidadProcedencia, String fechaInicio, String fechaTermino, String horarioAsignadoPasante, String turnoTrabajador, String jornadaTrabajador, int matriculaPasante, String tipoTrabajador, String especialidad, int horasRegistradas, String areaAsignada, String observaciones, String statusTrabajador, String claseTrabajador) {
+    public DAOTrabajadores(int idTrabajador, String nombreTrabajador, String apPatTrabajador, String apMatTrabajador, String calleTrabajador, String noIntTrabajador, String noExtTrabajador, String estadoTrabajador, String municipioTrabajador, String telefonoTrabajador, String correoTrabajador, String universidadProcedencia, String fechaInicio, String fechaTermino, String horarioAsignadoPasante, String turnoTrabajador, String jornadaTrabajador, int matriculaPasante, String tipoTrabajador, String especialidad, int horasRegistradas, String areaAsignada, String observaciones, String statusTrabajador, char claseTrabajador) {
         super(idTrabajador, nombreTrabajador, apPatTrabajador, apMatTrabajador, calleTrabajador, noIntTrabajador, noExtTrabajador, estadoTrabajador, municipioTrabajador, telefonoTrabajador, correoTrabajador, universidadProcedencia, fechaInicio, fechaTermino, horarioAsignadoPasante, turnoTrabajador, jornadaTrabajador, matriculaPasante, tipoTrabajador, especialidad, horasRegistradas, areaAsignada, observaciones, statusTrabajador, claseTrabajador);
     }
     
@@ -125,30 +125,31 @@ public class DAOTrabajadores extends Trabajadores {
         con = Conex.getInstance().getConnection();
         try {
             CallableStatement pstm = con.prepareCall("call mod_Trabajador("
-                    + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-           pstm.setString(1,super.getNombreTrabajador());
-           pstm.setString(2, super.getApPatTrabajador());
-           pstm.setString(3, super.getApMatTrabajador());
-           pstm.setString(4, super.getCalleTrabajador());
-           pstm.setString(5, super.getNoIntTrabajador());
-           pstm.setString(6, super.getNoExtTrabajador());
-           pstm.setString(7, super.getEstadoTrabajador());
-           pstm.setString(8, super.getMunicipioTrabajador());
-           pstm.setString(9, super.getTelefonoTrabajador());
-           pstm.setString(10, super.getCorreoTrabajador());
-           pstm.setString(11, super.getUniversidadProcedencia());
-           pstm.setString(12, super.getFechaInicio());
-           pstm.setString(13, super.getFechaTermino());
-           pstm.setString(14, super.getHorarioAsignadoPasante());
-           pstm.setString(15, super.getTurnoTrabajador());
-           pstm.setString(16, super.getJornadaTrabajador());
-           pstm.setInt(17, super.getMatriculaPasante());
-           pstm.setString(18,super. getTipoTrabajador());
-           pstm.setString(19, super.getEspecialidad()); 
-           pstm.setInt(20, super.getHorasRegistradas()); 
-           pstm.setString(21, super.getAreaAsignada()); 
-           pstm.setString(22, super.getObservaciones()); 
-           pstm.setString(23, ""+super.getClaseTrabajador()); 
+                    + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+           pstm.setInt(1, super.getIdTrabajador()); 
+           pstm.setString(2,super.getNombreTrabajador());
+           pstm.setString(3, super.getApPatTrabajador());
+           pstm.setString(4, super.getApMatTrabajador());
+           pstm.setString(5, super.getCalleTrabajador());
+           pstm.setString(6, super.getNoIntTrabajador());
+           pstm.setString(7, super.getNoExtTrabajador());
+           pstm.setString(8, super.getEstadoTrabajador());
+           pstm.setString(9, super.getMunicipioTrabajador());
+           pstm.setString(10, super.getTelefonoTrabajador());
+           pstm.setString(11, super.getCorreoTrabajador());
+           pstm.setString(12, super.getUniversidadProcedencia());
+           pstm.setString(13, super.getFechaInicio());
+           pstm.setString(14, super.getFechaTermino());
+           pstm.setString(15, super.getHorarioAsignadoPasante());
+           pstm.setString(16, super.getTurnoTrabajador());
+           pstm.setString(17, super.getJornadaTrabajador());
+           pstm.setInt(18, super.getMatriculaPasante());
+           pstm.setString(19,super. getTipoTrabajador());
+           pstm.setString(20, super.getEspecialidad()); 
+           pstm.setInt(21, super.getHorasRegistradas()); 
+           pstm.setString(22, super.getAreaAsignada()); 
+           pstm.setString(23, super.getObservaciones()); 
+           pstm.setString(24, ""+super.getClaseTrabajador()); 
             pstm.execute();
 
             res = true;
@@ -226,7 +227,7 @@ public class DAOTrabajadores extends Trabajadores {
            super.setHorasRegistradas(rs.getInt("horasRegistradas")); 
            super.setAreaAsignada(rs.getString("areaAsignada")); 
            super.setObservaciones(rs.getString("observaciones")); 
-           super.setClaseTrabajador(rs.getString("claseTrabajador")); 
+           super.setClaseTrabajador(rs.getString("claseTrabajador").charAt(0)); 
                 
                 
                 
@@ -412,6 +413,35 @@ public class DAOTrabajadores extends Trabajadores {
             Logger.getLogger(DAOTrabajadores.class.getName()).log(Level.SEVERE, null, ex);
         }
         return trabajadores;
+    }
+    
+    
+    public void setTrabajador(Trabajadores tra){
+        super.setIdTrabajador(tra.getIdTrabajador());
+        super.setNombreTrabajador(tra.getNombreTrabajador());
+        super.setApPatTrabajador(tra.getApPatTrabajador());
+        super.setApMatTrabajador(tra.getApMatTrabajador());
+        super.setNoIntTrabajador(tra.getNoIntTrabajador());
+        super.setNoExtTrabajador(tra.getNoExtTrabajador());
+        super.setAreaAsignada(tra.getAreaAsignada());
+        super.setCalleTrabajador(tra.getCalleTrabajador());
+        super.setFechaInicio(tra.getFechaInicio());
+        super.setClaseTrabajador(tra.getClaseTrabajador());
+        super.setCorreoTrabajador(tra.getCorreoTrabajador());
+        super.setEspecialidad(tra.getEspecialidad());
+        super.setEstadoTrabajador(tra.getEstadoTrabajador());
+        super.setFechaTermino(tra.getFechaTermino());
+        super.setTelefonoTrabajador(tra.getTelefonoTrabajador());
+        super.setHorarioAsignadoPasante(tra.getHorarioAsignadoPasante());
+        super.setJornadaTrabajador(tra.getJornadaTrabajador());
+        super.setHorasRegistradas(tra.getHorasRegistradas());
+        super.setMatriculaPasante(tra.getMatriculaPasante());
+        super.setMunicipioTrabajador(tra.getMunicipioTrabajador());
+        super.setObservaciones(tra.getObservaciones());
+        super.setStatusTrabajador(tra.getStatusTrabajador());
+        super.setTipoTrabajador(tra.getTipoTrabajador());
+        super.setTurnoTrabajador(tra.getTurnoTrabajador());
+        super.setUniversidadProcedencia(tra.getUniversidadProcedencia());
     }
 }
  
