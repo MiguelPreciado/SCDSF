@@ -39,7 +39,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         cargaCmbArea();
         cargaCmbFiltrado();
         cargaCmbFiltradoEliminados();
-        cargaCmbClase();
+        
     }
 
     /**
@@ -782,12 +782,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
             cmbEliminadosTrabajadores.addItem((ComboItem) pacientes.get(i));
         }
     }
-    private void cargaCmbClase() {
-        cmbClase.removeAllItems();
-        cmbClase.addItem("PERSONAL");
-        cmbClase.addItem("PASANTE");
-        
-    }
+   
 
     private void LimpiarCampos() {
 
