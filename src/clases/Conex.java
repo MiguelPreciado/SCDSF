@@ -104,12 +104,12 @@ public class Conex {
     }
     
     private Conex(){               
-        server = "127.0.0.1";       
+        server = "192.168.1.71";       
         insSql = "";      
         puerto="3306";
-        bd="sagradafamiliapruebas";       
-        user="root";      
-        pwd = "LgAGxMye5K3VfQSYg9";        
+        bd="sagradafamilia";       
+        user="SCDSF";      
+        pwd = "0121610385Lic";
         driver="com.mysql.jdbc.Driver";    
         if(insSql.trim().length() ==0){         
           url="jdbc:mysql://"+server+"/" +bd;
