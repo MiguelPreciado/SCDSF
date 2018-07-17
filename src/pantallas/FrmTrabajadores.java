@@ -39,6 +39,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         cargaCmbArea();
         cargaCmbFiltrado();
         cargaCmbFiltradoEliminados();
+        cargaCmbClase();
     }
 
     /**
@@ -788,6 +789,12 @@ public class FrmTrabajadores extends javax.swing.JFrame {
             cmbEliminadosTrabajadores.addItem((ComboItem) pacientes.get(i));
         }
     }
+    private void cargaCmbClase() {
+        cmbClase.removeAllItems();
+        cmbClase.addItem("PERSONAL");
+        cmbClase.addItem("PASANTE");
+        
+    }
 
     private void LimpiarCampos() {
 
@@ -843,6 +850,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
         cmbEstado.setSelectedItem(dTra.getEstadoTrabajador());
         cmbArea.setSelectedItem(dTra.getAreaAsignada());
         cmbTurno.setSelectedItem(dTra.getTurnoTrabajador());
+        cmbTipoTrabajador.setSelectedItem(dTra.getTipoTrabajador());
         if (dTra.getClaseTrabajador() == 'E') {
             cmbClase.setSelectedItem("PERSONAL");
         } else {
@@ -1012,6 +1020,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                                                 if (dTra.agregar()) {
                                                                                     JOptionPane.showMessageDialog(rootPane, "Registro guardado");
                                                                                     LimpiarCampos();
+                                                                                    cargaCmbFiltrado();
                                                                                     btnListar.doClick();
                                                                                 } else {
                                                                                     JOptionPane.showMessageDialog(rootPane, "No se inserto");
@@ -1135,6 +1144,7 @@ public class FrmTrabajadores extends javax.swing.JFrame {
                                                                                 if (dTra.modificar()) {
                                                                                     JOptionPane.showMessageDialog(rootPane, "Registro trabajador modificado");
                                                                                     LimpiarCampos();
+                                                                                    cargaCmbFiltrado();
                                                                                     btnListar.doClick();
                                                                                 } else {
                                                                                     JOptionPane.showMessageDialog(rootPane, "No se modifico");
