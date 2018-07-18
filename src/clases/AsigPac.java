@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AsigPac {
 
-    private int idPaciente, idEnfermera, idAsigPac;
+    private int idPaciente, idTrabajador, idAsigPac;
     private int horaInicio, horaFin, minInicio, minFin, resHora, resMin;
     private String mensaje, nombreEnf, nombrePac,area;
     public DefaultTableModel tmodel = new DefaultTableModel();
@@ -29,12 +29,12 @@ public class AsigPac {
         this.idPaciente = idPaciente;
     }
 
-    public int getIdEnfermera() {
-        return idEnfermera;
+    public int getIdTrabajador() {
+        return idTrabajador;
     }
 
-    public void setIdEnfermera(int idEnfermera) {
-        this.idEnfermera = idEnfermera;
+    public void setIdTrabajador(int idTrabajador) {
+        this.idTrabajador = idTrabajador;
     }
 
     public int getIdAsigPac() {
@@ -136,9 +136,9 @@ public class AsigPac {
     public AsigPac() {
     }
 
-    public AsigPac(int idPaciente, int idEnfermera, int idAsigPac, int horaInicio, int horaFin, int minInicio, int minFin, int resHora, int resMin, String mensaje, String nombreEnf, String nombrePac, String area) {
+    public AsigPac(int idPaciente, int idTrabajador, int idAsigPac, int horaInicio, int horaFin, int minInicio, int minFin, int resHora, int resMin, String mensaje, String nombreEnf, String nombrePac, String area) {
         this.idPaciente = idPaciente;
-        this.idEnfermera = idEnfermera;
+        this.idTrabajador = idTrabajador;
         this.idAsigPac = idAsigPac;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;

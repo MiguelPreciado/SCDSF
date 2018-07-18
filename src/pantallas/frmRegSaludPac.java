@@ -40,7 +40,7 @@ public class frmRegSaludPac extends javax.swing.JFrame {
     public frmRegSaludPac() {
         initComponents();
         cargaComboPaciente();
-        cargaComboEnfermera();
+        cargaComboTrabajador();
         btnListar.doClick();
         skin1();
     }
@@ -105,7 +105,7 @@ public class frmRegSaludPac extends javax.swing.JFrame {
         }
     }
     
-    private void cargaComboEnfermera() {
+    private void cargaComboTrabajador() {
         cmbNomEnf.removeAllItems();
         if (daoReg.getNomEnf() == null) {
             daoReg.setNomEnf("%");
@@ -118,7 +118,7 @@ public class frmRegSaludPac extends javax.swing.JFrame {
             ComboItem miItem;
             ResultSet res = cstm.executeQuery();
             while (res.next()) {
-                miItem = new ComboItem(res.getInt("idEnfermera"), res.getString("nombreEnfermera") + " " + res.getString("apellidoPatEnf") + " " + res.getString("apellidoMatEnf"));
+                miItem = new ComboItem(res.getInt("idTrabajador"), res.getString("nombreTrabajador") + " " + res.getString("apPatTrabajador") + " " + res.getString("apMatTrabajador"));
                 cmbNomEnf.addItem(String.valueOf(miItem));
             }
         } catch (SQLException ex) {
@@ -383,6 +383,11 @@ public class frmRegSaludPac extends javax.swing.JFrame {
         getContentPane().add(lblCmbFiltPac, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 100, -1));
 
         txtCmbFiltPac.setFont(textoComponentes);
+        txtCmbFiltPac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCmbFiltPacActionPerformed(evt);
+            }
+        });
         txtCmbFiltPac.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCmbFiltPacKeyReleased(evt);
@@ -395,6 +400,11 @@ public class frmRegSaludPac extends javax.swing.JFrame {
         getContentPane().add(lblEnf, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
 
         cmbNomEnf.setFont(textoComponentes);
+        cmbNomEnf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbNomEnfActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbNomEnf, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 260, -1));
 
         lblFiltEnf.setFont(textoComponentes);
@@ -619,13 +629,21 @@ public class frmRegSaludPac extends javax.swing.JFrame {
     private void txtFiltEnfKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltEnfKeyReleased
         daoReg.setNomEnf(txtFiltEnf.getText() + "%");
         cmbNomEnf.removeAllItems();
-        cargaComboEnfermera();
+        cargaComboTrabajador();
     }//GEN-LAST:event_txtFiltEnfKeyReleased
 
     private void btnIncidenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncidenciasActionPerformed
         dispose();
         logIn.setVisible(true);
     }//GEN-LAST:event_btnIncidenciasActionPerformed
+
+    private void cmbNomEnfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNomEnfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbNomEnfActionPerformed
+
+    private void txtCmbFiltPacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCmbFiltPacActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCmbFiltPacActionPerformed
 
     /**
      * @param args the command line arguments

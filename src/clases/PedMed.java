@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PedMed {
     private int idPedidoMed;
-    private int idEnfermera;
+    private int idTrabajador;
     private int idPaciente;
     private int idProducto;
     private String depart;
@@ -43,12 +43,12 @@ public class PedMed {
         this.idPedidoMed = idPedidoMed;
     }
 
-    public int getIdEnfermera() {
-        return idEnfermera;
+    public int getIdTrabajador() {
+        return idTrabajador;
     }
 
-    public void setIdEnfermera(int idEnfermera) {
-        this.idEnfermera = idEnfermera;
+    public void setIdTrabajador(int idTrabajador) {
+        this.idTrabajador = idTrabajador;
     }
 
     public int getIdPaciente() {
@@ -198,9 +198,9 @@ public class PedMed {
     public PedMed() {
     }
 
-    public PedMed(int idPedidoMed, int idEnfermera, int idPaciente, int idProducto, String depart, String fechaIngreso, String diagnost, String fechaPedMed, float dosis, String horarioEsp, String horarioMan, String horarioTarde, String horarioNoche, String descrPedMed, String nomPac, String nombreProductoGen, String nombreProductoPat, String enfermera, String mensaje) {
+    public PedMed(int idPedidoMed, int idTrabajador, int idPaciente, int idProducto, String depart, String fechaIngreso, String diagnost, String fechaPedMed, float dosis, String horarioEsp, String horarioMan, String horarioTarde, String horarioNoche, String descrPedMed, String nomPac, String nombreProductoGen, String nombreProductoPat, String enfermera, String mensaje) {
         this.idPedidoMed = idPedidoMed;
-        this.idEnfermera = idEnfermera;
+        this.idTrabajador = idTrabajador;
         this.idPaciente = idPaciente;
         this.idProducto = idProducto;
         this.depart = depart;

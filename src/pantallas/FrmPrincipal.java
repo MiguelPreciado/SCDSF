@@ -66,10 +66,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         mnuCtrlEnf = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
+        mnuCtrlPers = new javax.swing.JMenu();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
         mnuBenefactores = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
@@ -160,16 +162,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnuFarmacia);
 
-        mnuCtrlEnf.setText("ControlEnf");
+        mnuCtrlEnf.setText("Enfermeria");
         mnuCtrlEnf.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-
-        jMenuItem9.setText("Personal");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        mnuCtrlEnf.add(jMenuItem9);
 
         jMenuItem10.setText("Registro de Salud");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +190,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuCtrlEnf.add(jMenuItem14);
 
         jMenuBar1.add(mnuCtrlEnf);
+
+        mnuCtrlPers.setText("Personal");
+        mnuCtrlPers.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
+        jMenuItem16.setText("Registro de Trabajadores");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        mnuCtrlPers.add(jMenuItem16);
+
+        jMenuItem18.setText("Situaciones");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        mnuCtrlPers.add(jMenuItem18);
+
+        jMenuBar1.add(mnuCtrlPers);
 
         mnuBenefactores.setText("Benefactores");
         mnuBenefactores.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -322,13 +337,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         //dispose();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
-        frmEnfermeras frme = new frmEnfermeras();
-        frme.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        frme.setVisible(true);
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
         frmRegSaludPac frmrsp = new frmRegSaludPac();
@@ -342,6 +350,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
         frmpm.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frmpm.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        FrmTrabajadores frmpm = new FrmTrabajadores();
+        frmpm.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frmpm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        FrmSituaciones frmpm = new FrmSituaciones();
+        frmpm.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frmpm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -390,14 +410,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu mnuBenefactores;
     private javax.swing.JMenu mnuCtrlEnf;
+    private javax.swing.JMenu mnuCtrlPers;
     private javax.swing.JMenu mnuFarmacia;
     private javax.swing.JMenuItem mnuIngreEgre;
     private javax.swing.JMenu mnuInventario;

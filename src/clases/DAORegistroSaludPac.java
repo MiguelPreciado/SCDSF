@@ -21,8 +21,8 @@ import javax.swing.JOptionPane;
  */
 public class DAORegistroSaludPac extends RegistroSaludPac {
 
-    public DAORegistroSaludPac(int idRegistroDeSalud, int idPaciente, int idEnfermera, int presionArtSis, int presionArtDias, int frecuenciaCar, String temperatura, int prePrandial, int postPrandial, String notas, String fechaSalPac, String mensaje, String nomPac, String nomEnf) {
-        super(idRegistroDeSalud, idPaciente, idEnfermera, presionArtSis, presionArtDias, frecuenciaCar, temperatura, prePrandial, postPrandial, notas, fechaSalPac, mensaje, nomPac, nomEnf);
+    public DAORegistroSaludPac(int idRegistroDeSalud, int idPaciente, int idTrabajador, int presionArtSis, int presionArtDias, int frecuenciaCar, String temperatura, int prePrandial, int postPrandial, String notas, String fechaSalPac, String mensaje, String nomPac, String nomEnf) {
+        super(idRegistroDeSalud, idPaciente, idTrabajador, presionArtSis, presionArtDias, frecuenciaCar, temperatura, prePrandial, postPrandial, notas, fechaSalPac, mensaje, nomPac, nomEnf);
     }
   
     public DAORegistroSaludPac() {
@@ -37,7 +37,7 @@ public class DAORegistroSaludPac extends RegistroSaludPac {
         try {
             CallableStatement cstm = con.prepareCall(cadSql);
             cstm.setInt(1, getIdPaciente());
-            cstm.setInt(2, getIdEnfermera());
+            cstm.setInt(2, getIdTrabajador());
             cstm.setInt(3, getPresionArtSis());
             cstm.setInt(4, getPresionArtDias());
             cstm.setInt(5, getFrecuenciaCar());
@@ -64,7 +64,7 @@ public class DAORegistroSaludPac extends RegistroSaludPac {
             CallableStatement cstm = con.prepareCall(cadSql);
             cstm.setInt(1, getIdRegistroDeSalud());
             cstm.setInt(2, getIdPaciente());
-            cstm.setInt(3, getIdEnfermera());
+            cstm.setInt(3, getIdTrabajador());
             cstm.setInt(4, getPresionArtSis());
             cstm.setInt(5, getPresionArtDias());
             cstm.setInt(6, getFrecuenciaCar());
@@ -245,9 +245,9 @@ public class DAORegistroSaludPac extends RegistroSaludPac {
             cstm.setString(3, array[2]);
             ResultSet rs = cstm.executeQuery();
             if (rs.next()) {
-                setIdEnfermera(rs.getInt("idEnfermera"));
+                setIdTrabajador(rs.getInt("idTrabajador"));
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el idEnfermera.");
+                JOptionPane.showMessageDialog(null, "No se encontró el idTrabajador.");
             }
         } catch (SQLException ex) {
             setMensaje(ex.getMessage());
